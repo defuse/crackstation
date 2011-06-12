@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>http://crackstation.net/</loc>
+  <lastmod>2011-04-21T08:42:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://crackstation.net/cracking-services.html</loc>
+  <lastmod>2011-04-21T08:42:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://crackstation.net/hashing-security.html</loc>
+  <lastmod>2011-04-21T08:42:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://crackstation.net/legal-privacy.html</loc>
+  <lastmod>2011-04-21T08:42:15+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+</urlset>
