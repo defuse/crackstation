@@ -151,7 +151,7 @@
 					</tr>
 					</tbody></table>
 					<br>
-					When you have a hash you want to crack, the simplest form of attack is to guess the password using word lists or password cracking dictionaries. That involves hashing every word in the list, and seeing if it's hash matches the hash your are trying to crack. If it does, then you have just found the password for that hash. Brute force attacks are the same as dictionary attacks except they don't use a word list; they try every possible combination of letters, numbers, and symbols.
+					When you have a hash you want to crack, the simplest form of attack is to guess the password using word lists or password cracking dictionaries. That involves hashing every word in the list, and seeing if it's hash matches the hash you're trying to crack. If it does, then you have just found the password for that hash. Brute force attacks are the same as dictionary attacks except they don't use a word list; they try every possible combination of letters, numbers, and symbols.
 					<br><br>
 					There is no way to prevent dictionary attacks or brute force attacks. They can be made less effective, but there isn't a way to prevent them altogeather. If your password hashing system is secure, the only way to crack a hash will be to guess the correct password through a dictionary attack or brute force attack.
 					<br /><br />
@@ -175,7 +175,7 @@
 				<li>
 
 					<b>Rainbow Tables</b><br /><br />
-					Rainbow tables are a hybrid of lookup tables and brute force. In brief, they combine the two methods to reduce the overall size needed to store the wordlist. They do so by using a time-memory trade-off where it takes a little longer to crack one hash, but the lookup table will take up much less hard drive space. For our purposes, we can think of lookup tables and rainbow tables as the same thing.
+					Rainbow tables are a hybrid of lookup tables and brute force. In brief, they combine the two methods to reduce the overall size needed to store the wordlist. They do so by using a time-memory trade-off, making it take a little longer to crack one hash, but reducing the amount of hard drive space required to store the lookup table. For our purposes, we can think of lookup tables and rainbow tables as the same thing.
 				</li>
 	
 			</ul>
@@ -303,7 +303,9 @@
 			However, there is something you can do to prevent this. Create special database permissions so that only the account creation script has <u>write</u> access to the user table, and give all other scripts <u>read only</u> access. Then, if an attacker can access your user table through a SQL injection vulnerability, he won't be able to modify the hashes.
 			<h4>Is there anything that can be done to make dictionary attacks and brute force attacks harder?</h4>
 			<div class="passcrack" style="text-align: center;">
-			SHA256(SHA256(SHA256(.....SHA256($password . $salt)....)))
+			$x = SHA256($password . $salt)<br />
+			for i = 0 to 65000<br />
+				$x = SHA256($x . $password . $salt)<br />
 			</div>
 			Yes. You can have your program recursively hash the password many thousands of times (feed the output back into the input). Doing so makes the password hashing process thousands of times slower, so it will take thousands of times longer to brute force the password. This is called <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Key_stretching">key stretching</a>.
 			<br><br>
