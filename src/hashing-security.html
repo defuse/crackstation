@@ -304,7 +304,7 @@
 			<h4>Is there anything that can be done to make dictionary attacks and brute force attacks harder?</h4>
 			<div class="passcrack" style="text-align: center;">
 			$x = SHA256($password . $salt)<br />
-			for i = 0 to 65000<br />
+			Repeat 1,000,000 times:<br />
 				$x = SHA256($x . $password . $salt)<br />
 			</div>
 			Yes. You can have your program recursively hash the password many thousands of times (feed the output back into the input). Doing so makes the password hashing process thousands of times slower, so it will take thousands of times longer to brute force the password. This is called <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Key_stretching">key stretching</a>.
