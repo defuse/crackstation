@@ -224,8 +224,6 @@ header('Content-Type: text/html; charset=utf-8');
 				<tr><th>ripeMD160</th><td>1,493,677,782</td><td>51 GB</td></tr>
 				<tr><th>TOTAL</th><td>24,133,393,604</td><td>836 GB</td></tr>
 				</table>
-				<br /><br /><br />
-				<center><img src="http://deepbit.net/userbar/4dd2649f8161974ec200000e_21badc6eb6.png" alt="Hash Cracking" title="CrackStation fast hash cracking" /></center>
 			</div>
 	
 		</div>
