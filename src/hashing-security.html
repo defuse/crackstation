@@ -307,15 +307,13 @@
 			Repeat 65000 times:<br />
 				$x = SHA256($x . $password . $salt)<br />
 			</div>
-			Yes. You can have your program recursively hash the password many thousands of times (feed the output back into the input). Doing so makes the password hashing process thousands of times slower, so it will take thousands of times longer to brute force the password. This is called <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Key_stretching">key stretching</a>.
-			<br><br>
-			I don't recommend doing this for web applications because it allows malicious clients to put an intense load on your server's CPU, making you more vulnerable to DDoS attacks. But if your application is running on the client's computer using their processing power, it's definitely a good thing to do. A common key stretching algorithm is <a href="https://secure.wikimedia.org/wikipedia/en/wiki/PBKDF2">PBKDF2</a>.
+			Yes. You can have your program recursively hash the password many thousands of times (feed the output back into the input). Doing so makes the password hashing process thousands of times slower, so it will take thousands of times longer to brute force the password. This is called <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Key_stretching">key stretching</a>. A common key stretching algorithm is <a href="https://secure.wikimedia.org/wikipedia/en/wiki/PBKDF2">PBKDF2</a>. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.
 
 			<br /><br />
 			<a name="phpsourcecode"></a>
 			<h3>PHP Password Hashing Code</h3>
 
-			The following is a secure implementation of salted hashing in PHP<br /><br />
+			The following is a secure implementation of salted hashing in PHP. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.<br /><br />
 			<pre>
 //Takes a password and returns the salted hash
 //$password - the password to hash
@@ -352,11 +350,11 @@ function ValidatePassword($password, $correctHash)
 using System.Text;
 using System.Security.Cryptography;
 
-namespace OSSBOX
+namespace DEFUSE
 {
     /*
      * PasswordHash - A salted password hashing library
-     * WWW: http://www.ossbox.com/
+     * WWW: https://defuse.ca/
      * Use:
      *      Use 'HashPassword' to create the initial hash, store that in your DB
      *      Then use 'ValidatePassword' with the hash from the DB to verify a password
@@ -426,7 +424,7 @@ namespace OSSBOX
 			</pre>
 			</div>
 			<br />
-			<center><b>Article by <a href="https://ossbox.com/">OSSBox.</a></b></center>
+			<center><b>Article by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></b></center>
 
 		</div>
 		
