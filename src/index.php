@@ -173,13 +173,16 @@ header('Content-Type: text/html; charset=utf-8');
 
 				<table cellspacing=10 >
 				<tr><th>Hash</th><th>Lookup Table Entries</th><th>Database Size</th></tr>
-				<tr><th>md5</th><td>15,171,326,912</td><td>530 GB</td></tr>
-				<tr><th>md5(md5)</th><td>1,493,677,782</td><td>51 GB</td></tr>
-				<tr><th>sha1</th><td>1,493,677,782</td><td>51 GB</td></tr>
-				<tr><th>sha256</th><td>1,493,677,782</td><td>51 GB</td></tr>
-				<tr><th>sha512</th><td>1,493,677,782</td><td>51 GB</td></tr>
-				<tr><th>ripeMD160</th><td>1,493,677,782</td><td>51 GB</td></tr>
-				<tr><th>TOTAL</th><td>24,133,393,604</td><td>836 GB</td></tr>
+				<tr><th>md5</th><td>15,171,326,912</td><td>190 GB</td></tr>
+				<tr><th>md5(md5)</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>sha1</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>MySQL 4.1+</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>sha256</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>sha384</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>sha512</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>ripeMD160</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>whirlpool</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>TOTAL</th><td>24,133,393,604</td><td>318 GB</td></tr>
 				</table>
 			</div>
 	
