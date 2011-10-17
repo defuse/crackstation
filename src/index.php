@@ -12,82 +12,33 @@ function CrackHashes($hashes)
 {
 	echo "<table class=\"results\">";
 	echo "<tr><th>Hash</th><th>Type</th><th>Result</th></tr>";
-	$lookups = 0;
-	for($i = 0; $i < count($hashes) && $lookups < 10; $i++)
-	{
-		$hash = trim($hashes[$i]);
-		if(empty($hash) || strlen($hash) > 130)
-			continue;
-		if(!CrackHash($hash))
-			echo "<tr class=\"fail\"><td>" . htmlspecialchars($hash, ENT_QUOTES) . "</td><td>Unknown</td><td>Not Found</td></tr>";
-		else
-			$lookups++;
-	}
+    $query = "http://firexware.defuse.ca:1985/crack.php?hashes=" . urlencode(implode(",", $hashes));
+    $result = @file_get_contents($query); 
+    if(empty($result))
+        return false;
+    $result = explode("\n", $result);
+    foreach($result as $line)
+    {
+        $data = explode("||#||", $line);
+        if(count($data) == 4)
+        {
+            $hash = htmlspecialchars($data[3], ENT_QUOTES);
+            $type = htmlspecialchars($data[1], ENT_QUOTES);
+            $pass = htmlspecialchars($data[2], ENT_QUOTES);
+            if($data[0] == "FULLMATCH")
+                echo '<tr class="suc">';
+            elseif($data[0] == "PARTIALMATCH")
+                echo '<tr class="part">';
+            echo "<td>$hash</td><td>$type</td><td>$pass</td></tr>";
+        }
+        elseif(count($data) == 2 && $data[0] == "NOTFOUND")
+        {
+            $hash = htmlspecialchars($data[1], ENT_QUOTES);
+            echo "<tr class=\"fail\"><td>$hash</td><td>Unknown</td><td>Not Found</td></tr>";
+        }
+    }
 	echo "</table><br /><br />";
-}
-
-function ValidHash($hash)
-{
-	$hash = strtolower($hash);
-	for($i = 0; $i < strlen($hash); $i++)
-	{
-		$c = substr($hash,$i,1);
-		if( !($c <= 'f' && $c >= 'a' || $c <= '9' && $c >= '0' ))
-			return false;
-	}
-	return true;
-}
-
-function CrackHash($hash)
-{
-	if(!ValidHash($hash))
-		return false;
-
-	switch(strlen($hash))
-	{
-		case 16:
-			TryCrack($hash, "md5_med", "md5-half") or TryCrack($hash, "md5_big", "md5-half") or NotFound($hash);
-			break;
-		case 32:
-			TryCrack($hash, "dualmd5_med", "md5(md5)") or TryCrack($hash, "md5_med", "md5")  or TryCrack($hash, "md5_big", "md5") or NotFound($hash);
-			break;
-		case 40:
-			TryCrack($hash, "sha1_med", "SHA1") or TryCrack($hash, "ripeMD160_med", "RipeMD160") or NotFound($hash);
-			break;
-		case 64:
-			TryCrack($hash, "sha256_med", "SHA256") or NotFound($hash);
-			break;
-		case 128:
-			TryCrack($hash, "sha512_med", "SHA512") or NotFound($hash);
-			break;
-		default:
-			return false;
-	}
-	return true;
-}
-
-function TryCrack($hash, $db, $type)
-{
-	$db = mysql_real_escape_string($db);
-	$a = hexdec(substr($hash,0,8));
-	$b = hexdec(substr($hash,8,8));
-	
-	$q = mysql_query("SELECT * FROM $db WHERE a='$a' AND b='$b' LIMIT 1");
-	if($q && mysql_num_rows($q) > 0)
-	{
-		$info = mysql_fetch_array($q);
-		echo "<tr class=\"suc\"><td>" . htmlspecialchars($hash, ENT_QUOTES) . "</td><td>$type</td><td>" . htmlspecialchars($info['password'], ENT_QUOTES) . "</td></tr>";
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-function NotFound($hash)
-{
-	echo "<tr class=\"fail\"><td>" . htmlspecialchars($hash, ENT_QUOTES) . "</td><td>Unknown</td><td>Not Found</td></tr>";
+    return true;
 }
 
 header('Content-Type: text/html; charset=utf-8');
@@ -133,6 +84,11 @@ header('Content-Type: text/html; charset=utf-8');
 {
 	background-color: #00FF00;
 }
+
+.part
+{
+    background-color: #FFF000;
+}
 </style>
 </head>
 <body>
@@ -177,27 +133,27 @@ header('Content-Type: text/html; charset=utf-8');
 
 
 				<?php
+                function trim_value(&$value)
+                {
+                    $value = trim($value);
+                    $value = trim($value, "*"); // For MySQL 4.1+ hashes
+                }
 
 				if(isset($_POST['crack']))
 				{
-					
-					$dbhost = '68.144.23.245';
-					$dbuser = 'exterior';
-					$dbpass = 'BcKuDClNVfM8LUZo';
-
-					$conn = @mysql_connect($dbhost, $dbuser, $dbpass);
-					if($conn)
-					{
-						$dbname = 'crackstation';
-						mysql_select_db($dbname);
-
-						$hashes = explode("\n", $_POST['hashes']);
-						CrackHashes($hashes);
-					}
-					else
-					{
-						echo "<p style=\"color: red;\"><b>There was an error connecting to the CrackStation database. We will fix this shortly.</b></p>";
-					}
+                    $hashes = explode("\n", $_POST['hashes']);
+                    array_walk($hashes, 'trim_value');
+                    if(count($hashes) <= 10)
+                    {
+                        if(!CrackHashes($hashes))
+                        {
+                            echo "<p style=\"color: red;\"><b>There was an error connecting to the CrackStation database. We will fix this shortly.</b></p>";
+                        }
+                    }
+                    else
+                    {
+                        echo "<p style=\"color: red;\"><b>Please enter <strong>10</strong> or less hashes.</b></p>";
+                    }
 				}
 				?>
 				<b>Supported Hash Types:</b> md5, md5(md5), md5-half, sha1, sha256, sha512, ripeMD160			
