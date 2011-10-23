@@ -22,7 +22,12 @@ function CrackHashes($hashes)
         $data = explode("||#||", $line);
         if(count($data) == 4)
         {
-            $hash = htmlspecialchars($data[3], ENT_QUOTES);
+            $hash = "";
+            while(strlen($data[3]) > 0)
+            {
+                $hash .= htmlspecialchars(substr($data[3], 0, 64), ENT_QUOTES) . "<br />";
+                $data[3] = substr($data[3], 64);
+            }
             $type = htmlspecialchars($data[1], ENT_QUOTES);
             $pass = htmlspecialchars($data[2], ENT_QUOTES);
             if($data[0] == "FULLMATCH")
@@ -78,6 +83,7 @@ header('Content-Type: text/html; charset=utf-8');
 .results td
 {
 	padding:5px;
+    font-family: monospace;
 }
 
 .suc
