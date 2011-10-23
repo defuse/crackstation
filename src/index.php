@@ -64,7 +64,8 @@ function CrackHashes($hashes)
             echo "<tr class=\"fail\"><td>$hash</td><td>Unknown</td><td>Not Found</td></tr>";
         }
     }
-	echo "</table><br /><br />";
+	echo "</table><br />";
+    echo '<p><strong>Color Codes:</strong> <span style="background-color: #00FF00;">Green:</span> Exact match, <span style="background-color: #FFF000;">Yellow:</span> Partial match, <span style="background-color: #cacaca;">Gray:</span> Not found.</p>';
     return true;
 }
 
