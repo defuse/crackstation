@@ -186,7 +186,7 @@ header('Content-Type: text/html; charset=utf-8');
                     }
 				}
 				?>
-				<b>Supported Hash Types:</b> md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
+				<b>Supported Hash Types:</b>md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
                 <b>Coming Soon:</b> LM, NTLM, MySQL pre-4.1
 				<br /><br />
 				<a name="cracking-hashes"></a>
