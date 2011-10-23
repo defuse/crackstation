@@ -8,13 +8,35 @@ if(isset($_GET['p']))
 	header("Location: http://crackstation.net/");
 }
 
+// http://wezfurlong.org/blog/2006/nov/http-post-from-php-without-curl/
+function do_post_request($url, $data, $optional_headers = null)
+{
+  $params = array('http' => array(
+              'method' => 'POST',
+              'content' => $data
+            ));
+  if ($optional_headers !== null) {
+    $params['http']['header'] = $optional_headers;
+  }
+  $ctx = stream_context_create($params);
+  $fp = @fopen($url, 'rb', false, $ctx);
+  if (!$fp) {
+      return FALSE;
+  }
+  $response = @stream_get_contents($fp);
+  if ($response === false) {
+      return FALSE;
+  }
+  return $response;
+}
+
 function CrackHashes($hashes)
 {
 	echo "<table class=\"results\">";
 	echo "<tr><th>Hash</th><th>Type</th><th>Result</th></tr>";
-    $query = "http://firexware.defuse.ca:1985/crack.php?hashes=" . urlencode(implode(",", $hashes));
-    $result = @file_get_contents($query); 
-    if(empty($result))
+    $url = "http://firexware.defuse.ca:1985/crack.php";
+    $result = do_post_request($url, "hashes=" . urlencode(implode(",", $hashes)));
+    if($result === FALSE)
         return false;
     $result = explode("\n", $result);
     foreach($result as $line)
@@ -149,6 +171,7 @@ header('Content-Type: text/html; charset=utf-8');
 				{
                     $hashes = explode("\n", $_POST['hashes']);
                     array_walk($hashes, 'trim_value');
+                    $hashes = array_filter($hashes, function ($item) { return !empty($item); });
                     if(count($hashes) <= 10)
                     {
                         if(!CrackHashes($hashes))
