@@ -186,7 +186,7 @@ header('Content-Type: text/html; charset=utf-8');
                     }
 				}
 				?>
-				<b>Supported Hash Types:</b>md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
+				<b>Supported Hash Types:</b> md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
                 <b>Coming Soon:</b> LM, NTLM, MySQL pre-4.1
 				<br /><br />
 				<a name="cracking-hashes"></a>
@@ -205,9 +205,11 @@ header('Content-Type: text/html; charset=utf-8');
 				<tr><th>Hash</th><th>Lookup Table Entries</th><th>Database Size</th></tr>
 				<tr><th>md5</th><td>15,171,326,912</td><td>190 GB</td></tr>
 				<tr><th>md5(md5)</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>md2</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>md4</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>sha1</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>MySQL 4.1+</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>sha224</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>sha256</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>sha384</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>sha512</th><td>1,493,677,782</td><td>16 GB</td></tr>
