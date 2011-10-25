@@ -215,7 +215,6 @@ header('Content-Type: text/html; charset=utf-8');
 				<tr><th>sha512</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>ripeMD160</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>whirlpool</th><td>1,493,677,782</td><td>16 GB</td></tr>
-				<tr><th>TOTAL</th><td>24,133,393,604</td><td>318 GB</td></tr>
 				</table>
 			</div>
 	
