@@ -186,8 +186,8 @@ header('Content-Type: text/html; charset=utf-8');
                     }
 				}
 				?>
-				<b>Supported Hash Types:</b> md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
-                <b>Coming Soon:</b> LM, NTLM, MySQL pre-4.1
+				<b>Supported Hash Types:</b> NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
+                <b>Coming Soon:</b> LM, MySQL pre-4.1
 				<br /><br />
 				<a name="cracking-hashes"></a>
 				<h3>How Crackstation Cracks Hashes</h3>
@@ -215,6 +215,7 @@ header('Content-Type: text/html; charset=utf-8');
 				<tr><th>sha512</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>ripeMD160</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				<tr><th>whirlpool</th><td>1,493,677,782</td><td>16 GB</td></tr>
+				<tr><th>NTLM</th><td>1,493,677,782</td><td>16 GB</td></tr>
 				</table>
 			</div>
 	
