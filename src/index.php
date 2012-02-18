@@ -2,6 +2,11 @@
 mb_language('uni');
 mb_internal_encoding('UTF-8');
 
+require_once('recaptchalib.php');
+
+$rec_pub_key = "6LeKzs0SAAAAALT5EZVDjlNHtYeuU_2rWlMGvDho";
+$rec_priv_key = "6LeKzs0SAAAAACV1bvVMaC5haTQT-yHc_-FMbQyn";
+
 if(isset($_GET['p']))
 {
 	header("HTTP/1.1 301 Moved Permanently");
@@ -156,6 +161,9 @@ header('Content-Type: text/html; charset=utf-8');
 				</p>
 				<form action="index.php" method="post">
 				<textarea style="width: 100%;" rows=10 name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea><br />
+                <?php
+                    echo recaptcha_get_html($rec_pub_key);
+                ?>
 				<input type="submit" name="crack" value="Crack Hashes" style="width: 200px;" /> <b>(MAX: 10)</b>
 				</form>
 				<br />
@@ -170,19 +178,30 @@ header('Content-Type: text/html; charset=utf-8');
 
 				if(isset($_POST['crack']))
 				{
-                    $hashes = explode("\n", $_POST['hashes']);
-                    array_walk($hashes, 'trim_value');
-                    $hashes = array_filter($hashes, function ($item) { return !empty($item); });
-                    if(count($hashes) <= 10)
+                    $rec_result = recaptcha_check_answer($rec_priv_key,
+                                                         $_SERVER["REMOTE_ADDR"],
+                                                         $_POST["recaptcha_challenge_field"],
+                                                         $_POST["recaptcha_response_field"]);
+                    if($rec_result->is_valid)
                     {
-                        if(!CrackHashes($hashes))
+                        $hashes = explode("\n", $_POST['hashes']);
+                        array_walk($hashes, 'trim_value');
+                        $hashes = array_filter($hashes, function ($item) { return !empty($item); });
+                        if(count($hashes) <= 10)
                         {
-                            echo "<p style=\"color: red;\"><b>There was an error connecting to the CrackStation database. We will fix this shortly.</b></p>";
+                            if(!CrackHashes($hashes))
+                            {
+                                echo "<p style=\"color: red;\"><b>There was an error connecting to the CrackStation database. We will fix this shortly.</b></p>";
+                            }
+                        }
+                        else
+                        {
+                            echo "<p style=\"color: red;\"><b>Please enter <strong>10</strong> or less hashes.</b></p>";
                         }
                     }
                     else
                     {
-                        echo "<p style=\"color: red;\"><b>Please enter <strong>10</strong> or less hashes.</b></p>";
+                                echo "<p style=\"color: red;\"><b>Incorrect captcha. Please try again.</b></p>";
                     }
 				}
 				?>
