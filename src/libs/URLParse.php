@@ -77,7 +77,8 @@ class URLParse
     private static $ROOT_FOLDER = "pages/";
     private static $MASTER_HOST = "crackstation.net";
     private static $ACCEPTED_HOSTS = array(
-                                            "crackstation.localhost",
+                                            "crackstation.h.defuse.ca",
+                                            "crackstation"
                                             );
     private static $FORCE_HTTPS = false;
     private static $DEFAULT_TITLE = "CrackStation - Online Password Hash Cracking - MD5, SHA1, Linux, Zip, RAR, etc.";

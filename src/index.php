@@ -41,64 +41,6 @@ header('Content-Type: text/html; charset=utf-8');
         echo htmlspecialchars($metd, ENT_QUOTES);
 ?>" />
 <link rel="stylesheet" type="text/css" href="style.css" />
-<style type="text/css">
-.results
-{
-	width: 100%;
-}
-
-.results td, th
-{
-	text-align:left;
-}
-
-.fail
-{
-	background-color: #cacaca;
-}
-
-.results td
-{
-	padding:5px;
-    font-family: monospace;
-}
-
-.suc
-{
-	background-color: #00FF00;
-}
-
-.part
-{
-    background-color: #FFF000;
-}
-.ic{
-    color:#2020FF;
-    font-family:monospace;
-}
-#shortcuts{
-
-    width:100%;
-}
-#shortcuts td {
-    background-color:#ccffff;
-    border: solid 1px black;
-    padding: 5px;
-    font-weight:bold;
-}
-#shortcuts td a{
-    color: black;
-    font-weight:normal;
-
-}
-#shortcuts td a:visited{
-    color: black;
-}
-.passcrack{
-    font-family:monospace;
-    margin: 10px;
-}
-</style>
 </head>
 <body>
 

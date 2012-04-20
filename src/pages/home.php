@@ -80,7 +80,7 @@ function CrackHashes($hashes)
 				CrackStation allows you to crack many types of password hashes. Enter up to 10 hashes in the field below (one per line) and CrackStation will attempt to crack them with <a href="#cracking-hashes">our lookup tables</a>. 
 				</p>
 				<form action="/" method="post">
-				<textarea style="width: 100%;" rows=10 name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea><br />
+				<textarea style="width: 100%; margin-bottom: 10px;" rows=10 name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea><br />
                 <?php
                     echo recaptcha_get_html($rec_pub_key);
                 ?>
@@ -121,7 +121,7 @@ function CrackHashes($hashes)
                     }
                     else
                     {
-                                echo "<p style=\"color: red;\"><b>Incorrect captcha. Please try again.</b></p>";
+                        echo "<p style=\"color: red;\"><b>Incorrect captcha. Please try again.</b></p>";
                     }
 				}
 				?>
