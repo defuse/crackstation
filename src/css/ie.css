@@ -1,0 +1,10 @@
+.menu a,
+.box,
+.box-2,
+.numb,
+#contact-form input,
+#contact-form textarea {behavior: url(js/PIE.htc); position:relative;}
+.button {behavior: url(js/PIE.htc); position:relative;}
+*+html #page5 .button {position:static;}
+
+*+html .button {padding:6px 36px 7px;}

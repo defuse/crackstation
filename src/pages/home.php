@@ -13,6 +13,12 @@ if(isset($_GET['p']))
 	header("Location: http://crackstation.net/");
 }
 
+function trim_value(&$value)
+{
+    $value = trim($value);
+    $value = trim($value, "*"); // For MySQL 4.1+ hashes
+}
+
 // http://wezfurlong.org/blog/2006/nov/http-post-from-php-without-curl/
 function do_post_request($url, $data, $optional_headers = null)
 {
@@ -39,7 +45,7 @@ function CrackHashes($hashes)
 {
 	echo "<table class=\"results\">";
 	echo "<tr><th>Hash</th><th>Type</th><th>Result</th></tr>";
-    $url = "http://firexware.defuse.ca:1985/crack.php";
+    $url = "http://saturn5:1985/crack.php";
     $result = do_post_request($url, "hashes=" . urlencode(implode(",", $hashes)));
     if($result === FALSE)
         return false;
@@ -69,70 +75,85 @@ function CrackHashes($hashes)
             echo "<tr class=\"fail\"><td>$hash</td><td>Unknown</td><td>Not Found</td></tr>";
         }
     }
-	echo "</table><br />";
-    echo '<p><strong>Color Codes:</strong> <span style="background-color: #00FF00;">Green:</span> Exact match, <span style="background-color: #FFF000;">Yellow:</span> Partial match, <span style="background-color: #cacaca;">Gray:</span> Not found.</p>';
+	echo "</table>";
+    echo '<p style="font-size: 8pt;"><strong>Color Codes:</strong> <span style="background-color: #002c00;">Green:</span> Exact match, <span style="background-color: #2c2c00;">Yellow:</span> Partial match, <span style="background-color: #2c0000;">Red:</span> Not found.</p>';
     return true;
 }
 ?>
-
-				<h3>Crack Hashes</h3>
-				<p>
-				CrackStation allows you to crack many types of password hashes. Enter up to 10 hashes in the field below (one per line) and CrackStation will attempt to crack them with <a href="#cracking-hashes">our lookup tables</a>. 
-				</p>
-				<form action="/" method="post">
-				<textarea style="width: 100%; margin-bottom: 10px;" rows=10 name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea><br />
+ <script type="text/javascript">
+ var RecaptchaOptions = {
+    theme : 'blackglass'
+ };
+ </script>
+<div class="box">
+    <div class="padding">
+        <p>
+            Enter up to 10 unsalted hashes:
+        </p>
+        <form action="/" method="post">
+        <table style="width: 100%;">
+        <tr>
+            <td style="width: 550px;">
+                <textarea style="width: 100%; height: 180px;" name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea>
+            </td>
+            <td>
+                <center>
                 <?php
                     echo recaptcha_get_html($rec_pub_key);
                 ?>
-				<input type="submit" name="crack" value="Crack Hashes" style="width: 200px;" /> <b>(MAX: 10)</b>
-				</form>
-				<br />
+                <input type="submit" name="crack" value="Crack Hashes" style="width: 200px; margin-top: 10px;" />
+                </center>
+            </td>
+        </tr>
+        </table>
+        </form>
+        <p style="font-size: 8pt; margin: 0; padding: 0;">
+        <b>Cracks:</b> NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
+        <b>Coming Soon:</b> LM, MySQL pre-4.1
+        </p>
+        <div class="crackresults">
+        <?php
 
-
-				<?php
-                function trim_value(&$value)
+        if(isset($_POST['crack']))
+        {
+            $rec_result = recaptcha_check_answer($rec_priv_key,
+                                                 $_SERVER["REMOTE_ADDR"],
+                                                 $_POST["recaptcha_challenge_field"],
+                                                 $_POST["recaptcha_response_field"]);
+            if($rec_result->is_valid)
+            {
+                $hashes = explode("\n", $_POST['hashes']);
+                array_walk($hashes, 'trim_value');
+                $hashes = array_filter($hashes, function ($item) { return !empty($item); });
+                if(count($hashes) <= 10)
                 {
-                    $value = trim($value);
-                    $value = trim($value, "*"); // For MySQL 4.1+ hashes
+                    if(!CrackHashes($hashes))
+                    {
+                        echo "<p style=\"color: red;\"><b>There was an error connecting to the CrackStation database. We will fix this shortly.</b></p>";
+                    }
                 }
+                else
+                {
+                    echo "<p style=\"color: red;\"><b>Please enter <strong>10</strong> or less hashes.</b></p>";
+                }
+            }
+            else
+            {
+                echo "<p style=\"color: red;\"><b>Incorrect captcha. Please try again.</b></p>";
+            }
+        }
+        ?>
+        </div>
+    </div>
+</div>
 
-				if(isset($_POST['crack']))
-				{
-                    $rec_result = recaptcha_check_answer($rec_priv_key,
-                                                         $_SERVER["REMOTE_ADDR"],
-                                                         $_POST["recaptcha_challenge_field"],
-                                                         $_POST["recaptcha_response_field"]);
-                    if($rec_result->is_valid)
-                    {
-                        $hashes = explode("\n", $_POST['hashes']);
-                        array_walk($hashes, 'trim_value');
-                        $hashes = array_filter($hashes, function ($item) { return !empty($item); });
-                        if(count($hashes) <= 10)
-                        {
-                            if(!CrackHashes($hashes))
-                            {
-                                echo "<p style=\"color: red;\"><b>There was an error connecting to the CrackStation database. We will fix this shortly.</b></p>";
-                            }
-                        }
-                        else
-                        {
-                            echo "<p style=\"color: red;\"><b>Please enter <strong>10</strong> or less hashes.</b></p>";
-                        }
-                    }
-                    else
-                    {
-                        echo "<p style=\"color: red;\"><b>Incorrect captcha. Please try again.</b></p>";
-                    }
-				}
-				?>
-				<b>Supported Hash Types:</b> NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
-                <b>Coming Soon:</b> LM, MySQL pre-4.1
+
 				<br /><br />
 				<a name="cracking-hashes"></a>
 				<h3>How Crackstation Cracks Hashes</h3>
 
 				<p>
-				Crackstation uses massive pre-computed lookup tables to crack password hashes. These tables store a mapping between the hash of a password, and the correct password for that hash. The hash values are indexed so that it is possible to quickly search the database for a given hash. If the hash is present in the database, the password can be recovered in less only a fraction of a second. This cracking method only works for "unsalted" hashes. For information on password hashing systems that are not vulnerable to pre-computed lookup tables, see our <a href="hashing-security.html">hashing security page</a>.
+				Crackstation uses massive pre-computed lookup tables to crack password hashes. These tables store a mapping between the hash of a password, and the correct password for that hash. The hash values are indexed so that it is possible to quickly search the database for a given hash. If the hash is present in the database, the password can be recovered in less only a fraction of a second. This cracking method only works for "unsalted" hashes. For information on password hashing systems that are not vulnerable to pre-computed lookup tables, see our <a href="hashing-security.htm">hashing security page</a>.
 				</p>
 
 				<p>

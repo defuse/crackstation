@@ -117,6 +117,24 @@ class URLParse
                 P_METD => "How to hash passwords properly using salt. Why hashes should be salted and how to use salt correctly.",
                 P_METK => "salt, salted hashing, secure password hashing, password hashing, proper way to hash passwords",
                 ),
+            "downloads" => array(
+                P_FILE => "downloads.php",
+                P_TITL => "CrackStation Tools & Downloads",
+                P_METD => "Free tools & Downloads provided by CrackStation",
+                P_METK => "hash tools, hash cracking, password cracking",
+                ),
+            "contact-us" => array(
+                P_FILE => "contactus.php",
+                P_TITL => "CrackStation Contact",
+                P_METD => "CrackStation Contact Information",
+                P_METK => "crackstation contact",
+                ),
+            "about-us" => array(
+                P_FILE => "aboutus.php",
+                P_TITL => "CrackStation Contact",
+                P_METD => "CrackStation Contact Information",
+                P_METK => "crackstation contact",
+                ),
             "legal-privacy.html" => array(
                 P_RDIR => "legal-privacy"
                 ),

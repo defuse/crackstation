@@ -105,6 +105,7 @@
 				</li>
 	
 			</ul>
+            <br />
 			<a name="ineffective"></a>
 			<h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
 			This is a common one. The idea is that if you do something like <span class="ic">md5(md5($password))</span> or even <span class="ic">md5(sha1($password))</span> it will be more secure since plain md5 is "broken". I've even seen someone claim that it's better to use a super complicated function like <span class="ic">md5(sha1(md5(md5($password) + sha1($password)) + md5($password)))</span>. While complicated hash functions can sometimes be useful for generating encryption keys, you won't get much more security by combining hash functions. It's far better to choose a secure hash algorithm in the first place, and use <b>salt</b>, which I will discuss later. Once you are using salt, you can use multiple secure hash functions, for example <span class="ic">SHA256(WHIRLPOOL($password + $salt) + $salt)</span>. Combining secure hash functions will help if a practical collision attack is ever found for one of the hash algorithms, but it doesn't stop attackers from building lookup tables.
@@ -183,7 +184,7 @@
 			<a name="faq"></a>
 			<h3>FAQ</h3>
 			<h4>What hash algorithm should I use?</h4>
-			<span style="color: green;"><b>DO</b></span> use:<br><br>
+			<span style="color: green;"><b>DO</b></span> use:<br />
 			<ul class="moveul">
 				<li>The SHA2 Family - SHA256 and SHA512</li>
 
@@ -191,7 +192,7 @@
 				<li>WHIRLPOOL</li>
 				<li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a> or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a> near the bottom of this page</li>
 			</ul>
-			<span style="color: red;"><b>DO NOT</b></span> use:<br><br>
+			<span style="color: red;"><b>DO NOT</b></span> use:<br />
 
 			<ul class="moveul">
 				<li>MD5</li>
@@ -240,115 +241,118 @@
 			<h3>PHP Password Hashing Code</h3>
 
 			The following is a secure implementation of salted hashing in PHP. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.<br /><br />
-			<pre>
-//Takes a password and returns the salted hash
-//$password - the password to hash
-//returns - the hash of the password (128 hex characters)
-function HashPassword($password)
-{
-	$salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)); //get 256 random bits in hex
-	$hash = hash("sha256", $salt . $password); //prepend the salt, then hash
-	//store the salt and hash in the same string, so only 1 DB column is needed
-	$final = $salt . $hash; 
-	return $final;
+<div class="passcrack">
+//Takes a password and returns the salted hash<br />
+//$password - the password to hash<br />
+//returns - the hash of the password (128 hex characters)<br />
+function HashPassword($password)<br />
+{<br />
+&nbsp;&nbsp; &nbsp;$salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)); //get 256 random bits in hex<br />
+&nbsp;&nbsp; &nbsp;$hash = hash(&quot;sha256&quot;, $salt . $password); //prepend the salt, then hash<br />
+&nbsp;&nbsp; &nbsp;//store the salt and hash in the same string, so only 1 DB column is needed<br />
+&nbsp;&nbsp; &nbsp;$final = $salt . $hash; <br />
+&nbsp;&nbsp; &nbsp;return $final;<br />
+}<br />
+<br />
+//Validates a password<br />
+//returns true if hash is the correct hash for that password<br />
+//$hash - the hash created by HashPassword (stored in your DB)<br />
+//$password - the password to verify<br />
+//returns - true if the password is valid, false otherwise.<br />
+function ValidatePassword($password, $correctHash)<br />
+{<br />
+&nbsp;&nbsp; &nbsp;$salt = substr($correctHash, 0, 64); //get the salt from the front of the hash<br />
+&nbsp;&nbsp; &nbsp;$validHash = substr($correctHash, 64, 64); //the SHA256<br />
+<br />
+&nbsp;&nbsp; &nbsp;$testHash = hash(&quot;sha256&quot;, $salt . $password); //hash the password being tested<br />
+&nbsp;&nbsp; &nbsp;<br />
+&nbsp;&nbsp; &nbsp;//if the hashes are exactly the same, the password is valid<br />
+&nbsp;&nbsp; &nbsp;return $testHash === $validHash;<br />
 }
-
-//Validates a password
-//returns true if hash is the correct hash for that password
-//$hash - the hash created by HashPassword (stored in your DB)
-//$password - the password to verify
-//returns - true if the password is valid, false otherwise.
-function ValidatePassword($password, $correctHash)
-{
-	$salt = substr($correctHash, 0, 64); //get the salt from the front of the hash
-	$validHash = substr($correctHash, 64, 64); //the SHA256
-
-	$testHash = hash("sha256", $salt . $password); //hash the password being tested
-	
-	//if the hashes are exactly the same, the password is valid
-	return $testHash === $validHash;
-}
-			</pre>
+</div>
 			<a name="aspsourcecode"></a>
 			<h3>ASP.NET (C#) Password Hashing Code</h3>
 			The following code is a secure implementation of salted hashing in C# for ASP.NET<br /><br />
-			<pre>using System;
-using System.Text;
-using System.Security.Cryptography;
-
-namespace DEFUSE
-{
-    /*
-     * PasswordHash - A salted password hashing library
-     * WWW: https://defuse.ca/
-     * Use:
-     *      Use 'HashPassword' to create the initial hash, store that in your DB
-     *      Then use 'ValidatePassword' with the hash from the DB to verify a password
-     *      NOTE: Salting happens automatically, there is no need for a separate salt field in the DB
-     */
-    class PasswordHash
-    {
-	/// &lt;summary&gt;
-	/// Hashes a password
-	/// &lt;/summary&gt;
-	/// &lt;param name="password"&gt;The password to hash&lt;/param&gt;
-
-	/// &lt;returns&gt;The hashed password as a 128 character hex string&lt;/returns&gt;
-	public static string HashPassword(string password)
-	{
-	    string salt = GetRandomSalt();
-	    string hash = Sha256Hex(salt + password);
-	    return salt + hash;
-	}
-
-	/// &lt;summary&gt;
-	/// Validates a password
-	/// &lt;/summary&gt;
-	/// &lt;param name="password"&gt;The password to test&lt;/param&gt;
-
-	/// &lt;param name="correctHash"&gt;The hash of the correct password&lt;/param&gt;
-	/// &lt;returns&gt;True if password is the correct password, false otherwise&lt;/returns&gt;
-	public static bool ValidatePassword(string password, string correctHash )
-	{
-	    if (correctHash.Length &lt; 128)
-		throw new ArgumentException("correctHash must be 128 hex characters!");
-	    string salt = correctHash.Substring(0, 64);
-	    string validHash = correctHash.Substring(64, 64);
-	    string passHash = Sha256Hex(salt + password);
-	    return string.Compare(validHash, passHash) == 0;
-	}
-
-	//returns the SHA256 hash of a string, formatted in hex
-	private static string Sha256Hex(string toHash)
-	{
-	    SHA256Managed hash = new SHA256Managed();
-	    byte[] utf8 = UTF8Encoding.UTF8.GetBytes(toHash);
-	    return BytesToHex(hash.ComputeHash(utf8));
-	}
-
-	//Returns a random 64 character hex string (256 bits)
-	private static string GetRandomSalt()
-	{
-	    RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
-	    byte[] salt = new byte[32]; //256 bits
-	    random.GetBytes(salt);
-	    return BytesToHex(salt);
-	}
-
-	//Converts a byte array to a hex string
-	private static string BytesToHex(byte[] toConvert)
-	{
-	    StringBuilder s = new StringBuilder(toConvert.Length * 2);
-	    foreach (byte b in toConvert)
-	    {
-		s.Append(b.ToString("x2"));
-	    }
-	    return s.ToString();
-	}
-    }
+<div class="passcrack">
+using System;<br />
+using System.Text;<br />
+using System.Security.Cryptography;<br />
+<br />
+namespace DEFUSE<br />
+{<br />
+&nbsp;&nbsp; &nbsp;/*<br />
+&nbsp;&nbsp; &nbsp; * PasswordHash - A salted password hashing library<br />
+&nbsp;&nbsp; &nbsp; * WWW: https://defuse.ca/<br />
+&nbsp;&nbsp; &nbsp; * Use:<br />
+&nbsp;&nbsp; &nbsp; * &nbsp; &nbsp; &nbsp;Use &#039;HashPassword&#039; to create the initial hash, store that in your DB<br />
+&nbsp;&nbsp; &nbsp; * &nbsp; &nbsp; &nbsp;Then use &#039;ValidatePassword&#039; with the hash from the DB to verify a password<br />
+&nbsp;&nbsp; &nbsp; * &nbsp; &nbsp; &nbsp;NOTE: Salting happens automatically, there is no need for a separate salt field in the DB<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;class PasswordHash<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp;/// &lt;summary&gt;<br />
+&nbsp;&nbsp; &nbsp;/// Hashes a password<br />
+&nbsp;&nbsp; &nbsp;/// &lt;/summary&gt;<br />
+&nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to hash&lt;/param&gt;<br />
+<br />
+&nbsp;&nbsp; &nbsp;/// &lt;returns&gt;The hashed password as a 128 character hex string&lt;/returns&gt;<br />
+&nbsp;&nbsp; &nbsp;public static string HashPassword(string password)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string salt = GetRandomSalt();<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string hash = Sha256Hex(salt + password);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return salt + hash;<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/// &lt;summary&gt;<br />
+&nbsp;&nbsp; &nbsp;/// Validates a password<br />
+&nbsp;&nbsp; &nbsp;/// &lt;/summary&gt;<br />
+&nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to test&lt;/param&gt;<br />
+<br />
+&nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;correctHash&quot;&gt;The hash of the correct password&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp;/// &lt;returns&gt;True if password is the correct password, false otherwise&lt;/returns&gt;<br />
+&nbsp;&nbsp; &nbsp;public static bool ValidatePassword(string password, string correctHash )<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;if (correctHash.Length &lt; 128)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;throw new ArgumentException(&quot;correctHash must be 128 hex characters!&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string salt = correctHash.Substring(0, 64);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string validHash = correctHash.Substring(64, 64);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string passHash = Sha256Hex(salt + password);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return string.Compare(validHash, passHash) == 0;<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;//returns the SHA256 hash of a string, formatted in hex<br />
+&nbsp;&nbsp; &nbsp;private static string Sha256Hex(string toHash)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;SHA256Managed hash = new SHA256Managed();<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] utf8 = UTF8Encoding.UTF8.GetBytes(toHash);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return BytesToHex(hash.ComputeHash(utf8));<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;//Returns a random 64 character hex string (256 bits)<br />
+&nbsp;&nbsp; &nbsp;private static string GetRandomSalt()<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] salt = new byte[32]; //256 bits<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;random.GetBytes(salt);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return BytesToHex(salt);<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;//Converts a byte array to a hex string<br />
+&nbsp;&nbsp; &nbsp;private static string BytesToHex(byte[] toConvert)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;StringBuilder s = new StringBuilder(toConvert.Length * 2);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;foreach (byte b in toConvert)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;s.Append(b.ToString(&quot;x2&quot;));<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return s.ToString();<br />
+&nbsp;&nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp;}<br />
 }
-			</pre>
+</div>
 			</div>
 			<br />
-			<center><b>Article by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></b></center>
+            <p style="text-align: center;">
+			    <b>Article by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></b>
+            </p>
 
