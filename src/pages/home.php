@@ -45,7 +45,7 @@ function CrackHashes($hashes)
 {
 	echo "<table class=\"results\">";
 	echo "<tr><th>Hash</th><th>Type</th><th>Result</th></tr>";
-    $url = "http://saturn5:1985/crack.php";
+    $url = "http://firexware.defuse.ca:1985/crack.php";
     $result = do_post_request($url, "hashes=" . urlencode(implode(",", $hashes)));
     if($result === FALSE)
         return false;
