@@ -108,8 +108,7 @@ function CrackHashes($hashes)
         </table>
         </form>
         <p style="font-size: 8pt; margin: 0; padding: 0;">
-        <b>Cracks:</b> NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
-        <b>Coming Soon:</b> LM, MySQL pre-4.1
+        <b>Supported:</b> LM, NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
         </p>
         <div class="crackresults">
         <?php
