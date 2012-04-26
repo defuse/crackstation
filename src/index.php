@@ -10,6 +10,26 @@
 
 ==============================================================================*/
 
+function getCrackedCount()
+{
+    $str = file_get_contents("count.dat");
+    $counts = explode(":", $str);
+    return (int)$counts[0];
+}
+
+function getCrackAttemptCount()
+{
+    $str = file_get_contents("count.dat");
+    $counts = explode(":", $str);
+    return (int)$counts[1];
+}
+
+function incrementCounter($cracked, $attempts)
+{
+    $str = (getCrackedCount() + $cracked) . ":" . (getCrackAttemptCount() + $attempts);
+    file_put_contents("count.dat", $str);
+}
+
 require_once('libs/URLParse.php'); 
 
 $name = URLParse::ProcessURL();
@@ -58,7 +78,12 @@ header('Content-Type: text/html; charset=utf-8');
 <!--==============================header=================================-->
 				<header>
 					<div class="wrapper p4">
-						<h1><a href="/">CrackStation</a></h1>
+						<h1>
+                            <a href="/">CrackStation</a>
+                            <div style="font-size: 8pt; color: #505050; text-align: center;">
+                                <?php echo htmlentities(getCrackedCount() . " of " . getCrackAttemptCount(), ENT_QUOTES) . " hashes cracked."; ?>
+                            </div>
+                        </h1>
 						<ul class="list-services">
 							<li><a href="about-us.htm">About Us</a></li>
 							<li><a href="contact-us.htm">Contact Us</a></li>
