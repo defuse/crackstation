@@ -53,13 +53,13 @@ header('Content-Type: text/html; charset=utf-8');
         ?>" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="google-site-verification" content="bJfNsQVzNQLRCAQiZD0kUNF-gFYS16YnaCZDJEX-dLk" />
-		<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen">
-		<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
-		<link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">
-		<script src="js/cufon-yui.js" type="text/javascript"></script>
-		<script src="js/cufon-replace.js" type="text/javascript"></script>
-		<script src="js/Mate_400.font.js" type="text/javascript"></script>
-		<script src="js/FF-cash.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="/css/reset.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="/css/grid.css" type="text/css" media="screen">
+		<script src="/js/cufon-yui.js" type="text/javascript"></script>
+		<script src="/js/cufon-replace.js" type="text/javascript"></script>
+		<script src="/js/Mate_400.font.js" type="text/javascript"></script>
+		<script src="/js/FF-cash.js" type="text/javascript"></script>
 		<!--[if lt IE 7]>
 		<div style=' clear: both; text-align:center; position: relative;'>
 			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
@@ -69,7 +69,7 @@ header('Content-Type: text/html; charset=utf-8');
 		<![endif]-->
 		<!--[if lt IE 9]>
 			<script type="text/javascript" src="js/html5.js"></script>
-			<link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+			<link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen">
 		<![endif]-->
 	</head>
 	<body id="page1">
@@ -85,21 +85,21 @@ header('Content-Type: text/html; charset=utf-8');
                             </div>
                         </h1>
 						<ul class="list-services">
-							<li><a href="about-us.htm">About Us</a></li>
-							<li><a href="contact-us.htm">Contact Us</a></li>
-							<li><a href="legal-privacy.htm">Privacy Policy</a></li>
+							<li><a href="/about-us.htm">About Us</a></li>
+							<li><a href="/contact-us.htm">Contact Us</a></li>
+							<li><a href="/legal-privacy.htm">Privacy Policy</a></li>
 						</ul>
 					</div>
 					<nav>
 						<ul class="menu">
 							<?php if($name == "") echo '<li class="active">'; else echo '<li>'; ?>
-                                <a href="index.htm">Crack</a></li>
+                                <a href="/index.htm">Crack</a></li>
 							<?php if($name == "cracking-services") echo '<li class="active">'; else echo '<li>'; ?>
-							    <a href="cracking-services.htm">Advanced Services</a></li>
+							    <a href="/cracking-services.htm">Advanced Services</a></li>
 							<!--<?php if($name == "downloads") echo '<li class="active">'; else echo '<li>'; ?>
-							    <a href="downloads.htm">Tools & Downloads</a></li>-->
+							    <a href="/downloads.htm">Tools & Downloads</a></li>-->
 							<?php if($name == "hashing-security") echo '<li class="last active">'; else echo '<li class="last">'; ?>
-						        <a href="hashing-security.htm">Hashing Security</a></li>
+						        <a href="/hashing-security.htm">Hashing Security</a></li>
 						</ul>
 					</nav>
 				</header>
