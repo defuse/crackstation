@@ -1,8 +1,8 @@
-<div class="box">
+<!--<div class="box">
     <div class="padding">
         Rainbow Tables | Bulk Cracking | Salted Hash Cracking | WPA Cracking | Archive file cracking | Miscellaneous
     </div>
-</div>
+</div>-->
 
 <h3>Salted Hash, WPA, WEP, UNIX, LINUX, MySQL, and Encrypted Archive Cracking</h3>
 
