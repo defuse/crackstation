@@ -84,9 +84,10 @@ textarea {
     line-height: 110%;
 }
 
-.packages td {
+.packages td, th {
     padding: 10px;
 }
+
 
 /* Getting the new tags to behave */
 article, aside, audio, canvas, command, datalist, details, embed, figcaption, figure, footer, header, hgroup, keygen, meter, nav, output, progress, section, source, video {display:block;}
