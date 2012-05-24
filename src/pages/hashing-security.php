@@ -1,3 +1,5 @@
+<div class="box">
+<div class="padding">
 			<h3>Salted Password Hashing - Doing it Right</h3>
 
 			If you're a web developer, you've probably had to make a login system. If you've had to make a login system, you've had to use some form of hashing to protect your users' passwords in the event of a security breach. There are a lot of conflicting ideas and misconceptions on how to do password hashing properly. Password hashing is one of those things that's SO simple, but SO MANY people do it wrong. With this page, I hope to explain HOW to securely store passwords in a database, and WHY it should be done that way.
@@ -356,3 +358,5 @@ namespace DEFUSE<br />
 			    <b>Article by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></b>
             </p>
 
+</div>
+</div>
