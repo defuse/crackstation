@@ -79,9 +79,9 @@ header('Content-Type: text/html; charset=utf-8');
 				<header>
 					<div class="wrapper p4">
 						<h1>
-                            <a href="/">CrackStation</a>
+                            <a id="headerheads" href="/">CrackStation</a>
                             <div style="font-size: 8pt; color: #505050; text-align: center;">
-                                <?php echo htmlentities(getCrackedCount() . " of " . getCrackAttemptCount(), ENT_QUOTES) . " hashes cracked."; ?>
+                                By <a href="https://defuse.ca/">defuse.ca</a>. <?php echo htmlentities(getCrackedCount() . " of " . getCrackAttemptCount(), ENT_QUOTES) . " hashes cracked."; ?>
                             </div>
                         </h1>
 						<ul class="list-services">
