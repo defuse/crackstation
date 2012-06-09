@@ -11,8 +11,11 @@
 ==============================================================================*/
 require_once('libs/URLParse.php'); 
 require_once('libs/hitcounter.php');
+require_once('libs/phpcount.php');
 
 $name = URLParse::ProcessURL();
+PHPCount::AddHit($name, $_SERVER['REMOTE_ADDR']);
+
 
 header('Content-Type: text/html; charset=utf-8');
 ?>
