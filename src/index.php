@@ -63,7 +63,7 @@ header('Content-Type: text/html; charset=utf-8');
 					<div class="wrapper p4">
 						<h1>
                             <a id="headerheads" href="/">CrackStation</a>
-                            <div style="font-size: 8pt; color: #505050; text-align: center;">
+                            <div style="font-size: 8pt; color: #6e6e6e; text-align: center;">
                                 By <a href="https://defuse.ca/">defuse.ca</a>. &nbsp;&nbsp;<?php echo htmlentities(number_format(getCrackedCount(), 0) . " of " . number_format(getCrackAttemptCount(), 0), ENT_QUOTES) . " hashes cracked."; ?>
                             </div>
                         </h1>
