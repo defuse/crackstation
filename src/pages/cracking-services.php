@@ -24,10 +24,10 @@ Price guidelines are listed below, but feel free to contact us with special jobs
         </th>
     </tr>
     <tr>
-        <td>Bulk Unsalted</td><td>Medium</td><td>$5 + ($5 per 1000 hashes)</td>
+        <td>Bulk Unsalted</td><td>Medium</td><td>$5 + ($0.05 per 1000 hashes)</td>
     </tr>
     <tr>
-        <td>&nbsp;</td><td>Huge</td><td>$5 + ($10 per 1000 hashes)</td>
+        <td>&nbsp;</td><td>Huge</td><td>$5 + ($0.05 per 1000 hashes)</td>
     </tr>
     <tr>
         <td>Salted Single-Iteration</td><td>Medium</td><td>$5.00</td>
@@ -39,7 +39,7 @@ Price guidelines are listed below, but feel free to contact us with special jobs
         <td>Salted Multi-Iteration (i.e. PBKDF2, crypt)</td><td>Medium</td><td>$10.00</td>
     </tr>
     <tr>
-        <td>&nbsp;</td><td>Huge</td><td>$10.00</td>
+        <td>&nbsp;</td><td>Huge</td><td>$20.00</td>
     </tr>
     <tr>
         <td>WPA</td><td>Medium</td><td>$10.00</td>
