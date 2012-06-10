@@ -208,17 +208,14 @@
 
 
 			<h4>What do I do if my database gets leaked/hacked?</h4>
-			Tell your users RIGHT AWAY. Even if the passwords were salted and hashed properly, dictionary and brute force attacks can still be used to recover your users' passwords. It's important that you let your users know so that they can change their passwords if they suspect someone would try to brute force the hash of their password. If you got hacked, always assume that the hacker was able to obtain full control over your server and was able to leak the entire database. When you tell them, include the following information:
-			<br><br>
-			<ul class="moveul">
-				<li>How you got hacked.</li>
-				<li>How much of the database you think the hacker got.</li>
-				<li>Explain what personal information was in the database.</li>
-				<li>Explain how you were hashing the passwords, and that their passwords may still be recovered through brute force or dictionary attacks.</li>
-
-			</ul>
-			<h4>Why bother hashing?</h4>
-			Your users are entering their password into your website. They might be using the same passwords for other websites, like their bank. If your database gets hacked, and you didn't hash the passwords, then everyone will know your users' passwords. YOU are responsible for your users' security when using your website. If you are some sort of software that will be sold or distributed to many people, you have an even higher degree of responsibility to your users.
+            <p>It may be tempting to cover up the breach and hope nobody notices. Keep in mind that trying to cover up a breach makes you look worse, because you're putting your users at further risk by not informing them that their password may be compromised. The correct thing to do is to inform your users as soon as possible. <b>Do not inform your users by email.</b> Instead, put a notice on the front page of your website that links to a page with more detailed information. 
+            </p>
+            <p>
+                You shouldn't inform your users by email because it will look like a <a href="http://en.wikipedia.org/wiki/Phishing">phishing attack</a>. Spam filters will block it, and security-aware users won't believe it.
+            </p>
+            <p>
+                Explain to your users exactly how their passwords were protected&mdash;hopefully hashed with salt&mdash;and that even though they were protected with a salted hash, a malicious hacker can still run dictionary and brute force attacks on the hashes. Malicious hackers will use any passwords they find to try to log into a user's account on a different website, hoping they used the same password on both websites. Inform your users of this risk and recommend that they change there password both on your website, and any other website where they used a similar password.
+            </p>
 
 			<h4>What should my password policy be? Should I enforce strong passwords?</h4>
 			Don't limit your users. I would reccomend somehow dynamically showing users the strength of their password as they type it, and let them decide how secure they want their password to be. If your service handles sensitive user information, you may want to ensure that there is at least 1 number and 1 symbol in the password. Passwords should be able to contain ANY type of character. The password length should be a minimum of 6 characters and a maximum of beyond 100 characters (Yes, There are people who use 100 character and longer passwords!).
@@ -228,14 +225,24 @@
 			<br /><br />
 			However, there is something you can do to prevent this. Create special database permissions so that only the account creation script has <u>write</u> access to the user table, and give all other scripts <u>read only</u> access. Then, if an attacker can access your user table through a SQL injection vulnerability, he won't be able to modify the hashes.
 			<h4>Is there anything that can be done to make dictionary attacks and brute force attacks harder?</h4>
-			<div class="passcrack" style="text-align: center;">
-			$x = SHA256($password . $salt)<br />
-			Repeat 65000 times:<br />
-				$x = SHA256($x . $password . $salt)<br />
-			</div>
-			Yes. You can have your program recursively hash the password many thousands of times (feed the output back into the input). Doing so makes the password hashing process thousands of times slower, so it will take thousands of times longer to brute force the password. This is called <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Key_stretching">key stretching</a>. A common key stretching algorithm is <a href="https://secure.wikimedia.org/wikipedia/en/wiki/PBKDF2">PBKDF2</a>. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.
 
-			<br /><br />
+            <p>
+			Yes. You can have your program  hash the password many thousands of times (feed the output back into the input). Doing so makes the password hashing process thousands of times slower, and thus makes dictionary and brute force attacks thousands of times slower. This is called <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Key_stretching">key stretching</a>. A common key stretching algorithm is <a href="https://secure.wikimedia.org/wikipedia/en/wiki/PBKDF2">PBKDF2</a>. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.
+            </p>
+
+            <p>You may think that having to hash the password thousands of times will slow down the login process, but an average CPU today can compute over 1,000,000 hashes in one second. The time it takes to hash a password, say, 5000 times, is not noticeable. This will increase your application's CPU usage, but it is well worth it. If a dictionary attack takes 10 minutes to run on a normal hash, it will take more than 34 days to run on a hash produced by 5000-iteration PBKDF2.
+            </p>
+
+            <p>
+                I recommend using at least 500 iterations, but ideally 5000, for web applications that process a lot of sign-ons. A stand-alone application running on a PC or mobile device should use at least 50,000 iterations. But remember that computers are continually getting faster. You should increase the number of iterations as processor speed increases.
+            </p>
+
+			<h4>Why bother hashing?</h4>
+
+            <p>
+                Your users are entering their password into your website. They are trusting you with their security. If your database gets hacked, and your users' passwords are unprotected, then malicious hackers can use those passwords to compromise your users' accounts on other websites and services (most people use the same password everywhere). It's not just your security that's at risk, it's your users'. You are responsible for your users' security.
+            </p>
+
 			<a name="phpsourcecode"></a>
 			<h3>PHP Password Hashing Code</h3>
 
