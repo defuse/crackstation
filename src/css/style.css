@@ -1,5 +1,9 @@
 /* Custom stuff */
 
+ul, ol {
+    margin-left: 30px;
+}
+
 textarea {
     resize: none;
     background-color: #101010;
@@ -334,6 +338,7 @@ h4 {
     font-size: 16px;
     margin-top: 12px;
     margin-bottom: 12px;
+	font-weight:normal;
 }
 h6 {color:#fff; font-weight:normal;}
 

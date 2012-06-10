@@ -27,7 +27,7 @@ var{
 		outline: 0;
     vertical-align: top; }
 
-ol, ul {
+.menu, .list-services {
 	list-style: none;
 }
 blockquote, q {

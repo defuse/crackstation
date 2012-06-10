@@ -50,7 +50,7 @@
 			<ul class="moveul" >
 				<li>
 
-					<b>Dictionary &amp; Brute Force</b>
+					<h4>Dictionary and Brute Force Attacks</h4>
 					<table style="margin: 0pt auto;">
 					<tbody><tr>
 					<td>
@@ -86,7 +86,7 @@
 				</li>
 
 				<li>
-					<b>Lookup Tables</b>
+					<h4>Lookup Tables</h4>
 					<div class="passcrack" style="text-align: center;" title="Cracking many hashes with a pre-computed lookup table">
 						<span style="color: green;">Searching: 5f4dcc3b5aa765d61d8327deb882cf99: FOUND: password5</span><br>
 						Searching: 6cbe615c106f422d23669b610b564800: &nbsp;not in database<br>
@@ -102,7 +102,7 @@
 				</li>
 				<li>
 
-					<b>Rainbow Tables</b><br /><br />
+					<h4>Rainbow Tables</h4>
 					Rainbow tables are a hybrid of lookup tables and brute force. In brief, they combine the two methods to reduce the overall size needed to store the wordlist. They do so by using a time-memory trade-off, making it take a little longer to crack one hash, but reducing the amount of hard drive space required to store the lookup table. For our purposes, we can think of lookup tables and rainbow tables as the same thing.
 				</li>
 	
@@ -155,26 +155,23 @@
 			<br><br>
 			The salt need not be secret because it's only purpose is to make sure that if two users have the same password, the hash of their passwords will be different. Once the password has been hashed with the salt, there's no way that the salt can be "removed" from the hash, even if it is known by the password cracker.
 			<br><br>
-			The algorithm for storing the password is as follows:<br>
+            <h4>To Store a Password:</h4>
 			<ol class="moveul">
 				<li>Generate a long random salt using a CSPRNG.</li>
 				<li>Compute <span class="ic">$hash = Hash($password . $salt)</span>, where Hash() is a strong hash function like SHA256.</li>
 				<li>Save $hash and $salt in the database.</li>
 
 			</ol>
-			To validate a password (when the user tries to login):
-			<br>
+            <h4>To Validate a Password:</h4>
 			<ol class="moveul">
 				<li>Get the $hash and $salt for that user from the database.</li>
 				<li>Compute the hash of the password they tried to login with. <span class="ic">$userhash = Hash($pass_to_check . $salt)</span>.</li>
 				<li>Compare $hash with $userhash. If they are EXACTLY the same, then the password is valid. If there is any difference, then the password is invalid.</li>
 			</ol>
-			<br><br>
-
+			<br>
 			Instead of using multiple hash functions or creating your own, just stick to one well known and well tested algorithm. All you need is one. I would reccomend using SHA256.
-			<br><br>
-			Rules of thumb:
-			<br><br>
+			<br>
+			<h4>Rules of thumb:</h4>
 			<ul class="moveul">
 				<li>Use a well-known and secure hash algorithm like SHA256.</li>
 				<li>Each password should be hashed with a different salt.</li>
@@ -354,9 +351,9 @@ namespace DEFUSE<br />
 </div>
 			</div>
 			<br />
-            <p style="text-align: center;">
-			    <b>Article by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></b>
-            </p>
+            <div style="text-align: center;">
+			    <h4>Article written by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></h4>
+            </div>
 
 </div>
 </div>
