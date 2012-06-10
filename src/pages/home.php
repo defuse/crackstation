@@ -89,6 +89,7 @@ function CrackHashes($hashes)
     theme : 'blackglass'
  };
  </script>
+
 <div class="box">
     <div class="padding">
         <p>
@@ -150,6 +151,10 @@ function CrackHashes($hashes)
     </div>
 </div>
 
+<div style="text-align: center; font-size: 14pt; padding-top: 20px;">
+<b>News:</b> CrackStation Cracks <a href="https://defuse.ca/blog/2012/06/cracking-linkedin-hashes-with-crackstation/">LinkedIn's Hashes</a> and
+<a href="https://defuse.ca/blog/2012/06/cracking-eharmonys-unsalted-hashes-with-crackstation/">eHarmony's Hashes</a>
+</div>
 <br /><br />
 <a name="cracking-hashes"></a>
 <h3>How Crackstation Cracks Hashes</h3>
