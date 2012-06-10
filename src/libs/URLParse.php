@@ -126,13 +126,13 @@ class URLParse
             "contact-us" => array(
                 P_FILE => "contactus.php",
                 P_TITL => "CrackStation Contact",
-                P_METD => "CrackStation Contact Information",
+                P_METD => "Instructions for contacting CrackStation",
                 P_METK => "crackstation contact",
                 ),
             "about-us" => array(
                 P_FILE => "aboutus.php",
                 P_TITL => "CrackStation Contact",
-                P_METD => "CrackStation Contact Information",
+                P_METD => "What CrackStation is and why we exist",
                 P_METK => "crackstation contact",
                 ),
             "legal-privacy.html" => array(
@@ -141,7 +141,7 @@ class URLParse
             "legal-privacy" => array(
                 P_FILE => "legal-privacy.php",
                 P_TITL => "CrackStation - Legal and Privacy",
-                P_METD => "CrackStation.net's privacy policy.",
+                P_METD => "CrackStation.net's privacy policy",
                 P_METK => "hash cracking legal, penetration testing, password security",
                 ),
             );
