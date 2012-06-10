@@ -183,7 +183,9 @@
 			<a name="faq"></a>
 			<h3>FAQ</h3>
 			<h4>What hash algorithm should I use?</h4>
-			<span style="color: green;"><b>DO</b></span> use:<br />
+			<span style="color: green;"><b>DO</b></span> use:
+
+            <p>
 			<ul class="moveul">
 				<li>The SHA2 Family - SHA256 and SHA512</li>
 
@@ -191,15 +193,21 @@
 				<li>WHIRLPOOL</li>
 				<li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a> or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a> near the bottom of this page</li>
 			</ul>
-			<span style="color: red;"><b>DO NOT</b></span> use:<br />
+            </p>
+			<span style="color: red;"><b>DO NOT</b></span> use:
 
+            <p>
 			<ul class="moveul">
 				<li>MD5</li>
 				<li>SHA0 or SHA1</li>
-				<li>crypt unless it uses SHA256 or SHA512</li>
+				<li>Old versions of crypt. If you use a newer form of crypt, make sure it uses a long salt.</li>
 				<li>Any algorithm that you made yourself or hasn't gone through an intensive peer review process like the SHA3 competition</li>
-
 			</ul>
+            </p>
+
+            <p>
+                Even though there are no attacks on MD5 or SHA1 that would help crack a hash, they have been superseded by the SHA2 family, so I don't recommend using them. An exception to this rule is PBKDF2, which is frequently used with SHA1.
+            </p>
 			<h4>How long should the salt be?</h4>
 			The salt should be at least as long as the hash function. For example, if your hash function is 256 bits, then you should have a salt of at least 256 bits. I find that the easiest way to generate enough salt is to generate a random string of hex characters that is the same length as the hash function output (64 hex characters for 256 bits). First and foremost, your salt should be long enough so that no two users' passwords will ever be hashed using the same salt.
 
