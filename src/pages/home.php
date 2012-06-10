@@ -92,7 +92,7 @@ function CrackHashes($hashes)
 <div class="box">
     <div class="padding">
         <p>
-            Enter up to 10 unsalted hashes:
+            Enter up to 10 non-salted hashes:
         </p>
         <form action="/" method="post">
         <table style="width: 100%;">
