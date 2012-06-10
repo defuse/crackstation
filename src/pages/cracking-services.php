@@ -27,7 +27,7 @@ Price guidelines are listed below, but feel free to contact us with special jobs
         <td>Bulk Unsalted</td><td>Medium</td><td>$5 + ($0.05 per 1000 hashes)</td>
     </tr>
     <tr>
-        <td>&nbsp;</td><td>Huge</td><td>$5 + ($0.05 per 1000 hashes)</td>
+        <td>&nbsp;</td><td>Huge</td><td>$5 + ($0.10 per 1000 hashes)</td>
     </tr>
     <tr>
         <td>Salted Single-Iteration</td><td>Medium</td><td>$5.00</td>
