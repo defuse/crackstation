@@ -2,131 +2,176 @@
 <div class="padding">
 			<h3>Salted Password Hashing - Doing it Right</h3>
 
-			If you're a web developer, you've probably had to make a login system. If you've had to make a login system, you've had to use some form of hashing to protect your users' passwords in the event of a security breach. There are a lot of conflicting ideas and misconceptions on how to do password hashing properly. Password hashing is one of those things that's SO simple, but SO MANY people do it wrong. With this page, I hope to explain HOW to securely store passwords in a database, and WHY it should be done that way.
-			<br /><br />
+<p>
+If you're a web developer, you've probably had to make a user account system. The most important aspect of a user account system is how user passwords are protected. User account databases are hacked frequently, so you absolutely must do something to protect your users' passwords if your website is ever breached. The best way to protect passwords is to employ <b>salted password hashing</b>. This page will explain how to do it properly.
+</p>
 
-			<table id="shortcuts">
-			<tbody><tr>
-				<td>1. <a href="#normalhashing" title="What are hash functions and why are they used?">What is hashing?</a></td>
-				<td>2. <a href="#attacks" title="Methods for making hash cracking more efficient">How Hashes are Cracked</a></td>
+<p>
+There are a lot of conflicting ideas and misconceptions on how to do password hashing properly, probably due to the abundance of misinformation on the web. Password hashing is one of those things that's so simple, but yet so many people get wrong. With this page, I hope to explain not only the correct way to do it, but why it should be done that way.
+</p>
 
-				<td>3. <a href="#ineffective" title="The wrong way to do password hashing">Ineffective Hashing Methods</a></td>
-				<td>4. <a href="#salt" title="Adding salt to render hash cracking attacks less effective">What is salt?</a></td>
-			</tr>
-			<tr>
-				<td>5. <a href="#properhashing" title="The right way to do password hashing, with salt">How to hash properly</a></td>
-				<td>6. <a href="#faq" title="Frequently asked questions about password hashing and salt">Frequently Asked Questions</a></td>
+<p>You may use the following links to jump to the different sections of this page.</p>
+<table id="shortcuts">
+<tbody><tr>
+    <td>1. <a href="#normalhashing" title="What are hash functions and why are they used?">What is hashing?</a></td>
+    <td>2. <a href="#attacks" title="Methods for making hash cracking more efficient">How Hashes are Cracked</a></td>
 
-				<td>7. <a href="#phpsourcecode" title="PHP password hashing example source code">PHP Source Code</a></td>
-				<td>8. <a href="#aspsourcecode" title="PHP password hashing example source code in C#">ASP.NET (C#) Source Code</a></td>
-			</tr>
-			</tbody></table>
+    <td>3. <a href="#ineffective" title="The wrong way to do password hashing">Ineffective Hashing Methods</a></td>
+    <td>4. <a href="#salt" title="Adding salt to render hash cracking attacks less effective">What is salt?</a></td>
+</tr>
+<tr>
+    <td>5. <a href="#properhashing" title="The right way to do password hashing, with salt">How to hash properly</a></td>
+    <td>6. <a href="#faq" title="Frequently asked questions about password hashing and salt">Frequently Asked Questions</a></td>
 
-			<br /><br />
-			<a name="normalhashing"></a>
-			<h3>What is password hashing?</h3>
-					<div class="passcrack" style="text-align: center;">
+    <td>7. <a href="#phpsourcecode" title="PHP password hashing example source code">PHP Source Code</a></td>
+    <td>8. <a href="#aspsourcecode" title="PHP password hashing example source code in C#">ASP.NET (C#) Source Code</a></td>
+</tr>
+</tbody></table>
 
-						hash("hello") = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br>
-						hash("hbllo") = 58756879c05c68dfac9866712fad6a93f8146f337a69afe7dd238f3364946366<br>
-						hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542<br>
-					</div>
-			Hash algorithms are one way functions, meaning: they turn any amount of data into a fixed-length checksum that cannot be reversed. They also have the property that if the input changes by even a tiny bit, the resulting hash is COMPLETELY different. This is great for us, because we want to be able to be able to store passwords in an encrypted form that's impossible to decrypt. But at the same time, we need to be able to verify that a user's password is correct when they login. Generally, we follow this process:
-			<br /><br />
-			<ol class="moveul">
-				<li>The user creates an account.</li>
-				<li>Their password is hashed and stored in the database. At no point is the unhashed user's password ever written to the hard drive.</li>
+<a name="normalhashing"></a>
+<h3>What is password hashing?</h3>
+        <div class="passcrack" style="text-align: center;">
+            hash("hello") = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br>
+            hash("hbllo") = 58756879c05c68dfac9866712fad6a93f8146f337a69afe7dd238f3364946366<br>
+            hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542<br>
+        </div>
+<p>
+Hash algorithms are one way functions. They turn any amount of data into a fixed-length "fingerprint" that cannot be reversed. They also have the property that if the input changes by even a tiny bit, the resulting hash is completely different (see the example above). This is great for protecting passwords, because we want to store passwords in an encrypted form that's impossible to decrypt, but at the same time, we need to be able to verify that a user's password is correct. 
+</p>
 
-				<li>When the user attempts to login, the hash of the password they entered is checked against the hash in the database.</li>
-				<li>If the hashes match, the user is granted access. If not, the user is told they entered an incorrect password.</li>
-				<li>Steps 3 and 4 repeat everytime someone tries to login to their account.</li>
-			</ol>
-			<br /><br />
-			You may think that simply hashing passwords is enough to keep your users' passwords secure in the event of a database leak. Although normal hashing is FAR better than storing passwords in plain text (not hashed), there are a lot of ways to quickly recover passwords from normal hashes. We can do more to make cracking the hashes MUCH more difficult for someone who has stolen your database. If your users' passwords are only hashed, approximately 40% of the hashes can be cracked by a service like <a href="http://crackstation.net/">CrackStation</a> in the first day that someone gets a hold of your database.
-			<a name="attacks"></a>
+<p>
+The general workflow for account registration and authentication in a hash-based account system is as follows:
+</p>
+<ol class="moveul">
+    <li>The user creates an account.</li>
+    <li>Their password is hashed and stored in the database. At no point is the plain-text (unencrypted) password ever written to the hard drive.</li>
 
-			<br /><br />
-			<h3>How Hashes are Cracked</h3>
-			<ul class="moveul" >
-				<li>
+    <li>When the user attempts to login, the hash of the password they entered is checked against the hash of their real password (retrieved from the database).</li>
+    <li>If the hashes match, the user is granted access. If not, the user is told they entered an incorrect password.</li>
+    <li>Steps 3 and 4 repeat everytime someone tries to login to their account.</li>
+</ol>
+<br />
+<p>
+It should be noted that the hash functions used to protect passwords are not the same as the hash functions you may have seen in a data structures course.
+The hash functions used to implement data structures such as hash tables are designed to be fast, not secure. Only <b>cryptographic hash functions</b> may be used to implement password hashing.
+Hash functions like SHA256, SHA512, RipeMD, and WHIRLPOOL are cryptographic hash functions.
+</p>
 
-					<h4>Dictionary and Brute Force Attacks</h4>
-					<table style="margin: 0pt auto;">
-					<tbody><tr>
-					<td>
-					<div class="passcrack" title="Cracking a hash by brute force">
-						Trying aaaa : failed<br>
-						Trying aaab : failed<br>
+<p>
+It is easy to think that all you have to do is run the password through a cryptographic hash function and your users' passwords will be secure. This is far from the truth. There are many ways to recover passwords from plain hashes very quickly. There are several easy-to-implement techniques that make these "attacks" much less effective. To motivate the need for these techniques, consider this very website. On the front page, you can submit a list of hashes to be cracked, and receive results in less than a second. Clearly, simply hashing the password does not meet our needs for security.
+</p>
 
-						Trying aaac : failed<br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...			<br>
-						Trying acdb : failed<br>
-						<span style="color: green;">Trying acdc : success!</span><br>
-					</div>
-					</td>
-					<td>
+<p>The next section will discuss some of the common attacks used to crack plain password hashes.</p>
 
-					<div class="passcrack" title="Cracking a hash with a wordlist">
-						Trying apple : failed<br>
-						Trying blueberry : failed<br>
-						Trying justinbeiber : failed<br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...			<br>
-						Trying letmein : failed<br>
+<a name="attacks"></a>
+<h3>How Hashes are Cracked</h3>
+<ul class="moveul" >
+<li>
+    <h4>Dictionary and Brute Force Attacks</h4>
+    <table style="margin: 0 auto;">
+    <tbody><tr>
+    <td>
+    <div class="passcrack" title="Cracking a hash with a wordlist">
+        <center>Dictionary Attack</center><br />
+        Trying apple &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: failed<br>
+        Trying blueberry &nbsp;&nbsp;&nbsp;: failed<br>
+        Trying justinbeiber : failed<br>
+        <center>...</center>
+        Trying letmein &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: failed<br>
 
-						<span style="color: green;">Trying secretpassword : success!</span><br>
-					</div>
-					</td>
-					</tr>
-					</tbody></table>
-					<br>
-					When you have a hash you want to crack, the simplest form of attack is to guess the password using word lists or password cracking dictionaries. That involves hashing every word in the list, and seeing if it's hash matches the hash you're trying to crack. If it does, then you have just found the password for that hash. Brute force attacks are the same as dictionary attacks except they don't use a word list; they try every possible combination of letters, numbers, and symbols.
-					<br><br>
-					There is no way to prevent dictionary attacks or brute force attacks. They can be made less effective, but there isn't a way to prevent them altogeather. If your password hashing system is secure, the only way to crack a hash will be to guess the correct password through a dictionary attack or brute force attack.
-					<br /><br />
-				</li>
+        <span style="color: green;">Trying s3cr3t &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: success!</span><br>
+    </div>
+    </td>
+    <td>
+    <div class="passcrack" title="Cracking a hash by brute force">
+        <center>Brute Force Attack</center><br />
+        Trying aaaa : failed<br>
+        Trying aaab : failed<br>
+        Trying aaac : failed<br>
+        <center>...</center>
+        Trying acdb : failed<br>
+        <span style="color: green;">Trying acdc : success!</span><br>
+    </div>
+    </td>
+    </tr>
+    </tbody></table>
+    <p>
+    The simplest way to crack a hash is to try to guess the password, hashing each guess, and checking if the guess's hash equals the hash being cracked. If the hashes are equal, the guess is the password.
+    The two most common ways of guessing passwords are <b>dictionary attacks</b> and <b>brute-force attacks</b>.
+    </p>
 
-				<li>
-					<h4>Lookup Tables</h4>
-					<div class="passcrack" style="text-align: center;" title="Cracking many hashes with a pre-computed lookup table">
-						<span style="color: green;">Searching: 5f4dcc3b5aa765d61d8327deb882cf99: FOUND: password5</span><br>
-						Searching: 6cbe615c106f422d23669b610b564800: &nbsp;not in database<br>
-						<span style="color: green;">Searching: 630bf032efe4507f2c57b280995925a9: FOUND: letMEin12 </span><br>
+    <p>
+    A dictionary attack uses a file containing words, phrases, common passwords, and other strings that are likely to be used as a password. Each word in the file is hashed, and its hash is compared to the password hash. If they match, that word is the password. These dictionary files are constructed by extracting words from large bodies of text, and even from real databases of passwords. Further processing is often applied to dictionary files, such as replacing words with their "leet speak" equivalents ("hello" becomes "h3110"), to make them more effective.
+    </p>
 
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...			<br>
-						<span style="color: green;">Searching: 386f43fab5d096a7a66d67c8f213e5ec: FOUND: mcd0nalds</span><br>
-						<span style="color: green;">Searching: d5ec75d5fe70d428685510fae36492d9: FOUND: p@ssw0rd!</span><br>
-					</div>
-					<br>
-					Say you have a database of 1 Million hashes. You want to perform a dictionary attack on every hash, but you don't want to do 1 million dictionary attacks. What you do is hash every word in your dictionary, and store the word:hash pair in a lookup table. Next, you go through all the hashes you want to crack and see if the hash exists in the lookup table. If it does, you've just found the password. In this case the lookup table method is MUCH faster than doing 1 million dictionary attacks. You only have to hash each word in your wordlist once, then perform 1 million lookups (which are VERY fast). These lookup table databases DO exist! <a href="http://crackstation.net/">CrackStation</a> is one of them!
-					<br /><br />
-				</li>
-				<li>
+    <p>
+    A brute-force attack tries every possible combination of characters up to a given length. These attacks are very computationally expensive, and are usually the least efficient in terms of hashes cracked per processor time, but they will always eventually find the password. Passwords should be long enough that searching through all possible character strings to find it will take too long to be worthwhile.
+    </p>
 
-					<h4>Rainbow Tables</h4>
-					Rainbow tables are a hybrid of lookup tables and brute force. In brief, they combine the two methods to reduce the overall size needed to store the wordlist. They do so by using a time-memory trade-off, making it take a little longer to crack one hash, but reducing the amount of hard drive space required to store the lookup table. For our purposes, we can think of lookup tables and rainbow tables as the same thing.
-				</li>
-	
-			</ul>
-            <br />
-			<a name="ineffective"></a>
-			<h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
-			This is a common one. The idea is that if you do something like <span class="ic">md5(md5($password))</span> or even <span class="ic">md5(sha1($password))</span> it will be more secure since plain md5 is "broken". I've even seen someone claim that it's better to use a super complicated function like <span class="ic">md5(sha1(md5(md5($password) + sha1($password)) + md5($password)))</span>. While complicated hash functions can sometimes be useful for generating encryption keys, you won't get much more security by combining hash functions. It's far better to choose a secure hash algorithm in the first place, and use <b>salt</b>, which I will discuss later. Once you are using salt, you can use multiple secure hash functions, for example <span class="ic">SHA256(WHIRLPOOL($password + $salt) + $salt)</span>. Combining secure hash functions will help if a practical collision attack is ever found for one of the hash algorithms, but it doesn't stop attackers from building lookup tables.
+    <p>
+    There is no way to prevent dictionary attacks or brute force attacks. They can be made less effective, but there isn't a way to prevent them altogether. If your password hashing system is secure, the only way to crack the hashes will be to run a dictionary or brute-force attack on each hash.
+    </p>
+</li>
 
-			<br><br>
-			The attacks on MD5 are <b>collision</b> attacks. That means it's possible to find two different strings that have the same MD5 hash. If we were trying to prevent such an attack from affecting our cryptosystem, double hashing is the wrong thing to do. If you can find two strings of data such that <span class="ic">md5($data) == md5($differentData)</span>, then <span class="ic">md5(md5($data))</span> will STILL be the same as <span class="ic">md5(md5($differentData))</span>. Because the "inside" hashes are the same, so the "outside" hashes will be too. Adding the second hash did nothing. The collision attacks on MD5 don't make it any easier to recover the password from an md5 hash, but it's good practice to stop using MD5 just because there are much better functions readily available.
 
-			<br><br>
-			Double hashing does not protect against lookup tables or rainbow tables. It makes the process of generating the lookup table two times slower, but we want it to be <b>impossible</b> to use lookup tables. We can easily do so by adding "salt".
-			<a name="salt"></a>
-			<br /><br />
-			<h3>Adding Salt</h3>
-					<div class="passcrack" style="text-align: center;">
-						hash("hello") = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br>
-						hash("hello" + "QxLUF1bgIAdeQX") = 9e209040c863f84a31e719795b2577523954739fe5ed3b58a75cff2127075ed1<br>
+<li>
+    <h4>Lookup Tables</h4>
+    <center>
+    <span class="passcrack" style="display: inline-block; text-align: left;" title="Cracking many hashes with a pre-computed lookup table">
+        <span style="color: green;">Searching: 5f4dcc3b5aa765d61d8327deb882cf99: FOUND: password5</span><br>
+        Searching: 6cbe615c106f422d23669b610b564800: &nbsp;not in database<br>
+        <span style="color: green;">Searching: 630bf032efe4507f2c57b280995925a9: FOUND: letMEin12 </span><br>
+        <span style="color: green;">Searching: 386f43fab5d096a7a66d67c8f213e5ec: FOUND: mcd0nalds</span><br>
+        <span style="color: green;">Searching: d5ec75d5fe70d428685510fae36492d9: FOUND: p@ssw0rd!</span><br>
+    </span>
+    </center>
 
-						hash("hello" + "bv5PehSMfV11Cd") = d1d3ec2e6f20fd420d50e2642992841d8338a314b8ea157c9e18477aaef226ab
-					</div>
-			Salt is nothing complicated, just a string of random characters that get appended to the password before hashing. When done properly, it renders lookup tables and rainbow tables useless. Salt does so because, by adding extra characters, the resulting hash is COMPLETELY different than the unsalted hash of the password. For example, if the user's password was "apple", the SHA256 hash would be 
+    <p>
+    Lookup tables are an extremely effective method for cracking many hashes of the same type very quickly. The general idea is to <b>pre-compute</b> the hashes of the passwords in a password dictionary and store them, and their corresponding password, in a lookup table data structure. A good implementation of a lookup table can process hundreds of hash lookups per second, even when they contain many billions of hashes.
+    </p>
+
+    <p>
+    If you want a better idea of how fast lookup tables can be, try cracking the following sha256 hashes with CrackStation's <a href="/">free hash cracker</a>.
+    </p>
+
+    <div class="passcrack" style="text-align: center;" title="Example hashes to be cracked">
+    c11083b4b0a7743af748c85d343dfee9fbb8b2576c05f3a7f0d632b0926aadfc
+    08eac03b80adc33dc7d8fbe44b7c7b05d3a2c511166bdb43fcb710b03ba919e7
+    e4ba5cbd251c98e6cd1c23f126a3b81d8d8328abc95387229850952b3ef9f904
+    5206b8b8a996cf5320cb12ca91c7b790fba9f030408efe83ebb83548dc3007bd
+    </div>
+
+</li>
+<li>
+    <h4>Rainbow Tables</h4>
+    <p>
+    Rainbow tables are a time-memory trade-off technique. They are like lookup tables, except that they sacrifice hash cracking speed to make the lookup tables smaller. Because they are smaller, the solutions to more hashes can be stored in the same amount of space, making them more effective. Rainbow tables that can crack any md5 hash of a password up to 8 characters long <a href="http://www.freerainbowtables.com/en/tables2/">exist</a>.
+    </p>
+</li>
+</ul>
+
+<p>
+Next, we will look at some ineffective attempts to make password hashes more secure. Once you understand what not to do, we'll explain the right way to hash passwords.
+</p>
+<a name="ineffective"></a>
+<h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
+This is a common one. The idea is that if you do something like <span class="ic">md5(md5($password))</span> or even <span class="ic">md5(sha1($password))</span> it will be more secure since plain md5 is "broken". I've even seen someone claim that it's better to use a super complicated function like <span class="ic">md5(sha1(md5(md5($password) + sha1($password)) + md5($password)))</span>. While complicated hash functions can sometimes be useful for generating encryption keys, you won't get much more security by combining hash functions. It's far better to choose a secure hash algorithm in the first place, and use <b>salt</b>, which I will discuss later. Once you are using salt, you can use multiple secure hash functions, for example <span class="ic">SHA256(WHIRLPOOL($password + $salt) + $salt)</span>. Combining secure hash functions will help if a practical collision attack is ever found for one of the hash algorithms, but it doesn't stop attackers from building lookup tables.
+
+<br><br>
+The attacks on MD5 are <b>collision</b> attacks. That means it's possible to find two different strings that have the same MD5 hash. If we were trying to prevent such an attack from affecting our cryptosystem, double hashing is the wrong thing to do. If you can find two strings of data such that <span class="ic">md5($data) == md5($differentData)</span>, then <span class="ic">md5(md5($data))</span> will STILL be the same as <span class="ic">md5(md5($differentData))</span>. Because the "inside" hashes are the same, so the "outside" hashes will be too. Adding the second hash did nothing. The collision attacks on MD5 don't make it any easier to recover the password from an md5 hash, but it's good practice to stop using MD5 just because there are much better functions readily available.
+
+<br><br>
+Double hashing does not protect against lookup tables or rainbow tables. It makes the process of generating the lookup table two times slower, but we want it to be <b>impossible</b> to use lookup tables. We can easily do so by adding "salt".
+<a name="salt"></a>
+<br /><br />
+<h3>Adding Salt</h3>
+        <div class="passcrack" style="text-align: center;">
+            hash("hello") = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br>
+            hash("hello" + "QxLUF1bgIAdeQX") = 9e209040c863f84a31e719795b2577523954739fe5ed3b58a75cff2127075ed1<br>
+
+            hash("hello" + "bv5PehSMfV11Cd") = d1d3ec2e6f20fd420d50e2642992841d8338a314b8ea157c9e18477aaef226ab
+        </div>
+Salt is nothing complicated, just a string of random characters that get appended to the password before hashing. When done properly, it renders lookup tables and rainbow tables useless. Salt does so because, by adding extra characters, the resulting hash is COMPLETELY different than the unsalted hash of the password. For example, if the user's password was "apple", the SHA256 hash would be 
 
 			<span class="ic">3a7bd3e2360a3d29eea436fcfb7e...</span>
 

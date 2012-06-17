@@ -78,6 +78,9 @@ textarea {
 #shortcuts td a:visited {
     color: #CCCCCC;
 }
+#shortcuts td:hover {
+    background-color: #001946;
+}
 
 .passcrack{
     font-family:monospace;
