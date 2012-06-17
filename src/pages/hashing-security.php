@@ -243,7 +243,7 @@ This section covers the most common password hashing misconception: wacky combin
 
 <ul>
     <li><span class="ic">md5(sha1(password))</span></li>
-    <li><span class="ic">md5(md5(salt) . md5(password))</span></li>
+    <li><span class="ic">md5(md5(salt) + md5(password))</span></li>
     <li><span class="ic">sha1(sha1(password))</span></li>
     <li><span class="ic">sha1(str_rot13(password + salt))</span></li>
     <li><span class="ic">md5(sha1(md5(md5(password) + sha1(password)) + md5(password)))</span></li>
