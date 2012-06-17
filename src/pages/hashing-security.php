@@ -13,11 +13,11 @@ There are a lot of conflicting ideas and misconceptions on how to do password ha
 <p>You may use the following links to jump to the different sections of this page.</p>
 <table id="shortcuts">
 <tbody><tr>
-    <td>1. <a href="#normalhashing" title="What are hash functions and why are they used?">What is hashing?</a></td>
+    <td>1. <a href="#normalhashing" title="What are hash functions and why are they used?">What is password hashing?</a></td>
     <td>2. <a href="#attacks" title="Methods for making hash cracking more efficient">How Hashes are Cracked</a></td>
 
-    <td>3. <a href="#ineffective" title="The wrong way to do password hashing">Ineffective Hashing Methods</a></td>
-    <td>4. <a href="#salt" title="Adding salt to render hash cracking attacks less effective">What is salt?</a></td>
+    <td>3. <a href="#salt" title="Adding salt to render hash cracking attacks less effective">Adding Salt</a></td>
+    <td>4. <a href="#ineffective" title="The wrong way to do password hashing">Ineffective Hashing Methods</a></td>
 </tr>
 <tr>
     <td>5. <a href="#properhashing" title="The right way to do password hashing, with salt">How to hash properly</a></td>
@@ -113,7 +113,6 @@ It is easy to think that all you have to do is run the password through a crypto
     </p>
 </li>
 
-
 <li>
     <h4>Lookup Tables</h4>
     <center>
@@ -142,6 +141,28 @@ It is easy to think that all you have to do is run the password through a crypto
     </div>
 
 </li>
+
+<li>
+    <h4>Reverse Lookup Tables</h4>
+    <center>
+    <span class="passcrack" style="display: inline-block; text-align: left;" title="Cracking many hashes with a pre-computed lookup table">
+        <span style="color: green;">Searching for hash(apple) in users' hash list... &nbsp;&nbsp;&nbsp;&nbsp;: Matches [alice3, 0bob0, charles8]</span><br>
+        <span style="color: green;">Searching for hash(blueberry) in users' hash list... : Matches [usr10101, timmy, john91]</span><br>
+        <span style="color: green;">Searching for hash(letmein) in users' hash list... &nbsp;&nbsp;: Matches [wilson10, dragonslayerX, joe1984]</span><br>
+        <span style="color: green;">Searching for hash(s3cr3t) in users' hash list... &nbsp;&nbsp;&nbsp;: Matches [bruce19, knuth1337, john87]</span><br>
+        <span>Searching for hash(z@29hjja) in users' hash list... &nbsp;: No users used this password</span><br>
+    </span>
+    </center>
+    <p>
+        This attack allows an attacker to apply a dictionary or brute-force attack to many hashes at the same time, without having to pre-compute a lookup table.
+    </p>
+
+    <p>
+    First, the attacker creates a lookup table that maps each password hash from the compromised user account database to a list of users who had that hash.
+    The attacker then hashes each password guess and uses the lookup table to get a list of users whose password was the attacker's guess. This attack is especially effective because it is common for many users to have the same password. 
+    </p>
+</li>
+
 <li>
     <h4>Rainbow Tables</h4>
     <p>
@@ -151,80 +172,184 @@ It is easy to think that all you have to do is run the password through a crypto
 </ul>
 
 <p>
-Next, we will look at some ineffective attempts to make password hashes more secure. Once you understand what not to do, we'll explain the right way to hash passwords.
+Next, we'll look at a technique called salting, which makes it impossible to use lookup tables and rainbow tables to crack a hash.
 </p>
-<a name="ineffective"></a>
-<h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
-This is a common one. The idea is that if you do something like <span class="ic">md5(md5($password))</span> or even <span class="ic">md5(sha1($password))</span> it will be more secure since plain md5 is "broken". I've even seen someone claim that it's better to use a super complicated function like <span class="ic">md5(sha1(md5(md5($password) + sha1($password)) + md5($password)))</span>. While complicated hash functions can sometimes be useful for generating encryption keys, you won't get much more security by combining hash functions. It's far better to choose a secure hash algorithm in the first place, and use <b>salt</b>, which I will discuss later. Once you are using salt, you can use multiple secure hash functions, for example <span class="ic">SHA256(WHIRLPOOL($password + $salt) + $salt)</span>. Combining secure hash functions will help if a practical collision attack is ever found for one of the hash algorithms, but it doesn't stop attackers from building lookup tables.
 
-<br><br>
-The attacks on MD5 are <b>collision</b> attacks. That means it's possible to find two different strings that have the same MD5 hash. If we were trying to prevent such an attack from affecting our cryptosystem, double hashing is the wrong thing to do. If you can find two strings of data such that <span class="ic">md5($data) == md5($differentData)</span>, then <span class="ic">md5(md5($data))</span> will STILL be the same as <span class="ic">md5(md5($differentData))</span>. Because the "inside" hashes are the same, so the "outside" hashes will be too. Adding the second hash did nothing. The collision attacks on MD5 don't make it any easier to recover the password from an md5 hash, but it's good practice to stop using MD5 just because there are much better functions readily available.
-
-<br><br>
-Double hashing does not protect against lookup tables or rainbow tables. It makes the process of generating the lookup table two times slower, but we want it to be <b>impossible</b> to use lookup tables. We can easily do so by adding "salt".
 <a name="salt"></a>
-<br /><br />
 <h3>Adding Salt</h3>
-        <div class="passcrack" style="text-align: center;">
-            hash("hello") = &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br>
-            hash("hello" + "QxLUF1bgIAdeQX") = 9e209040c863f84a31e719795b2577523954739fe5ed3b58a75cff2127075ed1<br>
+<div class="passcrack" style="text-align: center;" title="Salt example">
+    hash("hello") &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br />
+    hash("hello" + "QxLUF1bgIAdeQX") = 9e209040c863f84a31e719795b2577523954739fe5ed3b58a75cff2127075ed1<br />
 
-            hash("hello" + "bv5PehSMfV11Cd") = d1d3ec2e6f20fd420d50e2642992841d8338a314b8ea157c9e18477aaef226ab
-        </div>
-Salt is nothing complicated, just a string of random characters that get appended to the password before hashing. When done properly, it renders lookup tables and rainbow tables useless. Salt does so because, by adding extra characters, the resulting hash is COMPLETELY different than the unsalted hash of the password. For example, if the user's password was "apple", the SHA256 hash would be 
+    hash("hello" + "bv5PehSMfV11Cd") = d1d3ec2e6f20fd420d50e2642992841d8338a314b8ea157c9e18477aaef226ab<br />
+    hash("hello" + "YYLmfY6IehjZMQ") = a49670c3c18b9e079b9cfaf51634f563dc8ae3070db2c4a8544305df1b60f007
+</div>
 
-			<span class="ic">3a7bd3e2360a3d29eea436fcfb7e...</span>
+<p>
+Lookup tables and rainbow tables only work because each password is hashed the exact same way. If two users have the same password, they'll have the same password hashes. 
+We can prevent these attacks by randomizing each hash, so that when the same password is hashed twice, the hashes are not the same.
+</p>
 
-			but if we append the salt, "Uwqe2uXdSKpAAi" before hashing, we get
+<p>
+We can randomize the hashes by appending or prepending a random string, called a <b>salt</b>, to the password before hashing. As shown in the example above, this makes the same password hash into a completely different string every time. To check if a password is correct, we need the salt, so it is usually stored in the user account database along with the hash, or as part of the hash string itself.
+</p>
 
-			<span class="ic">b7d07a9b609b222a73c750584e69...</span> which has NO similarity AT ALL to the unsalted hash. Even a small change in the salt will result in a completely different hash, so if a lookup table has been created for unsalted hashes, it cannot be used to crack salted hashes. If a lookup table were created with the salt "HdK92TLAOP71", then it would be useless for cracking hashes that were salted with "EEbbTsLyddNO". When salting is done properly, it renders lookup tables and rainbow tables completely useless.
-			<br /><br />
-			<h3>The <span style="color: red;">WRONG</span> Way: Short Salt &amp; Salt Re-use</h3>
+<p>
+The salt does not need to be secret. Just by randomizing the hashes, lookup tables, reverse lookup tables, and rainbow tables become ineffective. An attacker won't know in advance what the salt will be, so they can't pre-compute a lookup table or rainbow table. If each user's password is hashed with a different salt, the reverse lookup table attack won't work either. 
+</p>
 
-			The most common error of hash salting is using the same salt for every password. Someone trying to crack 1 million hashes that were all salted with the same salt would simply have to re-make his lookup table. He would just create a lookup table matching the words in a dictionary to the salted hashes of the words. He could then use the lookup table to VERY quickly attempt to crack all 1 million passwords.
+<p>
+In the next section, we'll look at how salt is commonly implemented incorrectly.
+</p>
 
-			<br><br>
-			The second most common error of hash salting is using a salt that's too short. Imagine 10 million password are hashed using random salts, but the salt is only 2 ASCII characters. Since there are only 95 printable ASCII characters, and the salt is only 2 characters long, there are <span class="ic">95<sup>2</sup> = 9 025</span> possible salt values. Since there are 10 million passwords, there will be <span class="ic">10 000 000 / 9 025 = 1 108</span> passwords using each salt. Someone trying to crack these hashes would make a lookup table for every possible salt value (9025 lookup tables), then use each lookup table to try to crack all the passwords that were using the same salt. The obvious fix to this problem is to use really long salt so that it's impossible to create a lookup table for every possible salt value.
-			<br><br>
-			It's also important not to rely on the username for salt. Usernames will be unique on YOUR website, but many other websites will have users of the same name. Someone trying to crack hashes would make a lookup table for every common username, and use them to crack hashes from different websites' databases. Since our goal is to have a unique and random salt for every password, using the username as salt has little security benefit.
-			<a name="properhashing"></a>
-			<br /><br />
-			<h3>The <span style="color: green;">RIGHT</span> Way: How to Hash Properly</h3>
+<a name="ineffective"></a>
+<h3>The <span style="color: red;">WRONG</span> Way: Short Salt &amp; Salt Reuse</h3>
 
-			To combat lookup tables and rainbow tables, all we have to do is give each password a long unique salt. Since no two passwords will ever be hashed using the same salt, and since there are so many possible salt values, lookup tables and rainbow tables become useless. The only way to recover the password from a hash with a unique salt is to guess the password (dictionary attack) or perform a brute force attack.
-			<br><br>
-			To guarantee the uniquness of the salt, it's best to use a randomly generated salt that's at least as long as the output of the hash function. If your hash function has a 256 bit output, then use 256 bits of salt. I find that the easiest way to ensure you're getting enough salt is to generate a random hex string that's the same length as the hash output. Make sure you use a <u>Cryptographically Secure</u> Pseudo-Random Number Generator (CSPRNG). Do NOT use your language's math library's <span class="ic">rand()</span> function. There will be a proper CSPRNG for you to use. In php, it's <a href="http://php.net/manual/en/function.mcrypt-create-iv.php" rel="nofollow"><span class="ic">mcrypt_create_iv()</span></a> and in .NET it's <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider.aspx" rel="nofollow"><span class="ic">System.Security.Cryptography.RNGCryptoServiceProvider</span></a>. Since you want each password to have it's own salt, it's important to change the salt whenever the password is changed.
-			<br><br>
-			You only need to generate the salt when an account is created or a user changes their password. You store the salt in your database so that it can be used to validate the user's password when they login. The salt doesn't have to be secret at all. All that matters is that it's <b>unique</b> for every hash that's stored in your database.
+<p>
+The most common salt implementation errors are reusing the same salt in multiple hashes, or using a salt that is too short.
+</p>
 
-			<br><br>
-			The salt need not be secret because it's only purpose is to make sure that if two users have the same password, the hash of their passwords will be different. Once the password has been hashed with the salt, there's no way that the salt can be "removed" from the hash, even if it is known by the password cracker.
-			<br><br>
-            <h4>To Store a Password:</h4>
-			<ol class="moveul">
-				<li>Generate a long random salt using a CSPRNG.</li>
-				<li>Compute <span class="ic">$hash = Hash($password . $salt)</span>, where Hash() is a strong hash function like SHA256.</li>
-				<li>Save $hash and $salt in the database.</li>
+<h4>Salt Reuse</h4>
 
-			</ol>
-            <h4>To Validate a Password:</h4>
-			<ol class="moveul">
-				<li>Get the $hash and $salt for that user from the database.</li>
-				<li>Compute the hash of the password they tried to login with. <span class="ic">$userhash = Hash($pass_to_check . $salt)</span>.</li>
-				<li>Compare $hash with $userhash. If they are EXACTLY the same, then the password is valid. If there is any difference, then the password is invalid.</li>
-			</ol>
-			<br>
-			Instead of using multiple hash functions or creating your own, just stick to one well known and well tested algorithm. All you need is one. I would reccomend using SHA256.
-			<br>
-			<h4>Rules of thumb:</h4>
-			<ul class="moveul">
-				<li>Use a well-known and secure hash algorithm like SHA256.</li>
-				<li>Each password should be hashed with a different salt.</li>
-				<li>Salt should be a random string of characters at least AS LONG AS the output of the hash function.</li>
-				<li>Use a CSPRNG to generate salt, NOT your language's built in <span class="ic">rand()</span> function.</li>
+<p>
+A common mistake is to use the same salt in each hash. Either the salt is hard-coded into the program, or is generated randomly once. This is ineffective because if two users have the same password, they'll still have the same hash. An attacker can still use a reverse lookup table attack to run a dictionary attack on every hash at the same time. They just have to apply the salt to each password guess before they hash it. If the salt is hard-coded into a popular product, lookup tables and rainbow tables can be built for that salt, to make it easier to crack hashes generated by the product.
+</p>
 
-				<li>When passwords are changed, the salt must be changed.</li>
-			</ul>
+<p>
+A new random salt must be generated each time a user creates an account or changes their password.
+</p>
+
+<h4>Short Salt</h4>
+
+<p>
+If the salt is too short, an attacker can build a lookup table for every possible salt. For example, if the salt is only three ASCII characters, there are only 95x95x95 = 857,375 possible salts. That may seem like a lot, but if each lookup table contains only 1MB of the most common passwords, collectively they will be only 837GB, which is not a lot considering 1000GB hard drives can be bought for under $100 today.
+</p>
+
+<p>
+For the same reason, the username shouldn't be used as a salt. Usernames may be unique to a single service, but they are predictable and often reused for accounts on other services.
+An attacker can build lookup tables for common usernames and use them to crack username-salted hashes.
+</p>
+
+<p>
+To make it impossible for an attacker to create a lookup table for every possible salt, the salt must be long. A good rule of thumb is to use a salt that is the same size as the output of the hash function. For example, the output of SHA256 is 256 bits (32 bytes), so the salt should be at least 32 random bytes.
+</p>
+
+<h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
+<p>
+This section covers the most common password hashing misconception: wacky combinations of hash algorithms. It's easy to get carried away and try to combine different hash functions, hoping that the result will be more secure. In practice, though, there is no benefit to doing it. All it does is create interoperability problems, and can sometimes even make the hashes less secure. Never try to invent your own crypto, always use a standard that has been designed by experts. Some will argue that using multiple hash functions makes the process of computing the hash slower, so cracking is slower, but there's a better way to make the cracking process slower as we'll see later.
+</p>
+
+<p>Here are some examples of poor wacky hash functions I've seen suggested in forums on the internet.
+
+<ul>
+    <li><span class="ic">md5(sha1(password))</span></li>
+    <li><span class="ic">md5(md5(salt) . md5(password))</span></li>
+    <li><span class="ic">sha1(sha1(password))</span></li>
+    <li><span class="ic">sha1(str_rot13(password + salt))</span></li>
+    <li><span class="ic">md5(sha1(md5(md5(password) + sha1(password)) + md5(password)))</span></li>
+</ul> <br />
+
+<p>
+    Do not use any of these. None of the wacky combinations provide any additional security. 
+</p>
+
+<h3>Hash Collisions</h3>
+
+<p>
+Because hash functions map arbitrary amounts of data to fixed-length strings, there must be some inputs that hash into the same string. Cryptographic hash functions are designed to make these collisions incredibly difficult to find. From time to time, cryptographers find "attacks" on hash functions that make finding collisions easier. A recent example is the MD5 hash function, for which collisions have actually been found.
+</p>
+
+<p>
+Collision attacks are a sign that it may be more likely for a string other than the user's password to have the same hash. However, finding collisions in even a weak hash function like MD5 requires a lot of dedicated computing power, so it is very unlikely that these collisions will happen "by accident" in practice. A password hashed using MD5 and salt is, for all practical purposes, just as secure as if it were hashed with SHA256 and salt. Nevertheless, it is a good idea to use a more secure hash function like SHA256, SHA512, RipeMD, or WHIRLPOOL if possible.
+</p>
+
+<a name="properhashing"></a>
+<h3>The <span style="color: green;">RIGHT</span> Way: How to Hash Properly</h3>
+
+<p>
+This section describes exactly how passwords should be hashed. The first subsection covers the basics&mdash;everything that is absolutely necessary. The following subsections explain how the basics can be augmented to make the hashes even harder to crack.
+</p>
+
+<h4>The Basics: Hashing with Salt</h4>
+
+<p>
+    We've seen how malicious hackers can crack plain hashes very quickly using lookup tables and rainbow tables. We've learned that randomizing the hashing using salt is the solution to the problem. 
+    But how do we generate the salt, and how do we apply it to the password?
+</p>
+
+<p>
+    Salt should be generated using a <b>Cryptographically Secure Pseudo-Random Number Generator</b> (CSPRNG). CSPRNGs are very different than ordinary pseudo-random number generators, like the "C" language's <span class="ic">rand()</span> function.
+As the name suggests, CSPRNGs are designed to be cryptographically secure, meaning they provide a high level of randomness and are completely unpredictable. We don't want our salts to be predictable, so we must use a CSPRNG. The following table lists some CSPRNGs that exist for some popular programming platforms.
+</p>
+
+<table id="rnglist">
+    <tr><th>Platform</th><th>CSPRNG</th></tr>
+    <tr><td>PHP</td><td><a href="http://php.net/manual/en/function.mcrypt-create-iv.php">mcrypt_create_iv</a>, <a href="http://php.net/manual/en/function.openssl-random-pseudo-bytes.php">openssl_random_pseudo_bytes</a></td></tr>
+    <tr><td>Dot NET (C#, VB)</td><td><a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider.aspx">System.Security.Cryptography.RNGCryptoServiceProvider</a></td></tr>
+    <tr><td>Ruby</td><td><a href="http://rubydoc.info/stdlib/securerandom/1.9.2/SecureRandom">SecureRandom</a></td></tr>
+    <tr><td>Python</td><td><a href="http://docs.python.org/library/os.html">os.urandom</a></td></tr>
+    <tr><td>Perl</td><td><a href="http://search.cpan.org/~mkanat/Math-Random-Secure-0.06/lib/Math/Random/Secure.pm">Math::Random::Secure</a></td></tr>
+    <tr><td>C/C++ (Windows API)</td><td><a href="http://en.wikipedia.org/wiki/CryptGenRandom">CryptGenRandom</a></td></tr>
+    <tr><td>Any language on GNU/Linux or Unix</td><td>Read from <a href="http://en.wikipedia.org/wiki//dev/random">/dev/random</a> or /dev/urandom</td></tr>
+</table> <br />
+
+<p>
+The salt needs to be unique per-user per-password. Every time a user creates an account or changes their password, the password should be hashed using a new random salt. Never reuse a salt.
+The salt also needs to be long, so that there are many possible salts. Make sure your salt is at least as long as the hash function's output. The salt should be stored in the user account table alongside the hash.
+</p>
+
+<h6>To Store a Password</h6>
+
+<ol>
+    <li>Generate a long random salt using a CSPRNG.</li>
+    <li>Prepend the salt to the password and hash it with a <b>standard</b> cryptographic hash function such as SHA256.</li>
+    <li>Save both the salt and the hash in the user's database record.</li>
+</ol>
+
+<h6>To Validate a Password</h6>
+
+<ol>
+    <li>Retrieve the user's salt and hash from the database.</li>
+    <li>Prepend the salt to the given password and hash it using the same hash function.</li>
+    <li>Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.</li>
+</ol><br />
+
+<p>
+    At the bottom of this page, there is an implementation of basic hashing with salt in <a href="#phpsourcecode">PHP</a> and <a href="#aspsourcecode">C#</a>.
+</p>
+
+<h4>Making Password Cracking Harder: Slow Hash Functions</h4>
+
+<p>
+    Salt ensures that attackers can't use specialized attacks like lookup tables and rainbow tables to crack large collections of hashes quickly, but it doesn't prevent them from running dictionary or brute-force attacks on each hash individually. High-end graphics cards (GPUs) and custom hardware can compute billions of hashes per second, so these attacks are still very effective. To make these attacks less effective, we can use a technique known as <b>key stretching</b>.
+</p>
+
+<p>
+    The idea is to make the hash function very slow, so that even with a fast GPU or custom hardware, dictionary and brute-force attacks are too slow to be worthwhile. The goal is to make the hash function slow enough to impede attacks, but still fast enough to not cause a noticeable delay for the user.
+</p>
+
+<p>
+    Key stretching is implemented using a special type of CPU-intensive hash function. Don't try to invent your own&ndash;simply iteratively hashing the hash of the password isn't enough as it can be parallelized in hardware and executed as fast as a normal hash. Use a standard algorithm like <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> or <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>. You can find a PHP implementation of <a href="https://defuse.ca/php-pbkdf2.htm">PBKDF2 here</a>.
+</p>
+
+<p>
+    These algorithms take a security factor or iteration count as an argument. This value determines how slow the hash function will be. For desktop software or smartphone apps, the best way to choose this parameter is to run a short benchmark on the device to find the value that makes the hash take about half a second. This way, your program can be as secure as possible without affecting the user experience.
+</p>
+
+<p>
+    If you use a key stretching hash in a web application, be aware that you will need extra computational resources to process large volumes of authentication requests, and that key stretching may make it easier to run a Denial of Service (DoS) attack on your website.
+    I still recommend using key stretching, but with a lower iteration count. You should calculate the iteration count based on your computational resources and the expected maximum authentication request rate. Always design your system so that the iteration count can be increased or decreased in the future.
+</p>
+
+<!--
+<h4>Impossible-to-crack Hashes: Keyed Hashes and Password Hashing Hardware</h4>
+
+<p>
+    It is possible to hash passwords in a way that is impossible to crack. 
+</p>
+-->
+
+
 			<a name="faq"></a>
 			<h3>FAQ</h3>
 			<h4>What hash algorithm should I use?</h4>

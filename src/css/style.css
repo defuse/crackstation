@@ -82,6 +82,15 @@ textarea {
     background-color: #001946;
 }
 
+#rnglist {
+    margin: 0 auto;
+}
+
+#rnglist td {
+    border: solid 1px #AAAAAA;
+    padding: 10px;
+}
+
 .passcrack{
     font-family:monospace;
     margin: 10px;
