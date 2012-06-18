@@ -341,13 +341,28 @@ The salt also needs to be long, so that there are many possible salts. Make sure
     I still recommend using key stretching, but with a lower iteration count. You should calculate the iteration count based on your computational resources and the expected maximum authentication request rate. Always design your system so that the iteration count can be increased or decreased in the future.
 </p>
 
-<!--
 <h4>Impossible-to-crack Hashes: Keyed Hashes and Password Hashing Hardware</h4>
 
 <p>
-    It is possible to hash passwords in a way that is impossible to crack. 
+    As long as an attacker can use a hash to check whether a password guess is right or wrong, they can run a dictionary or brute-force attack on the hash.
+    The next step is to add a <b>secret key</b> to the hash so that only someone who knows the key can use the hash validate a password. This can be accomplished two ways. Either the hash can be encrypted using a cipher like AES, or the secret key can be included in the hash using a keyed hash algorithm like <a href="http://en.wikipedia.org/wiki/HMAC">HMAC</a>.
 </p>
--->
+
+<p>
+    This is not as easy as it sounds. The key has to be kept secret from an attacker even in the event of a breach. If an attacker gains full access to the system, they'll be able to steal the key no matter where it is stored. The key must be stored in an external system, such as a physically separate server dedicated to password validation, or a special hardware device attached to the server such as the <a href="https://www.yubico.com/YubiHSM">YubiHSM</a>.
+</p>
+
+<p>
+    I highly recommend this approach for any large scale (more than 100,000 users) service. I consider it necessary for any service hosting more than 1,000,000 user accounts.
+</p>
+
+<p>
+    If you can't afford multiple dedicated servers or special hardware devices, you can still get some of the benefits of keyed hashes on a standard web server. Most databases are breached using <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL Injection Attacks</a>, which, in most cases, don't give attackers access to the local filesystem (make sure you disable local filesystem access in your SQL server if it has this feature). If you randomly generate a key upon application installation, and store it in a file somewhere that isn't accessible from the web, and include it into the salted hashes, the hashes won't be vulnerable if your database is breached using a simple SQL injection attack. It's not a perfect solution because if there are SQL injection vulnerabilities in a web application, there are probably others that would allow an attacker to read the secret key file. But, it's better than nothing.
+</p>
+
+<p>
+    Please note that keyed hashes do not remove the need for salt. Clever attackers will eventually find ways to compromise the keys, so it is important that hashes are still protected by salt and key stretching.
+</p>
 
 
 			<a name="faq"></a>
