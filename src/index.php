@@ -61,12 +61,12 @@ header('Content-Type: text/html; charset=utf-8');
 <!--==============================header=================================-->
 				<header>
 					<div class="wrapper p4">
-						<h1>
+						<div class="headhead">
                             <a id="headerheads" href="/">CrackStation</a>
                             <div style="font-size: 8pt; color: #6e6e6e; text-align: center;">
                                 By <a href="https://defuse.ca/">defuse.ca</a>. &nbsp;&nbsp;<?php echo htmlentities(number_format(getCrackedCount(), 0) . " of " . number_format(getCrackAttemptCount(), 0), ENT_QUOTES) . " hashes cracked."; ?>
                             </div>
-                        </h1>
+                        </div>
 						<ul class="list-services">
 							<li><a href="/about-us.htm">About Us</a></li>
 							<li><a href="/contact-us.htm">Contact Us</a></li>
@@ -87,7 +87,7 @@ header('Content-Type: text/html; charset=utf-8');
                                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
                                 <input type="hidden" name="cmd" value="_s-xclick">
                                 <input type="hidden" name="hosted_button_id" value="G26CP283D9XAG">
-                                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                                <input type="image" style="border: none;" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
                                 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                                 </form>
                             </li>

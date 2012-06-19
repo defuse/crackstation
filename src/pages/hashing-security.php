@@ -239,7 +239,7 @@ To make it impossible for an attacker to create a lookup table for every possibl
 This section covers the most common password hashing misconception: wacky combinations of hash algorithms. It's easy to get carried away and try to combine different hash functions, hoping that the result will be more secure. In practice, though, there is no benefit to doing it. All it does is create interoperability problems, and can sometimes even make the hashes less secure. Never try to invent your own crypto, always use a standard that has been designed by experts. Some will argue that using multiple hash functions makes the process of computing the hash slower, so cracking is slower, but there's a better way to make the cracking process slower as we'll see later.
 </p>
 
-<p>Here are some examples of poor wacky hash functions I've seen suggested in forums on the internet.
+<p>Here are some examples of poor wacky hash functions I've seen suggested in forums on the internet.</p>
 
 <ul>
     <li><span class="ic">md5(sha1(password))</span></li>
