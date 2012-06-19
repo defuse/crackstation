@@ -100,6 +100,15 @@ header('Content-Type: text/html; charset=utf-8');
                         URLParse::IncludePageContents();
                     ?>
 				</section>
+                <div style="text-align: center; font-size: 8pt;">
+                <p>
+                <?php
+                    $total = htmlentities(PHPCount::GetHits($name, false));
+                    $unique = htmlentities(PHPCount::GetHits($name, true));
+                    echo "Total hits: $total &nbsp;&nbsp;&nbsp; Unique hits: $unique";
+                ?>
+                </p>
+                </div>
 			</div>
 		</div>
 	</body>

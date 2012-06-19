@@ -561,11 +561,10 @@ namespace DEFUSE<br />
 &nbsp;&nbsp; &nbsp;}<br />
 }
 </div>
-			</div>
-			<br />
-            <div style="text-align: center;">
-			    <h4>Article written by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></h4>
-            </div>
-
 </div>
+<br />
+<div style="text-align: center;">
+    <h4>Article written by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></h4>
+</div>
+
 </div>
