@@ -370,79 +370,86 @@ The salt also needs to be long, so that there are many possible salts. Make sure
 </p>
 
 
-			<a name="faq"></a>
-			<h3>FAQ</h3>
-			<h4>What hash algorithm should I use?</h4>
-			<span style="color: green;"><b>DO</b></span> use:
+<a name="faq"></a>
+<h3>Frequently Asked Questions</h3>
+<h4>What hash algorithm should I use?</h4>
+<span style="color: green;"><b>DO</b></span> use:
 
-            <p>
-			<ul class="moveul">
-				<li>The SHA2 Family - SHA256 and SHA512</li>
+<p>
+<ul class="moveul">
+    <li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a> or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a> at the bottom of this page.</li>
+    <li>Any modern well-tested cryptographic hash algorithm, such as SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
+    <li>Well-designed key stretching algorithms such as <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and <a href="http://www.tarsnap.com/scrypt.html">scrypt</a>.</li>
+</ul>
+</p>
+<span style="color: red;"><b>DO NOT</b></span> use:
 
-				<li>RipeMD160</li>
-				<li>WHIRLPOOL</li>
-				<li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a> or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a> near the bottom of this page</li>
-			</ul>
-            </p>
-			<span style="color: red;"><b>DO NOT</b></span> use:
+<p>
+<ul class="moveul">
+    <li>Outdated hash functions like MD5 or SHA1</li>
+    <li>Insecure versions of <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a></li>
+    <li>Any algorithm that you designed yourself. Only use technology that is in the public domain and has been well-tested by experienced cryptographers.</li>
+</ul>
+</p>
 
-            <p>
-			<ul class="moveul">
-				<li>MD5</li>
-				<li>SHA0 or SHA1</li>
-				<li>Old versions of crypt. If you use a newer form of crypt, make sure it uses a long salt.</li>
-				<li>Any algorithm that you made yourself or hasn't gone through an intensive peer review process like the SHA3 competition</li>
-			</ul>
-            </p>
+<p>
+    Even though there are no cryptographic attacks on MD5 or SHA1 that make their hashes easier to crack, they are old and are widely considered (somewhat incorrectly) to be inadequate for password storage. So I don't recommend using them. An exception to this rule is PBKDF2, which is frequently implemented using SHA1 as the underlying hash function.
+</p>
+<h4>How should I allow users to reset their password when they forget it?</h4>
 
-            <p>
-                Even though there are no attacks on MD5 or SHA1 that would help crack a hash, they have been superseded by the SHA2 family, so I don't recommend using them. An exception to this rule is PBKDF2, which is frequently used with SHA1.
-            </p>
-			<h4>How long should the salt be?</h4>
-			The salt should be at least as long as the hash function. For example, if your hash function is 256 bits, then you should have a salt of at least 256 bits. I find that the easiest way to generate enough salt is to generate a random string of hex characters that is the same length as the hash function output (64 hex characters for 256 bits). First and foremost, your salt should be long enough so that no two users' passwords will ever be hashed using the same salt.
+<p>
+    It is my personal opinion that all password reset mechanisms in widespread use today are insecure. If you have high security requirements, such as an encryption service would, do not let the user reset their password.
+</p>
 
-			<h4>How do I generate the salt?</h4>
-			Use a <u>Cryptographically Secure</u> Pseudo-Random Number Generator (CSPRNG). Do NOT use your language's math library's <span class="ic">rand()</span> function. There will be a proper CSPRNG for you to use. In PHP, it's <a href="http://php.net/manual/en/function.mcrypt-create-iv.php" rel="nofollow" title="PHP mcrypt_create_iv Documentation"><span class="ic">mcrypt_create_iv()</span></a> and in .NET it's <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider.aspx" title="C# RNGCryptoServiceProvider Documentation" rel="nofollow"><span class="ic">System.Security.Cryptography.RNGCryptoServiceProvider</span></a>. The imporant thing is that the salt is <b>unique</b> for each user. Using a high quality CSPRNG to generate a long salt will practically guarantee uniqueness without needing to manually check if the salt has been used before.
+<p>
+Most websites use an email loop to authenticate users who have forgotten their password. To do this, generate a random <b>single-use</b> token that is strongly tied to the account. Include it in a password reset link sent to the user's email address. When the user clicks a password reset link containing a valid token, prompt them for a new password. Be sure that the token is strongly tied to the user account so that an attacker can't use a token sent to his own email address to reset a different user's password.
+</p>
 
+<p>
+The token should be set to expire in 15 minutes and after its first use. If not, it can be forever used to break into the user's account. Email (SMTP) is a plain-text protocol, and there may be malicious routers on the internet recording email traffic. And, a user's email account (including the reset link) may be compromised long after their password has been changed. Making the token expire  quickly reduces the user's exposure to these attacks.
+</p>
 
-			<h4>What do I do if my database gets leaked/hacked?</h4>
-            <p>It may be tempting to cover up the breach and hope nobody notices. Keep in mind that trying to cover up a breach makes you look worse, because you're putting your users at further risk by not informing them that their password may be compromised. The correct thing to do is to inform your users as soon as possible. <b>Do not inform your users by email.</b> Instead, put a notice on the front page of your website that links to a page with more detailed information. 
-            </p>
-            <p>
-                You shouldn't inform your users by email because it will look like a <a href="http://en.wikipedia.org/wiki/Phishing">phishing attack</a>. Spam filters will block it, and security-aware users won't believe it.
-            </p>
-            <p>
-                Explain to your users exactly how their passwords were protected&mdash;hopefully hashed with salt&mdash;and that even though they were protected with a salted hash, a malicious hacker can still run dictionary and brute force attacks on the hashes. Malicious hackers will use any passwords they find to try to log into a user's account on a different website, hoping they used the same password on both websites. Inform your users of this risk and recommend that they change there password both on your website, and any other website where they used a similar password.
-            </p>
+<p>
+Attackers will be able to modify the tokens, so don't store the user account information or timeout information in them. They should be an unpredictable random binary blob used only to identify a record in a database table.
+</p>
 
-			<h4>What should my password policy be? Should I enforce strong passwords?</h4>
-			Don't limit your users. I would reccomend somehow dynamically showing users the strength of their password as they type it, and let them decide how secure they want their password to be. If your service handles sensitive user information, you may want to ensure that there is at least 1 number and 1 symbol in the password. Passwords should be able to contain ANY type of character. The password length should be a minimum of 6 characters and a maximum of beyond 100 characters (Yes, There are people who use 100 character and longer passwords!).
+<p>
+    Never send the user a new password over email.
+</p>
 
-			<h4>If someone has access to my database, can't they just replace the hash of my password with their own hash so they can login?</h4>
-			Yes. But if someone has accesss to your database, they probably already have access to everything on your server, so they wouldn't need to login to your account to get what they want.
-			<br /><br />
-			However, there is something you can do to prevent this. Create special database permissions so that only the account creation script has <u>write</u> access to the user table, and give all other scripts <u>read only</u> access. Then, if an attacker can access your user table through a SQL injection vulnerability, he won't be able to modify the hashes.
-			<h4>Is there anything that can be done to make dictionary attacks and brute force attacks harder?</h4>
+<h4>What should I do if my user account database gets leaked/hacked?</h4>
+<p>It may be tempting to cover up the breach and hope nobody notices. Keep in mind that trying to cover up a breach makes you look worse, because you're putting your users at further risk by not informing them that their password may be compromised. The correct thing to do is to inform your users as soon as possible. Put a notice on the front page of your website that links to a page with more detailed information, and send a notice to each user by email if possible. 
+</p>
 
-            <p>
-			Yes. You can have your program  hash the password many thousands of times (feed the output back into the input). Doing so makes the password hashing process thousands of times slower, and thus makes dictionary and brute force attacks thousands of times slower. This is called <a href="https://secure.wikimedia.org/wikipedia/en/wiki/Key_stretching">key stretching</a>. A common key stretching algorithm is <a href="https://secure.wikimedia.org/wikipedia/en/wiki/PBKDF2">PBKDF2</a>. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.
-            </p>
+<p>
+    The security community is generally very understanding and sympathizes with organizations who notify their users of breach promptly. Try to cover it up, though, and it's a different story.
+</p>
 
-            <p>You may think that having to hash the password thousands of times will slow down the login process, but an average CPU today can compute over 1,000,000 hashes in one second. The time it takes to hash a password, say, 5000 times, is not noticeable. This will increase your application's CPU usage, but it is well worth it. If a dictionary attack takes 10 minutes to run on a normal hash, it will take more than 34 days to run on a hash produced by 5000-iteration PBKDF2.
-            </p>
+<p>
+    Explain to your users exactly how their passwords were protected&mdash;hopefully hashed with salt&mdash;and that even though they were protected with a salted hash, a malicious hacker can still run dictionary and brute force attacks on the hashes. Malicious hackers will use any passwords they find to try to login to a user's account on a different website, hoping they used the same password on both websites. Inform your users of this risk and recommend that they change their password on any website or service where they used a similar password. Force them to change their password for your service the next time they log in.
+</p>
 
-            <p>
-                I recommend using at least 500 iterations, but ideally 5000, for web applications that process a lot of sign-ons. A stand-alone application running on a PC or mobile device should use at least 50,000 iterations. But remember that computers are continually getting faster. You should increase the number of iterations as processor speed increases.
-            </p>
+<h4>What should my password policy be? Should I enforce strong passwords?</h4>
+<p>
+If your service doesn't have strict security requirements, then don't limit your users. I recommend showing users information about the strength of their password as they type it, letting them decide how secure they want their password to be. If you have special security needs, enforce a minimum length of 12 characters and require at least two letters, two digits, and two symbols.
+</p>
+<p>
+Do not force your users to change their password more often than once every six months, as doing so creates "user fatigue" and makes users less likely to choose good passwords. Instead, train users to change their password whenever they feel it has been compromised, and to never tell their password to anyone. If it is a business setting, encourage employees to use paid time to memorize and practice their password.
+</p>
 
-			<h4>Why bother hashing?</h4>
+<h4>If someone has access to my database, can't they just replace the hash of my password with their own hash and login?</h4>
+Yes. But if someone has accesss to your database, they probably already have access to everything on your server, so they wouldn't need to login to your account to get what they want.
+<br /><br />
+However, there is something you can do to prevent this. Create special database permissions so that only the account creation script has <u>write</u> access to the user table, and give all other scripts <u>read only</u> access. Then, if an attacker can access your user table through a SQL injection vulnerability, he won't be able to modify the hashes.
 
-            <p>
-                Your users are entering their password into your website. They are trusting you with their security. If your database gets hacked, and your users' passwords are unprotected, then malicious hackers can use those passwords to compromise your users' accounts on other websites and services (most people use the same password everywhere). It's not just your security that's at risk, it's your users'. You are responsible for your users' security.
-            </p>
+<h4>Why bother hashing?</h4>
 
-			<a name="phpsourcecode"></a>
-			<h3>PHP Password Hashing Code</h3>
+<p>
+    Your users are entering their password into your website. They are trusting you with their security. If your database gets hacked, and your users' passwords are unprotected, then malicious hackers can use those passwords to compromise your users' accounts on other websites and services (most people use the same password everywhere). It's not just your security that's at risk, it's your users'. You are responsible for your users' security.
+</p>
+
+<a name="phpsourcecode"></a>
+<h3>PHP Password Hashing Code</h3>
 
 			The following is a secure implementation of salted hashing in PHP. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.<br /><br />
 <div class="passcrack">
