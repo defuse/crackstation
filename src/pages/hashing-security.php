@@ -375,22 +375,18 @@ The salt also needs to be long, so that there are many possible salts. Make sure
 <h4>What hash algorithm should I use?</h4>
 <span style="color: green;"><b>DO</b></span> use:
 
-<p>
 <ul class="moveul">
     <li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a> or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a> at the bottom of this page.</li>
     <li>Any modern well-tested cryptographic hash algorithm, such as SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
     <li>Well-designed key stretching algorithms such as <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and <a href="http://www.tarsnap.com/scrypt.html">scrypt</a>.</li>
-</ul>
-</p>
+</ul><br />
 <span style="color: red;"><b>DO NOT</b></span> use:
 
-<p>
 <ul class="moveul">
     <li>Outdated hash functions like MD5 or SHA1</li>
     <li>Insecure versions of <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a></li>
     <li>Any algorithm that you designed yourself. Only use technology that is in the public domain and has been well-tested by experienced cryptographers.</li>
-</ul>
-</p>
+</ul><br />
 
 <p>
     Even though there are no cryptographic attacks on MD5 or SHA1 that make their hashes easier to crack, they are old and are widely considered (somewhat incorrectly) to be inadequate for password storage. So I don't recommend using them. An exception to this rule is PBKDF2, which is frequently implemented using SHA1 as the underlying hash function.
