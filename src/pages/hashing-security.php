@@ -3,11 +3,20 @@
 			<h3>Salted Password Hashing - Doing it Right</h3>
 
 <p>
-If you're a web developer, you've probably had to make a user account system. The most important aspect of a user account system is how user passwords are protected. User account databases are hacked frequently, so you absolutely must do something to protect your users' passwords if your website is ever breached. The best way to protect passwords is to employ <b>salted password hashing</b>. This page will explain how to do it properly.
+If you're a web developer, you've probably had to make a user account system.
+The most important aspect of a user account system is how user passwords are
+protected. User account databases are hacked frequently, so you absolutely must
+do something to protect your users' passwords if your website is ever breached.
+The best way to protect passwords is to employ <b>salted password hashing</b>.
+This page will explain how to do it properly.
 </p>
 
 <p>
-There are a lot of conflicting ideas and misconceptions on how to do password hashing properly, probably due to the abundance of misinformation on the web. Password hashing is one of those things that's so simple, but yet so many people get wrong. With this page, I hope to explain not only the correct way to do it, but why it should be done that way.
+There are a lot of conflicting ideas and misconceptions on how to do password
+hashing properly, probably due to the abundance of misinformation on the web.
+Password hashing is one of those things that's so simple, but yet so many people
+get wrong. With this page, I hope to explain not only the correct way to do it,
+but why it should be done that way.
 </p>
 
 <p>You may use the following links to jump to the different sections of this page.</p>
@@ -36,11 +45,18 @@ There are a lot of conflicting ideas and misconceptions on how to do password ha
             hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542<br>
         </div>
 <p>
-Hash algorithms are one way functions. They turn any amount of data into a fixed-length "fingerprint" that cannot be reversed. They also have the property that if the input changes by even a tiny bit, the resulting hash is completely different (see the example above). This is great for protecting passwords, because we want to store passwords in an encrypted form that's impossible to decrypt, but at the same time, we need to be able to verify that a user's password is correct. 
+Hash algorithms are one way functions. They turn any amount of data into a
+fixed-length "fingerprint" that cannot be reversed. They also have the property
+that if the input changes by even a tiny bit, the resulting hash is completely
+different (see the example above). This is great for protecting passwords,
+because we want to store passwords in an encrypted form that's impossible to
+decrypt, but at the same time, we need to be able to verify that a user's
+password is correct. 
 </p>
 
 <p>
-The general workflow for account registration and authentication in a hash-based account system is as follows:
+The general workflow for account registration and authentication in a hash-based
+account system is as follows:
 </p>
 <ol class="moveul">
     <li>The user creates an account.</li>
@@ -52,13 +68,23 @@ The general workflow for account registration and authentication in a hash-based
 </ol>
 <br />
 <p>
-It should be noted that the hash functions used to protect passwords are not the same as the hash functions you may have seen in a data structures course.
-The hash functions used to implement data structures such as hash tables are designed to be fast, not secure. Only <b>cryptographic hash functions</b> may be used to implement password hashing.
-Hash functions like SHA256, SHA512, RipeMD, and WHIRLPOOL are cryptographic hash functions.
+It should be noted that the hash functions used to protect passwords are not the
+same as the hash functions you may have seen in a data structures course.  The
+hash functions used to implement data structures such as hash tables are
+designed to be fast, not secure. Only <b>cryptographic hash functions</b> may be
+used to implement password hashing.  Hash functions like SHA256, SHA512, RipeMD,
+and WHIRLPOOL are cryptographic hash functions.
 </p>
 
 <p>
-It is easy to think that all you have to do is run the password through a cryptographic hash function and your users' passwords will be secure. This is far from the truth. There are many ways to recover passwords from plain hashes very quickly. There are several easy-to-implement techniques that make these "attacks" much less effective. To motivate the need for these techniques, consider this very website. On the front page, you can submit a list of hashes to be cracked, and receive results in less than a second. Clearly, simply hashing the password does not meet our needs for security.
+It is easy to think that all you have to do is run the password through a
+cryptographic hash function and your users' passwords will be secure. This is
+far from the truth. There are many ways to recover passwords from plain hashes
+very quickly. There are several easy-to-implement techniques that make these
+"attacks" much less effective. To motivate the need for these techniques,
+consider this very website. On the front page, you can submit a list of hashes
+to be cracked, and receive results in less than a second. Clearly, simply
+hashing the password does not meet our needs for security.
 </p>
 
 <p>The next section will discuss some of the common attacks used to crack plain password hashes.</p>
@@ -101,15 +127,30 @@ It is easy to think that all you have to do is run the password through a crypto
     </p>
 
     <p>
-    A dictionary attack uses a file containing words, phrases, common passwords, and other strings that are likely to be used as a password. Each word in the file is hashed, and its hash is compared to the password hash. If they match, that word is the password. These dictionary files are constructed by extracting words from large bodies of text, and even from real databases of passwords. Further processing is often applied to dictionary files, such as replacing words with their "leet speak" equivalents ("hello" becomes "h3110"), to make them more effective.
+    A dictionary attack uses a file containing words, phrases, common passwords,
+    and other strings that are likely to be used as a password. Each word in the
+    file is hashed, and its hash is compared to the password hash. If they
+    match, that word is the password. These dictionary files are constructed by
+    extracting words from large bodies of text, and even from real databases of
+    passwords. Further processing is often applied to dictionary files, such as
+    replacing words with their "leet speak" equivalents ("hello" becomes
+    "h3110"), to make them more effective.
     </p>
 
     <p>
-    A brute-force attack tries every possible combination of characters up to a given length. These attacks are very computationally expensive, and are usually the least efficient in terms of hashes cracked per processor time, but they will always eventually find the password. Passwords should be long enough that searching through all possible character strings to find it will take too long to be worthwhile.
+    A brute-force attack tries every possible combination of characters up to a
+    given length. These attacks are very computationally expensive, and are
+    usually the least efficient in terms of hashes cracked per processor time,
+    but they will always eventually find the password. Passwords should be long
+    enough that searching through all possible character strings to find it will
+    take too long to be worthwhile.
     </p>
 
     <p>
-    There is no way to prevent dictionary attacks or brute force attacks. They can be made less effective, but there isn't a way to prevent them altogether. If your password hashing system is secure, the only way to crack the hashes will be to run a dictionary or brute-force attack on each hash.
+    There is no way to prevent dictionary attacks or brute force attacks. They
+    can be made less effective, but there isn't a way to prevent them
+    altogether. If your password hashing system is secure, the only way to crack
+    the hashes will be to run a dictionary or brute-force attack on each hash.
     </p>
 </li>
 
@@ -126,11 +167,18 @@ It is easy to think that all you have to do is run the password through a crypto
     </center>
 
     <p>
-    Lookup tables are an extremely effective method for cracking many hashes of the same type very quickly. The general idea is to <b>pre-compute</b> the hashes of the passwords in a password dictionary and store them, and their corresponding password, in a lookup table data structure. A good implementation of a lookup table can process hundreds of hash lookups per second, even when they contain many billions of hashes.
+    Lookup tables are an extremely effective method for cracking many hashes of
+    the same type very quickly. The general idea is to <b>pre-compute</b> the
+    hashes of the passwords in a password dictionary and store them, and their
+    corresponding password, in a lookup table data structure. A good
+    implementation of a lookup table can process hundreds of hash lookups per
+    second, even when they contain many billions of hashes.
     </p>
 
     <p>
-    If you want a better idea of how fast lookup tables can be, try cracking the following sha256 hashes with CrackStation's <a href="/">free hash cracker</a>.
+    If you want a better idea of how fast lookup tables can be, try cracking the
+    following sha256 hashes with CrackStation's <a href="/">free hash
+    cracker</a>.
     </p>
 
     <div class="passcrack" style="text-align: center;" title="Example hashes to be cracked">
@@ -158,21 +206,31 @@ It is easy to think that all you have to do is run the password through a crypto
     </p>
 
     <p>
-    First, the attacker creates a lookup table that maps each password hash from the compromised user account database to a list of users who had that hash.
-    The attacker then hashes each password guess and uses the lookup table to get a list of users whose password was the attacker's guess. This attack is especially effective because it is common for many users to have the same password. 
+    First, the attacker creates a lookup table that maps each password hash from
+    the compromised user account database to a list of users who had that hash.
+    The attacker then hashes each password guess and uses the lookup table to
+    get a list of users whose password was the attacker's guess. This attack is
+    especially effective because it is common for many users to have the same
+    password. 
     </p>
 </li>
 
 <li>
     <h4>Rainbow Tables</h4>
     <p>
-    Rainbow tables are a time-memory trade-off technique. They are like lookup tables, except that they sacrifice hash cracking speed to make the lookup tables smaller. Because they are smaller, the solutions to more hashes can be stored in the same amount of space, making them more effective. Rainbow tables that can crack any md5 hash of a password up to 8 characters long <a href="http://www.freerainbowtables.com/en/tables2/">exist</a>.
+    Rainbow tables are a time-memory trade-off technique. They are like lookup
+    tables, except that they sacrifice hash cracking speed to make the lookup
+    tables smaller. Because they are smaller, the solutions to more hashes can
+    be stored in the same amount of space, making them more effective. Rainbow
+    tables that can crack any md5 hash of a password up to 8 characters long <a
+    href="http://www.freerainbowtables.com/en/tables2/">exist</a>.
     </p>
 </li>
 </ul>
 
 <p>
-Next, we'll look at a technique called salting, which makes it impossible to use lookup tables and rainbow tables to crack a hash.
+Next, we'll look at a technique called salting, which makes it impossible to use
+lookup tables and rainbow tables to crack a hash.
 </p>
 
 <a name="salt"></a>
@@ -186,16 +244,26 @@ Next, we'll look at a technique called salting, which makes it impossible to use
 </div>
 
 <p>
-Lookup tables and rainbow tables only work because each password is hashed the exact same way. If two users have the same password, they'll have the same password hashes. 
-We can prevent these attacks by randomizing each hash, so that when the same password is hashed twice, the hashes are not the same.
+Lookup tables and rainbow tables only work because each password is hashed the
+exact same way. If two users have the same password, they'll have the same
+password hashes.  We can prevent these attacks by randomizing each hash, so that
+when the same password is hashed twice, the hashes are not the same.
 </p>
 
 <p>
-We can randomize the hashes by appending or prepending a random string, called a <b>salt</b>, to the password before hashing. As shown in the example above, this makes the same password hash into a completely different string every time. To check if a password is correct, we need the salt, so it is usually stored in the user account database along with the hash, or as part of the hash string itself.
+We can randomize the hashes by appending or prepending a random string, called a
+<b>salt</b>, to the password before hashing. As shown in the example above, this
+makes the same password hash into a completely different string every time. To
+check if a password is correct, we need the salt, so it is usually stored in the
+user account database along with the hash, or as part of the hash string itself.
 </p>
 
 <p>
-The salt does not need to be secret. Just by randomizing the hashes, lookup tables, reverse lookup tables, and rainbow tables become ineffective. An attacker won't know in advance what the salt will be, so they can't pre-compute a lookup table or rainbow table. If each user's password is hashed with a different salt, the reverse lookup table attack won't work either. 
+The salt does not need to be secret. Just by randomizing the hashes, lookup
+tables, reverse lookup tables, and rainbow tables become ineffective. An
+attacker won't know in advance what the salt will be, so they can't pre-compute
+a lookup table or rainbow table. If each user's password is hashed with a
+different salt, the reverse lookup table attack won't work either. 
 </p>
 
 <p>
@@ -206,13 +274,21 @@ In the next section, we'll look at how salt is commonly implemented incorrectly.
 <h3>The <span style="color: red;">WRONG</span> Way: Short Salt &amp; Salt Reuse</h3>
 
 <p>
-The most common salt implementation errors are reusing the same salt in multiple hashes, or using a salt that is too short.
+The most common salt implementation errors are reusing the same salt in multiple
+hashes, or using a salt that is too short.
 </p>
 
 <h4>Salt Reuse</h4>
 
 <p>
-A common mistake is to use the same salt in each hash. Either the salt is hard-coded into the program, or is generated randomly once. This is ineffective because if two users have the same password, they'll still have the same hash. An attacker can still use a reverse lookup table attack to run a dictionary attack on every hash at the same time. They just have to apply the salt to each password guess before they hash it. If the salt is hard-coded into a popular product, lookup tables and rainbow tables can be built for that salt, to make it easier to crack hashes generated by the product.
+A common mistake is to use the same salt in each hash. Either the salt is
+hard-coded into the program, or is generated randomly once. This is ineffective
+because if two users have the same password, they'll still have the same hash.
+An attacker can still use a reverse lookup table attack to run a dictionary
+attack on every hash at the same time. They just have to apply the salt to each
+password guess before they hash it. If the salt is hard-coded into a popular
+product, lookup tables and rainbow tables can be built for that salt, to make it
+easier to crack hashes generated by the product.
 </p>
 
 <p>
@@ -222,21 +298,39 @@ A new random salt must be generated each time a user creates an account or chang
 <h4>Short Salt</h4>
 
 <p>
-If the salt is too short, an attacker can build a lookup table for every possible salt. For example, if the salt is only three ASCII characters, there are only 95x95x95 = 857,375 possible salts. That may seem like a lot, but if each lookup table contains only 1MB of the most common passwords, collectively they will be only 837GB, which is not a lot considering 1000GB hard drives can be bought for under $100 today.
+If the salt is too short, an attacker can build a lookup table for every
+possible salt. For example, if the salt is only three ASCII characters, there
+are only 95x95x95 = 857,375 possible salts. That may seem like a lot, but if
+each lookup table contains only 1MB of the most common passwords, collectively
+they will be only 837GB, which is not a lot considering 1000GB hard drives can
+be bought for under $100 today.
 </p>
 
 <p>
-For the same reason, the username shouldn't be used as a salt. Usernames may be unique to a single service, but they are predictable and often reused for accounts on other services.
-An attacker can build lookup tables for common usernames and use them to crack username-salted hashes.
+For the same reason, the username shouldn't be used as a salt. Usernames may be
+unique to a single service, but they are predictable and often reused for
+accounts on other services.  An attacker can build lookup tables for common
+usernames and use them to crack username-salted hashes.
 </p>
 
 <p>
-To make it impossible for an attacker to create a lookup table for every possible salt, the salt must be long. A good rule of thumb is to use a salt that is the same size as the output of the hash function. For example, the output of SHA256 is 256 bits (32 bytes), so the salt should be at least 32 random bytes.
+To make it impossible for an attacker to create a lookup table for every
+possible salt, the salt must be long. A good rule of thumb is to use a salt that
+is the same size as the output of the hash function. For example, the output of
+SHA256 is 256 bits (32 bytes), so the salt should be at least 32 random bytes.
 </p>
 
 <h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
 <p>
-This section covers the most common password hashing misconception: wacky combinations of hash algorithms. It's easy to get carried away and try to combine different hash functions, hoping that the result will be more secure. In practice, though, there is no benefit to doing it. All it does is create interoperability problems, and can sometimes even make the hashes less secure. Never try to invent your own crypto, always use a standard that has been designed by experts. Some will argue that using multiple hash functions makes the process of computing the hash slower, so cracking is slower, but there's a better way to make the cracking process slower as we'll see later.
+This section covers the most common password hashing misconception: wacky
+combinations of hash algorithms. It's easy to get carried away and try to
+combine different hash functions, hoping that the result will be more secure. In
+practice, though, there is no benefit to doing it. All it does is create
+interoperability problems, and can sometimes even make the hashes less secure.
+Never try to invent your own crypto, always use a standard that has been
+designed by experts. Some will argue that using multiple hash functions makes
+the process of computing the hash slower, so cracking is slower, but there's a
+better way to make the cracking process slower as we'll see later.
 </p>
 
 <p>Here are some examples of poor wacky hash functions I've seen suggested in forums on the internet.</p>
@@ -256,30 +350,53 @@ This section covers the most common password hashing misconception: wacky combin
 <h3>Hash Collisions</h3>
 
 <p>
-Because hash functions map arbitrary amounts of data to fixed-length strings, there must be some inputs that hash into the same string. Cryptographic hash functions are designed to make these collisions incredibly difficult to find. From time to time, cryptographers find "attacks" on hash functions that make finding collisions easier. A recent example is the MD5 hash function, for which collisions have actually been found.
+Because hash functions map arbitrary amounts of data to fixed-length strings,
+there must be some inputs that hash into the same string. Cryptographic hash
+functions are designed to make these collisions incredibly difficult to find.
+From time to time, cryptographers find "attacks" on hash functions that make
+finding collisions easier. A recent example is the MD5 hash function, for which
+collisions have actually been found.
 </p>
 
 <p>
-Collision attacks are a sign that it may be more likely for a string other than the user's password to have the same hash. However, finding collisions in even a weak hash function like MD5 requires a lot of dedicated computing power, so it is very unlikely that these collisions will happen "by accident" in practice. A password hashed using MD5 and salt is, for all practical purposes, just as secure as if it were hashed with SHA256 and salt. Nevertheless, it is a good idea to use a more secure hash function like SHA256, SHA512, RipeMD, or WHIRLPOOL if possible.
+Collision attacks are a sign that it may be more likely for a string other than
+the user's password to have the same hash. However, finding collisions in even a
+weak hash function like MD5 requires a lot of dedicated computing power, so it
+is very unlikely that these collisions will happen "by accident" in practice. A
+password hashed using MD5 and salt is, for all practical purposes, just as
+secure as if it were hashed with SHA256 and salt. Nevertheless, it is a good
+idea to use a more secure hash function like SHA256, SHA512, RipeMD, or
+WHIRLPOOL if possible.
 </p>
 
 <a name="properhashing"></a>
 <h3>The <span style="color: green;">RIGHT</span> Way: How to Hash Properly</h3>
 
 <p>
-This section describes exactly how passwords should be hashed. The first subsection covers the basics&mdash;everything that is absolutely necessary. The following subsections explain how the basics can be augmented to make the hashes even harder to crack.
+This section describes exactly how passwords should be hashed. The first
+subsection covers the basics&mdash;everything that is absolutely necessary. The
+following subsections explain how the basics can be augmented to make the hashes
+even harder to crack.
 </p>
 
 <h4>The Basics: Hashing with Salt</h4>
 
 <p>
-    We've seen how malicious hackers can crack plain hashes very quickly using lookup tables and rainbow tables. We've learned that randomizing the hashing using salt is the solution to the problem. 
-    But how do we generate the salt, and how do we apply it to the password?
+We've seen how malicious hackers can crack plain hashes very quickly using
+lookup tables and rainbow tables. We've learned that randomizing the hashing
+using salt is the solution to the problem.  But how do we generate the salt, and
+how do we apply it to the password?
 </p>
 
 <p>
-    Salt should be generated using a <b>Cryptographically Secure Pseudo-Random Number Generator</b> (CSPRNG). CSPRNGs are very different than ordinary pseudo-random number generators, like the "C" language's <span class="ic">rand()</span> function.
-As the name suggests, CSPRNGs are designed to be cryptographically secure, meaning they provide a high level of randomness and are completely unpredictable. We don't want our salts to be predictable, so we must use a CSPRNG. The following table lists some CSPRNGs that exist for some popular programming platforms.
+Salt should be generated using a <b>Cryptographically Secure Pseudo-Random
+Number Generator</b> (CSPRNG). CSPRNGs are very different than ordinary
+pseudo-random number generators, like the "C" language's 
+<span class="ic">rand()</span> function.  As the name suggests, CSPRNGs are
+designed to be cryptographically secure, meaning they provide a high level of
+randomness and are completely unpredictable. We don't want our salts to be
+predictable, so we must use a CSPRNG. The following table lists some CSPRNGs
+that exist for some popular programming platforms.
 </p>
 
 <table id="rnglist">
@@ -294,8 +411,12 @@ As the name suggests, CSPRNGs are designed to be cryptographically secure, meani
 </table> <br />
 
 <p>
-The salt needs to be unique per-user per-password. Every time a user creates an account or changes their password, the password should be hashed using a new random salt. Never reuse a salt.
-The salt also needs to be long, so that there are many possible salts. Make sure your salt is at least as long as the hash function's output. The salt should be stored in the user account table alongside the hash.
+The salt needs to be unique per-user per-password. Every time a user creates an
+account or changes their password, the password should be hashed using a new
+random salt. Never reuse a salt.  The salt also needs to be long, so that there
+are many possible salts. Make sure your salt is at least as long as the hash
+function's output. The salt should be stored in the user account table alongside
+the hash.
 </p>
 
 <h6>To Store a Password</h6>
@@ -321,52 +442,112 @@ The salt also needs to be long, so that there are many possible salts. Make sure
 <h4>Making Password Cracking Harder: Slow Hash Functions</h4>
 
 <p>
-    Salt ensures that attackers can't use specialized attacks like lookup tables and rainbow tables to crack large collections of hashes quickly, but it doesn't prevent them from running dictionary or brute-force attacks on each hash individually. High-end graphics cards (GPUs) and custom hardware can compute billions of hashes per second, so these attacks are still very effective. To make these attacks less effective, we can use a technique known as <b>key stretching</b>.
+    Salt ensures that attackers can't use specialized attacks like lookup tables
+    and rainbow tables to crack large collections of hashes quickly, but it
+    doesn't prevent them from running dictionary or brute-force attacks on each
+    hash individually. High-end graphics cards (GPUs) and custom hardware can
+    compute billions of hashes per second, so these attacks are still very
+    effective. To make these attacks less effective, we can use a technique
+    known as <b>key stretching</b>.
 </p>
 
 <p>
-    The idea is to make the hash function very slow, so that even with a fast GPU or custom hardware, dictionary and brute-force attacks are too slow to be worthwhile. The goal is to make the hash function slow enough to impede attacks, but still fast enough to not cause a noticeable delay for the user.
+    The idea is to make the hash function very slow, so that even with a fast
+    GPU or custom hardware, dictionary and brute-force attacks are too slow to
+    be worthwhile. The goal is to make the hash function slow enough to impede
+    attacks, but still fast enough to not cause a noticeable delay for the user.
 </p>
 
 <p>
-    Key stretching is implemented using a special type of CPU-intensive hash function. Don't try to invent your own&ndash;simply iteratively hashing the hash of the password isn't enough as it can be parallelized in hardware and executed as fast as a normal hash. Use a standard algorithm like <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> or <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>. You can find a PHP implementation of <a href="https://defuse.ca/php-pbkdf2.htm">PBKDF2 here</a>.
+    Key stretching is implemented using a special type of CPU-intensive hash
+    function. Don't try to invent your own&ndash;simply iteratively hashing the
+    hash of the password isn't enough as it can be parallelized in hardware and
+    executed as fast as a normal hash. Use a standard algorithm like <a
+    href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> or <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>.
+    You can find a PHP implementation of <a href="https://defuse.ca/php-pbkdf2.htm">PBKDF2 here</a>.
 </p>
 
 <p>
-    These algorithms take a security factor or iteration count as an argument. This value determines how slow the hash function will be. For desktop software or smartphone apps, the best way to choose this parameter is to run a short benchmark on the device to find the value that makes the hash take about half a second. This way, your program can be as secure as possible without affecting the user experience.
+    These algorithms take a security factor or iteration count as an argument.
+    This value determines how slow the hash function will be. For desktop
+    software or smartphone apps, the best way to choose this parameter is to run
+    a short benchmark on the device to find the value that makes the hash take
+    about half a second. This way, your program can be as secure as possible
+    without affecting the user experience.
 </p>
 
 <p>
-    If you use a key stretching hash in a web application, be aware that you will need extra computational resources to process large volumes of authentication requests, and that key stretching may make it easier to run a Denial of Service (DoS) attack on your website.
-    I still recommend using key stretching, but with a lower iteration count. You should calculate the iteration count based on your computational resources and the expected maximum authentication request rate. Always design your system so that the iteration count can be increased or decreased in the future.
+    If you use a key stretching hash in a web application, be aware that you
+    will need extra computational resources to process large volumes of
+    authentication requests, and that key stretching may make it easier to run a
+    Denial of Service (DoS) attack on your website.  I still recommend using key
+    stretching, but with a lower iteration count. You should calculate the
+    iteration count based on your computational resources and the expected
+    maximum authentication request rate. Always design your system so that the
+    iteration count can be increased or decreased in the future.
 </p>
 
 <p>
-    If you are worried about the computational burden, but still want to use key stretching in a web application, consider running the key stretching algorithm in the user's browser with JavaScript.
-    The <a href="http://crypto.stanford.edu/sjcl/">Stanford JavaScript Crypto Library</a> includes PBKDF2. The iteration count should be set low enough that the system is usable with slower clients like mobile devices, and the system should fall back to server-side computation if the user's browser doesn't support JavaScript. Client-side key stretching does not remove the need for server-side hashing. You must hash the hash generated by the client the same way you would hash a normal password.
+    If you are worried about the computational burden, but still want to use key
+    stretching in a web application, consider running the key stretching
+    algorithm in the user's browser with JavaScript.  The <a href="http://crypto.stanford.edu/sjcl/">Stanford JavaScript Crypto
+    Library</a> includes PBKDF2. The iteration count should be set low enough
+    that the system is usable with slower clients like mobile devices, and the
+    system should fall back to server-side computation if the user's browser
+    doesn't support JavaScript. Client-side key stretching does not remove the
+    need for server-side hashing. You must hash the hash generated by the client
+    the same way you would hash a normal password.
 </p>
 
 <h4>Impossible-to-crack Hashes: Keyed Hashes and Password Hashing Hardware</h4>
 
 <p>
-    As long as an attacker can use a hash to check whether a password guess is right or wrong, they can run a dictionary or brute-force attack on the hash.
-    The next step is to add a <b>secret key</b> to the hash so that only someone who knows the key can use the hash validate a password. This can be accomplished two ways. Either the hash can be encrypted using a cipher like AES, or the secret key can be included in the hash using a keyed hash algorithm like <a href="http://en.wikipedia.org/wiki/HMAC">HMAC</a>.
+    As long as an attacker can use a hash to check whether a password guess is
+    right or wrong, they can run a dictionary or brute-force attack on the hash.
+    The next step is to add a <b>secret key</b> to the hash so that only someone
+    who knows the key can use the hash validate a password. This can be
+    accomplished two ways. Either the hash can be encrypted using a cipher like
+    AES, or the secret key can be included in the hash using a keyed hash
+    algorithm like <a href="http://en.wikipedia.org/wiki/HMAC">HMAC</a>.
 </p>
 
 <p>
-    This is not as easy as it sounds. The key has to be kept secret from an attacker even in the event of a breach. If an attacker gains full access to the system, they'll be able to steal the key no matter where it is stored. The key must be stored in an external system, such as a physically separate server dedicated to password validation, or a special hardware device attached to the server such as the <a href="https://www.yubico.com/YubiHSM">YubiHSM</a>.
+    This is not as easy as it sounds. The key has to be kept secret from an
+    attacker even in the event of a breach. If an attacker gains full access to
+    the system, they'll be able to steal the key no matter where it is stored.
+    The key must be stored in an external system, such as a physically separate
+    server dedicated to password validation, or a special hardware device
+    attached to the server such as the <a href="https://www.yubico.com/YubiHSM">YubiHSM</a>.
 </p>
 
 <p>
-    I highly recommend this approach for any large scale (more than 100,000 users) service. I consider it necessary for any service hosting more than 1,000,000 user accounts.
+    I highly recommend this approach for any large scale (more than 100,000
+    users) service. I consider it necessary for any service hosting more than
+    1,000,000 user accounts.
 </p>
 
 <p>
-    If you can't afford multiple dedicated servers or special hardware devices, you can still get some of the benefits of keyed hashes on a standard web server. Most databases are breached using <a href="http://en.wikipedia.org/wiki/SQL_injection">SQL Injection Attacks</a>, which, in most cases, don't give attackers access to the local filesystem (disable local filesystem access in your SQL server if it has this feature). If you generate a random key and store it in a file  that isn't accessible from the web, and include it into the salted hashes, then the hashes won't be vulnerable if your database is breached using a simple SQL injection attack. Don't hard-code a key into the source code, generate it randomly when the application is installed. This isn't as secure as using a separate system to do the password hashing, because if there are SQL injection vulnerabilities in a web application, there are probably other types, such as Local File Inclusion, that an attacker could use to read the secret key file. But, it's better than nothing.
+    If you can't afford multiple dedicated servers or special hardware devices,
+    you can still get some of the benefits of keyed hashes on a standard web
+    server. Most databases are breached using <a
+    href="http://en.wikipedia.org/wiki/SQL_injection">SQL Injection Attacks</a>,
+    which, in most cases, don't give attackers access to the local filesystem
+    (disable local filesystem access in your SQL server if it has this feature).
+    If you generate a random key and store it in a file  that isn't accessible
+    from the web, and include it into the salted hashes, then the hashes won't
+    be vulnerable if your database is breached using a simple SQL injection
+    attack. Don't hard-code a key into the source code, generate it randomly
+    when the application is installed. This isn't as secure as using a separate
+    system to do the password hashing, because if there are SQL injection
+    vulnerabilities in a web application, there are probably other types, such
+    as Local File Inclusion, that an attacker could use to read the secret key
+    file. But, it's better than nothing.
 </p>
 
 <p>
-    Please note that keyed hashes do not remove the need for salt. Clever attackers will eventually find ways to compromise the keys, so it is important that hashes are still protected by salt and key stretching.
+    Please note that keyed hashes do not remove the need for salt. Clever
+    attackers will eventually find ways to compromise the keys, so it is
+    important that hashes are still protected by salt and key stretching.
 </p>
 
 
@@ -379,34 +560,54 @@ The salt also needs to be long, so that there are many possible salts. Make sure
     <li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a> or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a> at the bottom of this page.</li>
     <li>Any modern well-tested cryptographic hash algorithm, such as SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
     <li>Well-designed key stretching algorithms such as <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and <a href="http://www.tarsnap.com/scrypt.html">scrypt</a>.</li>
+    <li>Secure versions of <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a> ($2y$, $5$, $6$)</li>
 </ul><br />
 <span style="color: red;"><b>DO NOT</b></span> use:
 
 <ul class="moveul">
-    <li>Outdated hash functions like MD5 or SHA1</li>
-    <li>Insecure versions of <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a></li>
+    <li>Outdated hash functions like MD5 or SHA1.</li>
+    <li>Insecure versions of crypt ($1$, $2$, $2a$, $2x$, $3$).</li>
     <li>Any algorithm that you designed yourself. Only use technology that is in the public domain and has been well-tested by experienced cryptographers.</li>
 </ul><br />
 
 <p>
-    Even though there are no cryptographic attacks on MD5 or SHA1 that make their hashes easier to crack, they are old and are widely considered (somewhat incorrectly) to be inadequate for password storage. So I don't recommend using them. An exception to this rule is PBKDF2, which is frequently implemented using SHA1 as the underlying hash function.
+    Even though there are no cryptographic attacks on MD5 or SHA1 that make
+    their hashes easier to crack, they are old and are widely considered
+    (somewhat incorrectly) to be inadequate for password storage. So I don't
+    recommend using them. An exception to this rule is PBKDF2, which is
+    frequently implemented using SHA1 as the underlying hash function.
 </p>
 <h4>How should I allow users to reset their password when they forget it?</h4>
 
 <p>
-    It is my personal opinion that all password reset mechanisms in widespread use today are insecure. If you have high security requirements, such as an encryption service would, do not let the user reset their password.
+    It is my personal opinion that all password reset mechanisms in widespread
+    use today are insecure. If you have high security requirements, such as an
+    encryption service would, do not let the user reset their password.
 </p>
 
 <p>
-Most websites use an email loop to authenticate users who have forgotten their password. To do this, generate a random <b>single-use</b> token that is strongly tied to the account. Include it in a password reset link sent to the user's email address. When the user clicks a password reset link containing a valid token, prompt them for a new password. Be sure that the token is strongly tied to the user account so that an attacker can't use a token sent to his own email address to reset a different user's password.
+Most websites use an email loop to authenticate users who have forgotten their
+password. To do this, generate a random <b>single-use</b> token that is strongly
+tied to the account. Include it in a password reset link sent to the user's
+email address. When the user clicks a password reset link containing a valid
+token, prompt them for a new password. Be sure that the token is strongly tied
+to the user account so that an attacker can't use a token sent to his own email
+address to reset a different user's password.
 </p>
 
 <p>
-The token should be set to expire in 15 minutes and after its first use. If not, it can be forever used to break into the user's account. Email (SMTP) is a plain-text protocol, and there may be malicious routers on the internet recording email traffic. And, a user's email account (including the reset link) may be compromised long after their password has been changed. Making the token expire  quickly reduces the user's exposure to these attacks.
+The token should be set to expire in 15 minutes and after its first use. If not,
+it can be forever used to break into the user's account. Email (SMTP) is a
+plain-text protocol, and there may be malicious routers on the internet
+recording email traffic. And, a user's email account (including the reset link)
+may be compromised long after their password has been changed. Making the token
+expire  quickly reduces the user's exposure to these attacks.
 </p>
 
 <p>
-Attackers will be able to modify the tokens, so don't store the user account information or timeout information in them. They should be an unpredictable random binary blob used only to identify a record in a database table.
+Attackers will be able to modify the tokens, so don't store the user account
+information or timeout information in them. They should be an unpredictable
+random binary blob used only to identify a record in a database table.
 </p>
 
 <p>
@@ -414,40 +615,79 @@ Attackers will be able to modify the tokens, so don't store the user account inf
 </p>
 
 <h4>What should I do if my user account database gets leaked/hacked?</h4>
-<p>It may be tempting to cover up the breach and hope nobody notices. Keep in mind that trying to cover up a breach makes you look worse, because you're putting your users at further risk by not informing them that their password may be compromised. The correct thing to do is to inform your users as soon as possible. Put a notice on the front page of your website that links to a page with more detailed information, and send a notice to each user by email if possible. 
+<p>
+It may be tempting to cover up the breach and hope nobody notices. Keep in
+mind that trying to cover up a breach makes you look worse, because you're
+putting your users at further risk by not informing them that their password may
+be compromised. The correct thing to do is to inform your users as soon as
+possible. Put a notice on the front page of your website that links to a page
+with more detailed information, and send a notice to each user by email if
+possible. 
 </p>
 
 <p>
-    The security community is generally very understanding and sympathizes with organizations who notify their users of breach promptly. Try to cover it up, though, and it's a different story.
+The security community is generally very understanding and sympathizes with
+organizations who notify their users of breach promptly. Try to cover it up,
+though, and it's a different story.
 </p>
 
 <p>
-    Explain to your users exactly how their passwords were protected&mdash;hopefully hashed with salt&mdash;and that even though they were protected with a salted hash, a malicious hacker can still run dictionary and brute force attacks on the hashes. Malicious hackers will use any passwords they find to try to login to a user's account on a different website, hoping they used the same password on both websites. Inform your users of this risk and recommend that they change their password on any website or service where they used a similar password. Force them to change their password for your service the next time they log in.
+Explain to your users exactly how their passwords were protected&mdash;hopefully
+hashed with salt&mdash;and that even though they were protected with a salted
+hash, a malicious hacker can still run dictionary and brute force attacks on the
+hashes. Malicious hackers will use any passwords they find to try to login to a
+user's account on a different website, hoping they used the same password on
+both websites. Inform your users of this risk and recommend that they change
+their password on any website or service where they used a similar password.
+Force them to change their password for your service the next time they log in.
 </p>
 
 <h4>What should my password policy be? Should I enforce strong passwords?</h4>
 <p>
-If your service doesn't have strict security requirements, then don't limit your users. I recommend showing users information about the strength of their password as they type it, letting them decide how secure they want their password to be. If you have special security needs, enforce a minimum length of 12 characters and require at least two letters, two digits, and two symbols.
+If your service doesn't have strict security requirements, then don't limit your
+users. I recommend showing users information about the strength of their
+password as they type it, letting them decide how secure they want their
+password to be. If you have special security needs, enforce a minimum length of
+12 characters and require at least two letters, two digits, and two symbols.
 </p>
 <p>
-Do not force your users to change their password more often than once every six months, as doing so creates "user fatigue" and makes users less likely to choose good passwords. Instead, train users to change their password whenever they feel it has been compromised, and to never tell their password to anyone. If it is a business setting, encourage employees to use paid time to memorize and practice their password.
+Do not force your users to change their password more often than once every six
+months, as doing so creates "user fatigue" and makes users less likely to choose
+good passwords. Instead, train users to change their password whenever they feel
+it has been compromised, and to never tell their password to anyone. If it is a
+business setting, encourage employees to use paid time to memorize and practice
+their password.
 </p>
 
 <h4>If someone has access to my database, can't they just replace the hash of my password with their own hash and login?</h4>
-Yes. But if someone has accesss to your database, they probably already have access to everything on your server, so they wouldn't need to login to your account to get what they want.
+Yes. But if someone has accesss to your database, they probably already have
+access to everything on your server, so they wouldn't need to login to your
+account to get what they want.
 <br /><br />
-However, there is something you can do to prevent this. Create special database permissions so that only the account creation script has <u>write</u> access to the user table, and give all other scripts <u>read only</u> access. Then, if an attacker can access your user table through a SQL injection vulnerability, he won't be able to modify the hashes.
+However, there is something you can do to prevent this. Create special database
+permissions so that only the account creation script has <u>write</u> access to
+the user table, and give all other scripts <u>read only</u> access. Then, if an
+attacker can access your user table through a SQL injection vulnerability, he
+won't be able to modify the hashes.
 
 <h4>Why bother hashing?</h4>
 
 <p>
-    Your users are entering their password into your website. They are trusting you with their security. If your database gets hacked, and your users' passwords are unprotected, then malicious hackers can use those passwords to compromise your users' accounts on other websites and services (most people use the same password everywhere). It's not just your security that's at risk, it's your users'. You are responsible for your users' security.
+Your users are entering their password into your website. They are trusting you
+with their security. If your database gets hacked, and your users' passwords are
+unprotected, then malicious hackers can use those passwords to compromise your
+users' accounts on other websites and services (most people use the same
+password everywhere). It's not just your security that's at risk, it's your
+users'. You are responsible for your users' security.
 </p>
 
 <a name="phpsourcecode"></a>
 <h3>PHP Password Hashing Code</h3>
 
-			The following is a secure implementation of salted hashing in PHP. If you want to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.<br /><br />
+The following is a secure implementation of salted hashing in PHP. If you want
+to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.
+<br /><br />
+
 <div class="passcrack">
 //Takes a password and returns the salted hash<br />
 //$password - the password to hash<br />
