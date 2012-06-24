@@ -550,6 +550,43 @@ the hash.
     important that hashes are still protected by salt and key stretching.
 </p>
 
+<h3>Other Security Measures</h3>
+
+<p>
+Password hashing protects passwords in the event of a security breach. It does
+not make the application as a whole more secure. Much more must be done to
+prevent the password hashes (and other user data) from being stolen in the first
+place.
+</p>
+
+<p>
+Even experienced developers must be educated in security in order to write secure applications.
+A great resource for learning about web application vulnerabilities is 
+<a href="https://www.owasp.org/index.php/Main_Page">The Open Web Application
+Security Project (OWASP)</a>. A good introduction is the 
+<a href="http://owasptop10.googlecode.com/files/OWASP%20Top%2010%20-%202010.pdf">OWASP Top Ten Vulnerability List</a>.
+Unless you understand all the vulnerabilities on the list, do not attempt to
+write a web application that deals with sensitive data. It is the employer's
+responsibility to ensure all developers are adequately trained in secure
+application development.
+</p>
+
+<p>
+Having a third party "penetration test" your application is a good idea. Even
+the best programmers make mistakes, so it always makes sense to have a security
+expert review the code for potential vulnerabilities. Find a trustworthy
+organization (or hire staff) to review your code on a regular basis. The
+security review process should begin early in an application's life and continue
+throughout its development.
+</p>
+
+<p>
+It is also important to monitor your website to detect a breach if one does
+occur. I recommend hiring at least one person whose full time job is detecting
+and responding to security breaches. If a breach goes undetected, the attacker
+can make your website infect visitors with malware, so it is extremely important
+that breaches are detected and responded to promptly.
+</p>
 
 <a name="faq"></a>
 <h3>Frequently Asked Questions</h3>
@@ -615,20 +652,20 @@ random binary blob used only to identify a record in a database table.
 </p>
 
 <h4>What should I do if my user account database gets leaked/hacked?</h4>
+
 <p>
-It may be tempting to cover up the breach and hope nobody notices. Keep in
-mind that trying to cover up a breach makes you look worse, because you're
-putting your users at further risk by not informing them that their password may
-be compromised. The correct thing to do is to inform your users as soon as
-possible. Put a notice on the front page of your website that links to a page
-with more detailed information, and send a notice to each user by email if
-possible. 
+Your first priority is to determine how the system was compromised and patch
+the vulnerability the attacker used to get in. If you do not have experience
+responding to breaches, I highly recommend hiring a third-party security firm.
 </p>
 
 <p>
-The security community is generally very understanding and sympathizes with
-organizations who notify their users of breach promptly. Try to cover it up,
-though, and it's a different story.
+It may be tempting to cover up the breach and hope nobody notices. However, trying to cover up a breach makes you look worse, because you're putting
+your users at further risk by not informing them that their passwords and other
+personal information may be
+compromised. You must inform your users as soon as possible&mdash;even if you don't yet fully understand what happened.  Put a notice on the
+front page of your website that links to a page with more detailed information,
+and send a notice to each user by email if possible. 
 </p>
 
 <p>
@@ -640,6 +677,25 @@ user's account on a different website, hoping they used the same password on
 both websites. Inform your users of this risk and recommend that they change
 their password on any website or service where they used a similar password.
 Force them to change their password for your service the next time they log in.
+Most users will try to "change" their password to the original password to get
+around the forced change quickly. Use the current password hash to ensure that
+they cannot do this.
+</p>
+
+<p>
+It is likely, even with salted slow hashes, that an attacker will be able to
+crack some of the weak passwords very quickly. To reduce the attacker's window of opportunity to use these passwords, you should require, in
+addition to the current password, an email loop for authentication until the
+user has changed their password. See the previous question, "How should I allow
+users to reset their password when they forget it?" for tips on implementing
+email loop authentication.
+</p>
+
+<p>
+Also tell your users what kind of personal information was stored on the
+website. If your database includes credit card numbers, you should instruct your
+users to look over their recent and future bills closely and cancel their
+credit card.
 </p>
 
 <h4>What should my password policy be? Should I enforce strong passwords?</h4>
@@ -659,16 +715,23 @@ business setting, encourage employees to use paid time to memorize and practice
 their password.
 </p>
 
-<h4>If someone has access to my database, can't they just replace the hash of my password with their own hash and login?</h4>
-Yes. But if someone has accesss to your database, they probably already have
+<h4>If an attacker has access to my database, can't they just replace the hash of my password with their own hash and login?</h4>
+
+<p>
+Yes, but if someone has accesss to your database, they probably already have
 access to everything on your server, so they wouldn't need to login to your
-account to get what they want.
-<br /><br />
-However, there is something you can do to prevent this. Create special database
-permissions so that only the account creation script has <u>write</u> access to
-the user table, and give all other scripts <u>read only</u> access. Then, if an
-attacker can access your user table through a SQL injection vulnerability, he
-won't be able to modify the hashes.
+account to get what they want. The purpose of password hashing (in the context
+of a website) is not to protect the website from being breached, but to protect
+the passwords if a breach does occur.
+</p>
+
+<p>
+You can prevent hashes from being replaced during a SQL injection attack by
+connecting to the database with two users with different permissions. One for
+the 'create account' code and one for the 'login' code. The 'create account'
+code should be able to read and write to the user table, but the 'login' code
+should only be able to read.
+</p>
 
 <h4>Why bother hashing?</h4>
 
