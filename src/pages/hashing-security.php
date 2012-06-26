@@ -635,12 +635,15 @@ address to reset a different user's password.
 </p>
 
 <p>
-The token should be set to expire in 15 minutes and after its first use. If not,
-it can be forever used to break into the user's account. Email (SMTP) is a
-plain-text protocol, and there may be malicious routers on the internet
-recording email traffic. And, a user's email account (including the reset link)
-may be compromised long after their password has been changed. Making the token
-expire  quickly reduces the user's exposure to these attacks.
+The token must be set to expire in 15 minutes or after it is used, whichever
+comes first. It is also a good idea to expire any existing password tokens when
+the user logs in (they remembered their password) or requests another reset
+token. If a token doesn't expire, it can be forever used to break into the
+user's account.  Email (SMTP) is a plain-text protocol, and there may be
+malicious routers on the internet recording email traffic. And, a user's email
+account (including the reset link) may be compromised long after their password
+has been changed.  Making the token expire as soon as possible reduces the
+user's exposure to these attacks.
 </p>
 
 <p>
