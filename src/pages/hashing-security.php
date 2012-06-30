@@ -738,6 +738,41 @@ code should be able to read and write to the user table, but the 'login' code
 should only be able to read.
 </p>
 
+<h4>Why do I have to use a special algorithm like HMAC? Why can't I just append
+the password to the secret key?</h4>
+
+<p> Hash functions like MD5, SHA1, and SHA2 use the <a href="http://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction">
+Merkle–Damgård construction</a>, which makes them vulnerable to what are known
+as length extension attacks. This means that given a hash H(X), an attacker can
+find the value of H(pad(X) + Y), for any other string Y, without knowing X.
+pad(X) is the padding function used by the hash.
+</p>
+
+<p>
+This means that given a hash H(key + message), an attacker can compute H(pad(key +
+message) + extension), without knowing the key. If the hash was being used as a
+message authentication code, using the key to prevent an attacker from being
+able to modify the message and replace it with a different valid hash, the
+system has failed, since the attacker now has a valid hash of message +
+extension.
+</p>
+
+<p>
+It is not clear how an attacker could use this attack to crack a password hash
+quicker.  However, because of the attack, it is considered bad practice to
+use a plain hash function for keyed hashing. A clever cryptographer may one day
+come up with a clever way to use these attacks to make cracking faster, so use
+HMAC.
+</p>
+
+
+<h4>Should the salt come before or after the password?</h4>
+
+<p>
+It doesn't matter, but pick one and stick with it for interoperability's sake.
+Having the salt come before the password seems to be more common.
+</p>
+
 <h4>Why bother hashing?</h4>
 
 <p>
