@@ -63,10 +63,17 @@ account system is as follows:
     <li>Their password is hashed and stored in the database. At no point is the plain-text (unencrypted) password ever written to the hard drive.</li>
 
     <li>When the user attempts to login, the hash of the password they entered is checked against the hash of their real password (retrieved from the database).</li>
-    <li>If the hashes match, the user is granted access. If not, the user is told they entered an incorrect password.</li>
+    <li>If the hashes match, the user is granted access. If not, the user is told they entered invalid login credentials.</li>
     <li>Steps 3 and 4 repeat everytime someone tries to login to their account.</li>
 </ol>
 <br />
+
+<p>
+In step 4, never tell the user if it was the username or password they got wrong. Always display
+a generic message like "Invalid username or password." This prevents attackers from enumerating
+valid usernames without knowing their passwords.
+</p>
+
 <p>
 It should be noted that the hash functions used to protect passwords are not the
 same as the hash functions you may have seen in a data structures course.  The
