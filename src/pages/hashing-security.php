@@ -794,38 +794,121 @@ users'. You are responsible for your users' security.
 <a name="phpsourcecode"></a>
 <h3>PHP Password Hashing Code</h3>
 
-The following is a secure implementation of salted hashing in PHP. If you want
-to use PBKDF2 in PHP, use <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's implementation</a>.
+The following is a secure implementation of salted slow hashing in PHP. You can find a test suite
+and benchmark code for it on <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's
+PBKDF2 for PHP</a> page.
 <br /><br />
 
 <div class="passcrack">
-//Takes a password and returns the salted hash<br />
-//$password - the password to hash<br />
-//returns - the hash of the password (128 hex characters)<br />
-function HashPassword($password)<br />
+&lt;?php<br />
+/*<br />
+&nbsp;* Password hashing with PBKDF2.<br />
+&nbsp;* Author: havoc AT defuse.ca<br />
+&nbsp;* www: https://defuse.ca/php-pbkdf2.htm<br />
+&nbsp;*/<br />
+<br />
+// These constants may be changed without breaking existing hashes.<br />
+define(&quot;PBKDF2_HASH_ALGORITHM&quot;, &quot;sha256&quot;);<br />
+define(&quot;PBKDF2_ITERATIONS&quot;, 1000);<br />
+define(&quot;PBKDF2_SALT_BYTES&quot;, 24);<br />
+define(&quot;PBKDF2_HASH_BYTES&quot;, 24);<br />
+<br />
+define(&quot;HASH_SECTIONS&quot;, 4);<br />
+define(&quot;HASH_ALGORITHM_INDEX&quot;, 0);<br />
+define(&quot;HASH_ITERATION_INDEX&quot;, 1);<br />
+define(&quot;HASH_SALT_INDEX&quot;, 2);<br />
+define(&quot;HASH_PBKDF2_INDEX&quot;, 3);<br />
+<br />
+function create_hash($password)<br />
 {<br />
-&nbsp;&nbsp; &nbsp;$salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM)); //get 256 random bits in hex<br />
-&nbsp;&nbsp; &nbsp;$hash = hash(&quot;sha256&quot;, $salt . $password); //prepend the salt, then hash<br />
-&nbsp;&nbsp; &nbsp;//store the salt and hash in the same string, so only 1 DB column is needed<br />
-&nbsp;&nbsp; &nbsp;$final = $salt . $hash; <br />
-&nbsp;&nbsp; &nbsp;return $final;<br />
+&nbsp;&nbsp; &nbsp;// format: algorithm:iterations:salt:hash<br />
+&nbsp;&nbsp; &nbsp;$salt = base64_encode(mcrypt_create_iv(PBKDF2_SALT_BYTES, MCRYPT_DEV_URANDOM));<br />
+&nbsp;&nbsp; &nbsp;return PBKDF2_HASH_ALGORITHM . &quot;:&quot; . PBKDF2_ITERATIONS . &quot;:&quot; . &nbsp;$salt . &quot;:&quot; . <br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;base64_encode(pbkdf2(<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PBKDF2_HASH_ALGORITHM,<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$password,<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$salt,<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PBKDF2_ITERATIONS,<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PBKDF2_HASH_BYTES,<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;true<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;));<br />
 }<br />
 <br />
-//Validates a password<br />
-//returns true if hash is the correct hash for that password<br />
-//$hash - the hash created by HashPassword (stored in your DB)<br />
-//$password - the password to verify<br />
-//returns - true if the password is valid, false otherwise.<br />
-function ValidatePassword($password, $correctHash)<br />
+function validate_password($password, $good_hash)<br />
 {<br />
-&nbsp;&nbsp; &nbsp;$salt = substr($correctHash, 0, 64); //get the salt from the front of the hash<br />
-&nbsp;&nbsp; &nbsp;$validHash = substr($correctHash, 64, 64); //the SHA256<br />
+&nbsp;&nbsp; &nbsp;$params = explode(&quot;:&quot;, $good_hash);<br />
+&nbsp;&nbsp; &nbsp;if(count($params) &lt; HASH_SECTIONS)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; return false; <br />
+&nbsp;&nbsp; &nbsp;$pbkdf2 = base64_decode($params[HASH_PBKDF2_INDEX]);<br />
+&nbsp;&nbsp; &nbsp;return slow_equals(<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;$pbkdf2,<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;pbkdf2(<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$params[HASH_ALGORITHM_INDEX],<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$password,<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$params[HASH_SALT_INDEX],<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(int)$params[HASH_ITERATION_INDEX],<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;strlen($pbkdf2),<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;true<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;)<br />
+&nbsp;&nbsp; &nbsp;);<br />
+}<br />
 <br />
-&nbsp;&nbsp; &nbsp;$testHash = hash(&quot;sha256&quot;, $salt . $password); //hash the password being tested<br />
-&nbsp;&nbsp; &nbsp;<br />
-&nbsp;&nbsp; &nbsp;//if the hashes are exactly the same, the password is valid<br />
-&nbsp;&nbsp; &nbsp;return $testHash === $validHash;<br />
-}
+// Compares two strings $a and $b in length-constant time.<br />
+function slow_equals($a, $b)<br />
+{<br />
+&nbsp;&nbsp; &nbsp;$diff = strlen($a) ^ strlen($b);<br />
+&nbsp;&nbsp; &nbsp;for($i = 0; $i &lt; min(strlen($a), strlen($b)); $i++)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;$diff |= ord($a[$i]) ^ ord($b[$i]);<br />
+&nbsp;&nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp;return $diff === 0; <br />
+}<br />
+<br />
+/*<br />
+&nbsp;* PBKDF2 key derivation function as defined by RSA&#039;s PKCS #5: https://www.ietf.org/rfc/rfc2898.txt<br />
+&nbsp;* $algorithm - The hash algorithm to use. Recommended: SHA256<br />
+&nbsp;* $password - The password.<br />
+&nbsp;* $salt - A salt that is unique to the password.<br />
+&nbsp;* $count - Iteration count. Higher is better, but slower. Recommended: At least 1024.<br />
+&nbsp;* $key_length - The length of the derived key in bytes.<br />
+&nbsp;* $raw_output - If true, the key is returned in raw binary format. Hex encoded otherwise.<br />
+&nbsp;* Returns: A $key_length-byte key derived from the password and salt.<br />
+&nbsp;*<br />
+&nbsp;* Test vectors can be found here: https://www.ietf.org/rfc/rfc6070.txt<br />
+&nbsp;*<br />
+&nbsp;* This implementation of PBKDF2 was originally created by https://defuse.ca<br />
+&nbsp;* With improvements by http://www.variations-of-shadow.com<br />
+&nbsp;*/<br />
+function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output = false)<br />
+{<br />
+&nbsp;&nbsp; &nbsp;$algorithm = strtolower($algorithm);<br />
+&nbsp;&nbsp; &nbsp;if(!in_array($algorithm, hash_algos(), true))<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;die(&#039;PBKDF2 ERROR: Invalid hash algorithm.&#039;);<br />
+&nbsp;&nbsp; &nbsp;if($count &lt;= 0 || $key_length &lt;= 0)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;die(&#039;PBKDF2 ERROR: Invalid parameters.&#039;);<br />
+<br />
+&nbsp;&nbsp; &nbsp;$hash_length = strlen(hash($algorithm, &quot;&quot;, true));<br />
+&nbsp;&nbsp; &nbsp;$block_count = ceil($key_length / $hash_length);<br />
+<br />
+&nbsp;&nbsp; &nbsp;$output = &quot;&quot;;<br />
+&nbsp;&nbsp; &nbsp;for($i = 1; $i &lt;= $block_count; $i++) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// $i encoded as 4 bytes, big endian.<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;$last = $salt . pack(&quot;N&quot;, $i);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// first iteration<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;$last = $xorsum = hash_hmac($algorithm, $last, $password, true);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// perform the other $count - 1 iterations<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;for ($j = 1; $j &lt; $count; $j++) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;$xorsum ^= ($last = hash_hmac($algorithm, $last, $password, true));<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;$output .= $xorsum;<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;if($raw_output)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return substr($output, 0, $key_length);<br />
+&nbsp;&nbsp; &nbsp;else<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return bin2hex(substr($output, 0, $key_length));<br />
+}<br />
+?&gt;
 </div>
 			<a name="aspsourcecode"></a>
 			<h3>ASP.NET (C#) Password Hashing Code</h3>
