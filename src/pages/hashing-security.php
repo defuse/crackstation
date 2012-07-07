@@ -34,8 +34,8 @@ but why it should be done that way.
 </tr>
 <tr>
     <td>7. <a href="#phpsourcecode" title="PHP password hashing example source code">PHP Source Code</a></td>
-    <td>8. <a href="#aspsourcecode" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
     <td>8. <a href="#javasourcecode" title="Java password hashing example source code">Java Source Code</a></td>
+    <td>9. <a href="#aspsourcecode" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
 </tr>
 </tbody></table>
 
