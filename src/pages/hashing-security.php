@@ -26,14 +26,16 @@ but why it should be done that way.
     <td>2. <a href="#attacks" title="Methods for making hash cracking more efficient">How Hashes are Cracked</a></td>
 
     <td>3. <a href="#salt" title="Adding salt to render hash cracking attacks less effective">Adding Salt</a></td>
-    <td>4. <a href="#ineffective" title="The wrong way to do password hashing">Ineffective Hashing Methods</a></td>
 </tr>
 <tr>
+    <td>4. <a href="#ineffective" title="The wrong way to do password hashing">Ineffective Hashing Methods</a></td>
     <td>5. <a href="#properhashing" title="The right way to do password hashing, with salt">How to hash properly</a></td>
     <td>6. <a href="#faq" title="Frequently asked questions about password hashing and salt">Frequently Asked Questions</a></td>
-
+</tr>
+<tr>
     <td>7. <a href="#phpsourcecode" title="PHP password hashing example source code">PHP Source Code</a></td>
-    <td>8. <a href="#aspsourcecode" title="PHP password hashing example source code in C#">ASP.NET (C#) Source Code</a></td>
+    <td>8. <a href="#aspsourcecode" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
+    <td>8. <a href="#javasourcecode" title="Java password hashing example source code">Java Source Code</a></td>
 </tr>
 </tbody></table>
 
@@ -558,6 +560,7 @@ the hash.
     important that hashes are still protected by salt and key stretching.
 </p>
 
+<a name="othersecurity"></a>
 <h3>Other Security Measures</h3>
 
 <p>
@@ -602,7 +605,11 @@ that breaches are detected and responded to promptly.
 <span style="color: green;"><b>DO</b></span> use:
 
 <ul class="moveul">
-    <li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a> or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a> at the bottom of this page.</li>
+    <li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a>,
+            <a href="#javasourcecode" title="Java password hashing source code">Java source code</a>,
+            or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a>
+            at the bottom of this page.
+    </li>
     <li>OpenWall's <a href="http://www.openwall.com/phpass/">Portable PHP password hashing
     framework</a></li>
     <li>Any modern well-tested cryptographic hash algorithm, such as SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
@@ -793,11 +800,12 @@ users'. You are responsible for your users' security.
 </p>
 
 <a name="phpsourcecode"></a>
-<h3>PHP Password Hashing Code</h3>
+<h3>PHP PBKDF2 Password Hashing Code</h3>
 
-The following is a secure implementation of salted slow hashing in PHP. You can find a test suite
+The following code is a secure implementation of PBKDF2 hashing in PHP. You can find a test suite
 and benchmark code for it on <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's
-PBKDF2 for PHP</a> page.
+PBKDF2 for PHP</a> page. The code is in the public domain, so you may use it for any purpose
+whatsoever.
 <br /><br />
 
 <div class="passcrack">
@@ -911,9 +919,230 @@ function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output =
 }<br />
 ?&gt;
 </div>
+
+<a name="javasourcecode"></a>
+<h3>Java PBKDF2 Password Hashing Code</h3>
+<p>
+    The following code is a secure implementation of PBKDF2 hashing in Java.
+    The code is in the public domain, so you may use it for any purpose whatsoever.
+</p>
+<div class="passcrack">
+import java.security.SecureRandom;<br />
+import javax.crypto.spec.PBEKeySpec;<br />
+import javax.crypto.SecretKeyFactory;<br />
+import java.math.BigInteger;<br />
+import java.security.NoSuchAlgorithmException;<br />
+import java.security.spec.InvalidKeySpecException;<br />
+<br />
+/*<br />
+&nbsp;* PBKDF2 salted password hashing.<br />
+&nbsp;* Author: havoc AT defuse.ca<br />
+&nbsp;* www: http://crackstation.net/hashing-security.htm<br />
+&nbsp;*/<br />
+public class PasswordHash<br />
+{<br />
+&nbsp;&nbsp; &nbsp;public static final String PBKDF2_ALGORITHM = &quot;PBKDF2WithHmacSHA1&quot;;<br />
+<br />
+&nbsp;&nbsp; &nbsp;// The following constants may be changed without breaking existing hashes.<br />
+&nbsp;&nbsp; &nbsp;public static final int SALT_BYTES = 24;<br />
+&nbsp;&nbsp; &nbsp;public static final int HASH_BYTES = 24;<br />
+&nbsp;&nbsp; &nbsp;public static final int PBKDF2_ITERATIONS = 1000;<br />
+<br />
+&nbsp;&nbsp; &nbsp;public static final int ITERATION_INDEX = 0;<br />
+&nbsp;&nbsp; &nbsp;public static final int SALT_INDEX = 1;<br />
+&nbsp;&nbsp; &nbsp;public static final int PBKDF2_INDEX = 2;<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Returns a salted PBKDF2 hash of the password.<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; password &nbsp; &nbsp;the password to hash<br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a salted PBKDF2 hash of the password<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;public static String createHash(String password)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;throws NoSuchAlgorithmException, InvalidKeySpecException<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return createHash(password.toCharArray());<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Returns a salted PBKDF2 hash of the password.<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; password &nbsp; &nbsp;the password to hash<br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a salted PBKDF2 hash of the password<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;public static String createHash(char[] password)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;throws NoSuchAlgorithmException, InvalidKeySpecException<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Generate a random salt<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;SecureRandom random = new SecureRandom();<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] salt = new byte[SALT_BYTES];<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;random.nextBytes(salt);<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Hash the password<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] hash = pbkdf2(password, salt, PBKDF2_ITERATIONS, HASH_BYTES);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// format iterations:salt:hash<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return PBKDF2_ITERATIONS + &quot;:&quot; + toHex(salt) + &quot;:&quot; + &nbsp;toHex(hash);<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Validates a password using a hash.<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; password &nbsp; &nbsp;the password to check<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; goodHash &nbsp; &nbsp;the hash of the valid password<br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;true if the password is correct, false if not<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;public static boolean validatePassword(String password, String goodHash)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;throws NoSuchAlgorithmException, InvalidKeySpecException<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return validatePassword(password.toCharArray(), goodHash);<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Validates a password using a hash.<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; password &nbsp; &nbsp;the password to check<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; goodHash &nbsp; &nbsp;the hash of the valid password<br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;true if the password is correct, false if not<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;public static boolean validatePassword(char[] password, String goodHash)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;throws NoSuchAlgorithmException, InvalidKeySpecException<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Decode the hash into its parameters<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;String[] params = goodHash.split(&quot;:&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;int iterations = Integer.parseInt(params[ITERATION_INDEX]);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] salt = fromHex(params[SALT_INDEX]);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] hash = fromHex(params[PBKDF2_INDEX]);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Compute the hash of the provided password, using the same salt, <br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// iteration count, and hash length<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] testHash = pbkdf2(password, salt, iterations, hash.length);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Compare the hashes in constant time. The password is correct if<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// both hashes match.<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return slowEquals(hash, testHash);<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Compares two byte arrays in length-constant time. This comparison method<br />
+&nbsp;&nbsp; &nbsp; * is used so that password hashes cannot be extracted from an on-line <br />
+&nbsp;&nbsp; &nbsp; * system using a timing attack and then attacked off-line.<br />
+&nbsp;&nbsp; &nbsp; * <br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; a &nbsp; &nbsp; &nbsp; the first byte array<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; b &nbsp; &nbsp; &nbsp; the second byte array <br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;true if both byte arrays are the same, false if not<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;private static boolean slowEquals(byte[] a, byte[] b)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;int diff = a.length ^ b.length;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;for(int i = 0; i &lt; a.length &amp;&amp; i &lt; b.length; i++)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;diff |= a[i] ^ b[i];<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return diff == 0;<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * &nbsp;Computes the PBKDF2 hash of a password.<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; password &nbsp; &nbsp;the password to hash.<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; salt &nbsp; &nbsp; &nbsp; &nbsp;the salt<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; iterations &nbsp;the iteration count (slowness factor)<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; bytes &nbsp; &nbsp; &nbsp; the length of the hash to compute in bytes<br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;the PBDKF2 hash of the password<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;throws NoSuchAlgorithmException, InvalidKeySpecException<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return skf.generateSecret(spec).getEncoded();<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Converts a string of hexadecimal characters into a byte array.<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; hex &nbsp; &nbsp; &nbsp; &nbsp; the hex string<br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;the hex string decoded into a byte array<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;private static byte[] fromHex(String hex)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] binary = new byte[hex.length() / 2];<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;for(int i = 0; i &lt; binary.length; i++)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;binary[i] = (byte)Integer.parseInt(hex.substring(2*i, 2*i+2), 16);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return binary;<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Converts a byte array into a hexadecimal string.<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; array &nbsp; &nbsp; &nbsp; the byte array to convert<br />
+&nbsp;&nbsp; &nbsp; * @return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;a length*2 character string encoding the byte array<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;private static String toHex(byte[] array)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;BigInteger bi = new BigInteger(1, array);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;String hex = bi.toString(16);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;int paddingLength = (array.length * 2) - hex.length();<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;if(paddingLength &gt; 0) <br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return String.format(&quot;%0&quot; + paddingLength + &quot;d&quot;, 0) + hex;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;else<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return hex;<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp;/**<br />
+&nbsp;&nbsp; &nbsp; * Tests the basic functionality of the PasswordHash class<br />
+&nbsp;&nbsp; &nbsp; *<br />
+&nbsp;&nbsp; &nbsp; * @param &nbsp; args &nbsp; &nbsp; &nbsp; &nbsp;ignored<br />
+&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;public static void main(String[] args)<br />
+&nbsp;&nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;try<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Print out 10 hashes<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for(int i = 0; i &lt; 10; i++)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(PasswordHash.createHash(&quot;p\r\nassw0Rd!&quot;));<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Test password validation<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;boolean failure = false;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(&quot;Running tests...&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for(int i = 0; i &lt; 100; i++)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String password = &quot;&quot;+i;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String hash = createHash(password);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String secondHash = createHash(password);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(hash == secondHash) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(&quot;FAILURE: TWO HASHES ARE EQUAL!&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;failure = true;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String wrongPassword = &quot;&quot;+(i+1);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(validatePassword(wrongPassword, hash)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(&quot;FAILURE: WRONG PASSWORD ACCEPTED!&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;failure = true;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(!validatePassword(password, hash)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(&quot;FAILURE: GOOD PASSWORD NOT ACCEPTED!&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;failure = true;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if(failure)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(&quot;TESTS FAILED!&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;else<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(&quot;TESTS PASSED!&quot;);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;catch(Exception ex)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(&quot;ERROR: &quot; + ex);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp;}<br />
+<br />
+}<br />
+
+</div>
+
 			<a name="aspsourcecode"></a>
-			<h3>ASP.NET (C#) Password Hashing Code</h3>
-			The following code is a secure implementation of salted hashing in C# for ASP.NET<br /><br />
+<h3>ASP.NET (C#) Password Hashing Code</h3>
+<p>
+The following code is a secure implementation of salted hashing in C# for ASP.NET. It is in the
+public domain, so you may use it for any purpose whatsoever.
+</p>
 <div class="passcrack">
 using System;<br />
 using System.Text;<br />
@@ -935,7 +1164,6 @@ namespace DEFUSE<br />
 &nbsp;&nbsp; &nbsp;/// Hashes a password<br />
 &nbsp;&nbsp; &nbsp;/// &lt;/summary&gt;<br />
 &nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to hash&lt;/param&gt;<br />
-<br />
 &nbsp;&nbsp; &nbsp;/// &lt;returns&gt;The hashed password as a 128 character hex string&lt;/returns&gt;<br />
 &nbsp;&nbsp; &nbsp;public static string HashPassword(string password)<br />
 &nbsp;&nbsp; &nbsp;{<br />
@@ -948,7 +1176,6 @@ namespace DEFUSE<br />
 &nbsp;&nbsp; &nbsp;/// Validates a password<br />
 &nbsp;&nbsp; &nbsp;/// &lt;/summary&gt;<br />
 &nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to test&lt;/param&gt;<br />
-<br />
 &nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;correctHash&quot;&gt;The hash of the correct password&lt;/param&gt;<br />
 &nbsp;&nbsp; &nbsp;/// &lt;returns&gt;True if password is the correct password, false otherwise&lt;/returns&gt;<br />
 &nbsp;&nbsp; &nbsp;public static bool ValidatePassword(string password, string correctHash )<br />
@@ -994,7 +1221,7 @@ namespace DEFUSE<br />
 </div>
 <br />
 <div style="text-align: center;">
-    <h4>Article written by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></h4>
+    <h4>Article and code written by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></h4>
 </div>
 
 </div>
