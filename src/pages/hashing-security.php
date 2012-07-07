@@ -866,7 +866,7 @@ function validate_password($password, $good_hash)<br />
 function slow_equals($a, $b)<br />
 {<br />
 &nbsp;&nbsp; &nbsp;$diff = strlen($a) ^ strlen($b);<br />
-&nbsp;&nbsp; &nbsp;for($i = 0; $i &lt; min(strlen($a), strlen($b)); $i++)<br />
+&nbsp;&nbsp; &nbsp;for($i = 0; $i &lt; strlen($a) &amp;&amp; $i &lt; strlen($b); $i++)<br />
 &nbsp;&nbsp; &nbsp;{<br />
 &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;$diff |= ord($a[$i]) ^ ord($b[$i]);<br />
 &nbsp;&nbsp; &nbsp;}<br />
