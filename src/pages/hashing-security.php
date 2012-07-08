@@ -20,6 +20,7 @@ but why it should be done that way.
 </p>
 
 <p>You may use the following links to jump to the different sections of this page.</p>
+
 <table id="shortcuts">
 <tbody><tr>
     <td>1. <a href="#normalhashing" title="What are hash functions and why are they used?">What is password hashing?</a></td>
@@ -32,12 +33,29 @@ but why it should be done that way.
     <td>5. <a href="#properhashing" title="The right way to do password hashing, with salt">How to hash properly</a></td>
     <td>6. <a href="#faq" title="Frequently asked questions about password hashing and salt">Frequently Asked Questions</a></td>
 </tr>
-<tr>
-    <td>7. <a href="#phpsourcecode" title="PHP password hashing example source code">PHP Source Code</a></td>
-    <td>8. <a href="#javasourcecode" title="Java password hashing example source code">Java Source Code</a></td>
-    <td>9. <a href="#aspsourcecode" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
-</tr>
 </tbody></table>
+
+<br />
+<p>There is public domain password hashing source code at the bottom of this page:</p>
+
+<?php sourceCodeShortcuts(); ?>
+
+<?php
+function sourceCodeShortcuts() {
+?>
+    <table id="shortcuts" style="text-align: center;">
+    <tbody>
+    <tr>
+        <td><a href="#phpsourcecode" title="PHP password hashing example source code">PHP Source Code</a></td>
+        <td><a href="#javasourcecode" title="Java password hashing example source code">Java Source Code</a></td>
+        <td><a href="#aspsourcecode" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
+        <td><a href="#rubysourcecode" title="Ruby PBKDF2 password hashing code">Ruby (on Rails) Source Code</a></td>
+    </tr>
+    </tbody>
+    </table><br />
+<?
+}
+?>
 
 <a name="normalhashing"></a>
 <h3>What is password hashing?</h3>
@@ -446,7 +464,9 @@ the hash.
 </ol><br />
 
 <p>
-    At the bottom of this page, there is an implementation of basic hashing with salt in <a href="#phpsourcecode">PHP</a> and <a href="#aspsourcecode">C#</a>.
+    At the bottom of this page, there are implementations of salted password hashing in
+    <a href="#phpsourcecode">PHP</a>, <a href="#aspsourcecode">C#</a>,
+    <a href="#javasourcecode">Java</a>, and <a href="#rubysourcecode">Ruby</a>.
 </p>
 
 <h4>Making Password Cracking Harder: Slow Hash Functions</h4>
@@ -607,7 +627,8 @@ that breaches are detected and responded to promptly.
 <ul class="moveul">
     <li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a>,
             <a href="#javasourcecode" title="Java password hashing source code">Java source code</a>,
-            or the <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a>
+            <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a>
+            or the <a href="#aspsourcecode" title="Ruby password hashing source code">Ruby source code</a>
             at the bottom of this page.
     </li>
     <li>OpenWall's <a href="http://www.openwall.com/phpass/">Portable PHP password hashing
@@ -801,6 +822,7 @@ users'. You are responsible for your users' security.
 
 <a name="phpsourcecode"></a>
 <h3>PHP PBKDF2 Password Hashing Code</h3>
+<?php sourceCodeShortcuts(); ?>
 
 The following code is a secure implementation of PBKDF2 hashing in PHP. You can find a test suite
 and benchmark code for it on <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's
@@ -922,6 +944,7 @@ function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output =
 
 <a name="javasourcecode"></a>
 <h3>Java PBKDF2 Password Hashing Code</h3>
+<?php sourceCodeShortcuts(); ?>
 <p>
     The following code is a secure implementation of PBKDF2 hashing in Java.
     The code is in the public domain, so you may use it for any purpose whatsoever.
@@ -1139,6 +1162,7 @@ public class PasswordHash<br />
 
 			<a name="aspsourcecode"></a>
 <h3>ASP.NET (C#) Password Hashing Code</h3>
+<?php sourceCodeShortcuts(); ?>
 <p>
 The following code is a secure implementation of salted hashing in C# for ASP.NET. It is in the
 public domain, so you may use it for any purpose whatsoever.
@@ -1237,6 +1261,105 @@ namespace PasswordHash<br />
 &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
 &nbsp;&nbsp; &nbsp;}<br />
 }
+</div>
+
+<a name="rubysourcecode"></a>
+<h3>Ruby (on Rails) Password Hashing Code</h3>
+<?php sourceCodeShortcuts(); ?>
+<p>
+The following is a secure implementation of salted PBKDF2 password hashing in Ruby. The code is
+public domain, so you may use it for any purpose whatsoever.
+</p>
+<div class="passcrack">
+require &#039;securerandom&#039;<br />
+require &#039;openssl&#039;<br />
+require &#039;base64&#039;<br />
+<br />
+# Salted password hashing with PBKDF2-SHA1.<br />
+# Authors: RedragonX (dicesoft.net), havoc AT defuse.ca <br />
+# www: http://crackstation.net/hashing-security.htm<br />
+module PasswordHash<br />
+<br />
+&nbsp;&nbsp;# The following constants can be changed without breaking existing hashes.<br />
+&nbsp;&nbsp;PBKDF2_ITERATIONS = 1000<br />
+&nbsp;&nbsp;SALT_BYTES = 24<br />
+&nbsp;&nbsp;HASH_BYTES = 24<br />
+<br />
+&nbsp;&nbsp;HASH_SECTIONS = 4<br />
+&nbsp;&nbsp;SECTION_DELIMITER = &#039;:&#039;<br />
+&nbsp;&nbsp;ITERATIONS_INDEX = 1<br />
+&nbsp;&nbsp;SALT_INDEX = 2<br />
+&nbsp;&nbsp;HASH_INDEX = 3<br />
+<br />
+&nbsp;&nbsp;# Returns a salted PBKDF2 hash of the password.<br />
+&nbsp;&nbsp;def self.createHash( password )<br />
+&nbsp;&nbsp; &nbsp;salt = SecureRandom.base64( SALT_BYTES )<br />
+&nbsp;&nbsp; &nbsp;pbkdf2 = OpenSSL::PKCS5::pbkdf2_hmac_sha1( <br />
+&nbsp;&nbsp; &nbsp; &nbsp;password,<br />
+&nbsp;&nbsp; &nbsp; &nbsp;salt,<br />
+&nbsp;&nbsp; &nbsp; &nbsp;PBKDF2_ITERATIONS, <br />
+&nbsp;&nbsp; &nbsp; &nbsp;HASH_BYTES<br />
+&nbsp;&nbsp; &nbsp;)<br />
+&nbsp;&nbsp; &nbsp;return [&quot;sha1&quot;, PBKDF2_ITERATIONS, salt, Base64.encode64( pbkdf2 )].join( SECTION_DELIMITER )<br />
+&nbsp;&nbsp;end<br />
+<br />
+&nbsp;&nbsp;# Checks if a password is correct given a hash of the correct one.<br />
+&nbsp;&nbsp;# goodHash must be a hash string generated with createHash.<br />
+&nbsp;&nbsp;def self.validatePassword( password, goodHash )<br />
+&nbsp;&nbsp; &nbsp;params = goodHash.split( SECTION_DELIMITER )<br />
+&nbsp;&nbsp; &nbsp;return false if params.length != HASH_SECTIONS<br />
+<br />
+&nbsp;&nbsp; &nbsp;pbkdf2 = Base64.decode64( params[HASH_INDEX] )<br />
+&nbsp;&nbsp; &nbsp;testHash = OpenSSL::PKCS5::pbkdf2_hmac_sha1(<br />
+&nbsp;&nbsp; &nbsp; &nbsp;password,<br />
+&nbsp;&nbsp; &nbsp; &nbsp;params[SALT_INDEX],<br />
+&nbsp;&nbsp; &nbsp; &nbsp;params[ITERATIONS_INDEX].to_i,<br />
+&nbsp;&nbsp; &nbsp; &nbsp;pbkdf2.length<br />
+&nbsp;&nbsp; &nbsp;)<br />
+&nbsp;&nbsp; &nbsp;<br />
+&nbsp;&nbsp; &nbsp;return pbkdf2 == testHash<br />
+&nbsp;&nbsp;end<br />
+<br />
+&nbsp;&nbsp;# Run tests to ensure the module is functioning properly.<br />
+&nbsp;&nbsp;# Returns true if all tests succeed, false if not.<br />
+&nbsp;&nbsp;def self.runSelfTests<br />
+&nbsp;&nbsp; &nbsp;puts &quot;Sample hashes:&quot;<br />
+&nbsp;&nbsp; &nbsp;3.times { puts createHash(&quot;password&quot;) }<br />
+<br />
+&nbsp;&nbsp; &nbsp;puts &quot;\nRunning self tests...&quot; <br />
+&nbsp;&nbsp; &nbsp;@@allPass = true<br />
+<br />
+&nbsp;&nbsp; &nbsp;correctPassword = &#039;aaaaaaaaaa&#039;<br />
+&nbsp;&nbsp; &nbsp;wrongPassword = &#039;aaaaaaaaab&#039;<br />
+&nbsp;&nbsp; &nbsp;hash = createHash(correctPassword)<br />
+<br />
+&nbsp;&nbsp; &nbsp;assert( validatePassword( correctPassword, hash ) == true, &quot;correct password&quot; )<br />
+&nbsp;&nbsp; &nbsp;assert( validatePassword( wrongPassword, hash ) == false, &quot;wrong password&quot; ) <br />
+<br />
+&nbsp;&nbsp; &nbsp;h1 = hash.split( SECTION_DELIMITER )<br />
+&nbsp;&nbsp; &nbsp;h2 = createHash( correctPassword ).split( SECTION_DELIMITER )<br />
+&nbsp;&nbsp; &nbsp;assert( h1[HASH_INDEX] != h2[HASH_INDEX], &quot;different hashes&quot; )<br />
+&nbsp;&nbsp; &nbsp;assert( h1[SALT_INDEX] != h2[SALT_INDEX], &quot;different salt&quot; )<br />
+&nbsp;&nbsp; &nbsp; <br />
+&nbsp;&nbsp; &nbsp;if @@allPass<br />
+&nbsp;&nbsp; &nbsp; &nbsp;puts &quot;*** ALL TESTS PASS ***&quot;<br />
+&nbsp;&nbsp; &nbsp;else<br />
+&nbsp;&nbsp; &nbsp; &nbsp;puts &quot;*** FAILURES ***&quot;<br />
+&nbsp;&nbsp; &nbsp;end<br />
+<br />
+&nbsp;&nbsp; &nbsp;return @@allPass<br />
+&nbsp;&nbsp;end<br />
+<br />
+&nbsp;&nbsp;def self.assert( truth, msg )<br />
+&nbsp;&nbsp; &nbsp;if truth<br />
+&nbsp;&nbsp; &nbsp; &nbsp;puts &quot;PASS [#{msg}]&quot;<br />
+&nbsp;&nbsp; &nbsp;else<br />
+&nbsp;&nbsp; &nbsp; &nbsp;puts &quot;FAIL [#{msg}]&quot;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;@@allPass = false<br />
+&nbsp;&nbsp; &nbsp;end<br />
+&nbsp;&nbsp;end<br />
+<br />
+end
 </div>
 
 </div> <!-- body stuff -->
