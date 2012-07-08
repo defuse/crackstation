@@ -513,8 +513,10 @@ the hash.
     Denial of Service (DoS) attack on your website.  I still recommend using key
     stretching, but with a lower iteration count. You should calculate the
     iteration count based on your computational resources and the expected
-    maximum authentication request rate. Always design your system so that the
-    iteration count can be increased or decreased in the future.
+    maximum authentication request rate. The denial of service threat can be
+    eliminated by making the user solve a CAPTCHA every time they log in.
+    Always design your system so that the iteration count can be increased or
+    decreased in the future.
 </p>
 
 <p>
