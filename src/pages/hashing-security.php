@@ -1148,77 +1148,98 @@ using System;<br />
 using System.Text;<br />
 using System.Security.Cryptography;<br />
 <br />
-namespace DEFUSE<br />
+namespace PasswordHash<br />
 {<br />
-&nbsp;&nbsp; &nbsp;/*<br />
-&nbsp;&nbsp; &nbsp; * PasswordHash - A salted password hashing library<br />
-&nbsp;&nbsp; &nbsp; * WWW: https://defuse.ca/<br />
-&nbsp;&nbsp; &nbsp; * Use:<br />
-&nbsp;&nbsp; &nbsp; * &nbsp; &nbsp; &nbsp;Use &#039;HashPassword&#039; to create the initial hash, store that in your DB<br />
-&nbsp;&nbsp; &nbsp; * &nbsp; &nbsp; &nbsp;Then use &#039;ValidatePassword&#039; with the hash from the DB to verify a password<br />
-&nbsp;&nbsp; &nbsp; * &nbsp; &nbsp; &nbsp;NOTE: Salting happens automatically, there is no need for a separate salt field in the DB<br />
-&nbsp;&nbsp; &nbsp; */<br />
+&nbsp;&nbsp; &nbsp;/// &lt;summary&gt;<br />
+&nbsp;&nbsp; &nbsp;/// Salted password hashing with PBKDF2-SHA1.<br />
+&nbsp;&nbsp; &nbsp;/// Author: havoc AT defuse.ca<br />
+&nbsp;&nbsp; &nbsp;/// www: http://crackstation.net/hashing-security.htm<br />
+&nbsp;&nbsp; &nbsp;/// Compatibility: .NET 3.0 and later.<br />
+&nbsp;&nbsp; &nbsp;/// &lt;/summary&gt;<br />
 &nbsp;&nbsp; &nbsp;class PasswordHash<br />
 &nbsp;&nbsp; &nbsp;{<br />
-&nbsp;&nbsp; &nbsp;/// &lt;summary&gt;<br />
-&nbsp;&nbsp; &nbsp;/// Hashes a password<br />
-&nbsp;&nbsp; &nbsp;/// &lt;/summary&gt;<br />
-&nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to hash&lt;/param&gt;<br />
-&nbsp;&nbsp; &nbsp;/// &lt;returns&gt;The hashed password as a 128 character hex string&lt;/returns&gt;<br />
-&nbsp;&nbsp; &nbsp;public static string HashPassword(string password)<br />
-&nbsp;&nbsp; &nbsp;{<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string salt = GetRandomSalt();<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string hash = Sha256Hex(salt + password);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return salt + hash;<br />
-&nbsp;&nbsp; &nbsp;}<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// The following constants may be changed without breaking existing hashes.<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public const int SALT_BYTES = 24;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public const int HASH_BYTES = 24;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public const int PBKDF2_ITERATIONS = 1000;<br />
 <br />
-&nbsp;&nbsp; &nbsp;/// &lt;summary&gt;<br />
-&nbsp;&nbsp; &nbsp;/// Validates a password<br />
-&nbsp;&nbsp; &nbsp;/// &lt;/summary&gt;<br />
-&nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to test&lt;/param&gt;<br />
-&nbsp;&nbsp; &nbsp;/// &lt;param name=&quot;correctHash&quot;&gt;The hash of the correct password&lt;/param&gt;<br />
-&nbsp;&nbsp; &nbsp;/// &lt;returns&gt;True if password is the correct password, false otherwise&lt;/returns&gt;<br />
-&nbsp;&nbsp; &nbsp;public static bool ValidatePassword(string password, string correctHash )<br />
-&nbsp;&nbsp; &nbsp;{<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;if (correctHash.Length &lt; 128)<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;throw new ArgumentException(&quot;correctHash must be 128 hex characters!&quot;);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string salt = correctHash.Substring(0, 64);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string validHash = correctHash.Substring(64, 64);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;string passHash = Sha256Hex(salt + password);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return string.Compare(validHash, passHash) == 0;<br />
-&nbsp;&nbsp; &nbsp;}<br />
-<br />
-&nbsp;&nbsp; &nbsp;//returns the SHA256 hash of a string, formatted in hex<br />
-&nbsp;&nbsp; &nbsp;private static string Sha256Hex(string toHash)<br />
-&nbsp;&nbsp; &nbsp;{<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;SHA256Managed hash = new SHA256Managed();<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] utf8 = UTF8Encoding.UTF8.GetBytes(toHash);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return BytesToHex(hash.ComputeHash(utf8));<br />
-&nbsp;&nbsp; &nbsp;}<br />
-<br />
-&nbsp;&nbsp; &nbsp;//Returns a random 64 character hex string (256 bits)<br />
-&nbsp;&nbsp; &nbsp;private static string GetRandomSalt()<br />
-&nbsp;&nbsp; &nbsp;{<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;byte[] salt = new byte[32]; //256 bits<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;random.GetBytes(salt);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return BytesToHex(salt);<br />
-&nbsp;&nbsp; &nbsp;}<br />
-<br />
-&nbsp;&nbsp; &nbsp;//Converts a byte array to a hex string<br />
-&nbsp;&nbsp; &nbsp;private static string BytesToHex(byte[] toConvert)<br />
-&nbsp;&nbsp; &nbsp;{<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;StringBuilder s = new StringBuilder(toConvert.Length * 2);<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;foreach (byte b in toConvert)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public const int ITERATION_INDEX = 0;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public const int SALT_INDEX = 1;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public const int PBKDF2_INDEX = 2;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// Creates a salted PBKDF2 hash of the password.<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;/summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to hash.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;returns&gt;The hash of the password.&lt;/returns&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public static string CreateHash(string password)<br />
 &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;s.Append(b.ToString(&quot;x2&quot;));<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Generate a random salt<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;RNGCryptoServiceProvider csprng = new RNGCryptoServiceProvider();<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;byte[] salt = new byte[SALT_BYTES];<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;csprng.GetBytes(salt);<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Hash the password and encode the parameters<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;byte[] hash = PBKDF2(password, salt, PBKDF2_ITERATIONS, HASH_BYTES);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return PBKDF2_ITERATIONS + &quot;:&quot; + <br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Convert.ToBase64String(salt) + &quot;:&quot; + <br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Convert.ToBase64String(hash);<br />
 &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
-&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return s.ToString();<br />
-&nbsp;&nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// Validates a password given a hash of the correct one.<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;/summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to check.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;goodHash&quot;&gt;A hash of the correct password.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;returns&gt;True if the password is correct. False otherwise.&lt;/returns&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;public static bool ValidatePassword(string password, string goodHash)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Extract the parameters from the hash<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;char[] delimiter = { &#039;:&#039; };<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;string[] split = goodHash.Split(delimiter);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int iterations = Int32.Parse(split[ITERATION_INDEX]);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;byte[] salt = Convert.FromBase64String(split[SALT_INDEX]);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;byte[] hash = Convert.FromBase64String(split[PBKDF2_INDEX]);<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;byte[] testHash = PBKDF2(password, salt, iterations, hash.Length);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return SlowEquals(hash, testHash);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// Compares two byte arrays in length-constant time. This comparison<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// method is used so that password hashes cannot be extracted from <br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// on-line systems using a timing attack and then attacked off-line.<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;/summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;a&quot;&gt;The first byte array.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;b&quot;&gt;The second byte array.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;returns&gt;True if both byte arrays are equal. False otherwise.&lt;/returns&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;private static bool SlowEquals(byte[] a, byte[] b)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;uint diff = (uint)a.Length ^ (uint)b.Length;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for (int i = 0; i &lt; a.Length &amp;&amp; i &lt; b.Length; i++)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;diff |= (uint)(a[i] ^ b[i]);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return diff == 0;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// Computes the PBKDF2-SHA1 hash of a password.<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;/summary&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;password&quot;&gt;The password to hash.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;salt&quot;&gt;The salt.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;iterations&quot;&gt;The PBKDF2 iteration count.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;param name=&quot;outputBytes&quot;&gt;The length of the hash to generate, in bytes.&lt;/param&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;/// &lt;returns&gt;A hash of the password.&lt;/returns&gt;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;private static byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;pbkdf2.IterationCount = iterations;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return pbkdf2.GetBytes(outputBytes);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}<br />
 &nbsp;&nbsp; &nbsp;}<br />
 }
 </div>
-</div>
+
+</div> <!-- body stuff -->
 <br />
 <div style="text-align: center;">
     <h4>Article and code written by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></h4>
