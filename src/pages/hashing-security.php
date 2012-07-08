@@ -209,10 +209,10 @@ hashing the password does not meet our needs for security.
     </p>
 
     <div class="passcrack" style="text-align: center;" title="Example hashes to be cracked">
-    c11083b4b0a7743af748c85d343dfee9fbb8b2576c05f3a7f0d632b0926aadfc
-    08eac03b80adc33dc7d8fbe44b7c7b05d3a2c511166bdb43fcb710b03ba919e7
-    e4ba5cbd251c98e6cd1c23f126a3b81d8d8328abc95387229850952b3ef9f904
-    5206b8b8a996cf5320cb12ca91c7b790fba9f030408efe83ebb83548dc3007bd
+    c11083b4b0a7743af748c85d343dfee9fbb8b2576c05f3a7f0d632b0926aadfc<br />
+    08eac03b80adc33dc7d8fbe44b7c7b05d3a2c511166bdb43fcb710b03ba919e7<br />
+    e4ba5cbd251c98e6cd1c23f126a3b81d8d8328abc95387229850952b3ef9f904<br />
+    5206b8b8a996cf5320cb12ca91c7b790fba9f030408efe83ebb83548dc3007bd<br />
     </div>
 
 </li>

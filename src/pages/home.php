@@ -126,7 +126,9 @@ function CrackHashes($hashes)
                                                  $_POST["recaptcha_response_field"]);
             if($rec_result->is_valid)
             {
-                $hashes = explode("\n", $_POST['hashes']);
+                $hashes = str_replace("\r\n", "\n", $_POST['hashes']);
+                $hashes = str_replace("\r", "\n", $hashes);
+                $hashes = explode("\n", $hashes);
                 array_walk($hashes, 'trim_value');
                 $hashes = array_filter($hashes, function ($item) { return !empty($item); });
                 if(count($hashes) <= 10)
