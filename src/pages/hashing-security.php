@@ -811,6 +811,65 @@ It doesn't matter, but pick one and stick with it for interoperability's sake.
 Having the salt come before the password seems to be more common.
 </p>
 
+<h4>Why does the hashing code on this page compare the hashes in
+&quot;length-constant&quot;
+time?</h4>
+
+<p>
+Comparing the hashes in &quot;length-constant&quot; time ensures that an
+attacker cannot extract the hash of a password in an on-line system using a
+timing attack, then crack it off-line.
+</p>
+
+<p>
+The standard way to check if two sequences of bytes (strings) are the same is to
+compare the first byte, then the second, then the third, and so on. As soon as
+you find a byte that isn't the same for both strings, you know they are
+different and can return a negative response immediately. If you make it through
+both strings without finding any bytes that differ, you know the strings are the
+same and can return a positive result. This means that comparing two strings can
+take a different amount of time depending on how much of the strings match.
+</p>
+
+<p>
+For example, a standard comparison of the strings &quot;xyzabc&quot; and
+&quot;abcxyz&quot; would immediately see that the first character is different
+and wouldn't bother to check the rest of the string. On the other hand, when the
+strings &quot;aaaaaaaaaaB&quot; and &quot;aaaaaaaaaaZ&quot; are compared, the
+comparison algorithm scans through the block of "a" before it determins the
+strings are unequal.
+</p>
+
+<p>
+Suppose an attacker wants to break into an on-line system that rate limits
+authentication attempts to one attempt per second. Also suppose the attacker
+knows all of the parameters to the password hash (salt, hash type, etc), except
+for the hash and (obviously) the password. If the attacker can get a precisise
+measurement of how long it takes the on-line system to compare the hash of the
+real password with the hash of a password the attacker provides, he can use the
+timing attack to extract part of the hash and crack it using an offline attack,
+bypassing the system's rate limiting.
+</p>
+
+<p>
+First, the attacker finds 256 strings whose hashes begin with every possible
+byte.  He sends each string to the on-line system, recording the amount of time
+it takes the system to respond. The string that takes the longest will be the
+one whose hash's first byte matches the real hash's first byte. The attacker
+now knows the first byte, and can continue the attack in a similar manner on
+the second byte. Once the attacker knows enough of the hash, he can use his own
+hardware to crack it, without being rate limited by the system.
+</p>
+
+<p>
+This is a theoretical attack. I've never seen it done in practice,
+and I seriously doubt it could be done over the internet. Nevertheless, the
+hashing code on this page compares strings in a way that takes the same amount
+of time no matter how much of the strings match, just in case the code gets used
+in an environment that's unusually vulnerable to timing atttacks (such as
+on an extremely slow processor).
+</p>
+
 <h4>Why bother hashing?</h4>
 
 <p>
