@@ -855,10 +855,11 @@ bypassing the system's rate limiting.
 First, the attacker finds 256 strings whose hashes begin with every possible
 byte.  He sends each string to the on-line system, recording the amount of time
 it takes the system to respond. The string that takes the longest will be the
-one whose hash's first byte matches the real hash's first byte. The attacker
-now knows the first byte, and can continue the attack in a similar manner on
-the second byte. Once the attacker knows enough of the hash, he can use his own
-hardware to crack it, without being rate limited by the system.
+one whose hash's first byte matches the real hash's first byte. The attacker now
+knows the first byte, and can continue the attack in a similar manner on the
+second byte, then the third, and so on. Once the attacker knows enough of the
+hash, he can use his own hardware to crack it, without being rate limited by the
+system.
 </p>
 
 <p>
