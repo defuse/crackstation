@@ -871,6 +871,79 @@ in an environment that's unusually vulnerable to timing atttacks (such as
 on an extremely slow processor).
 </p>
 
+<a name="slowequals"></a>
+<h4>How does the SlowEquals code work?</h4>
+
+<p>
+The previous question explains why SlowEquals is necessary, this one explains
+how the code actually works.
+</p>
+
+<div class="passcrack">
+1. &nbsp;&nbsp; &nbsp;private static boolean slowEquals(byte[] a, byte[] b)<br />
+2. &nbsp;&nbsp; &nbsp;{<br />
+3. &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;int diff = a.length ^ b.length;<br />
+4. &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;for(int i = 0; i &lt; a.length &amp;&amp; i &lt; b.length; i++)<br />
+5. &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;diff |= a[i] ^ b[i];<br />
+6. &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return diff == 0;<br />
+7. &nbsp;&nbsp; &nbsp;}<br />
+</div>
+
+<p>
+The code uses the XOR "^" operator to compare integers for equality, instead of
+the "==" operator. The reason why is explained below. The result of XORing
+two integers will be zero if and only if they are exactly the same. This is
+because 0 XOR 0 = 0, 1 XOR 1 = 0, 0 XOR 1 = 1, 1 XOR 0 = 1. If we apply that to
+all the bits in both integers, the result will be zero only if all the bits
+matched.
+</p>
+
+<p>
+So, in the first line, if <code>a.length</code> is equal to
+<code>b.length</code>, the diff variable will get a zero value, but if not, it
+will get some non-zero value. Next, we compare the bytes using XOR, and OR the
+result into diff. This will set diff to a non-zero value if the bytes differ.
+Because ORing never un-sets bits, the only way diff will be zero at the end of
+the loop is if it was zero before the loop began (a.length == b.length) and all
+of the bytes in the two arrays match (none of the XORs resulted in a non-zero
+value).
+</p>
+
+<p>
+The reason we need to use XOR instead of the "==" operator to compare integers
+is that "==" is usually translated/compiled/interpreted as a brach. For example,
+the C code "<code>diff &amp;= a == b</code>" might compile to the following x86
+assembly:
+</p>
+
+<div class="passcrack">
+MOV EAX, [A]<br />
+CMP [B], EAX<br />
+JZ equal<br />
+JMP done<br />
+equal:<br />
+AND [VALID], 1<br />
+done:<br />
+AND [VALID], 0<br />
+</div>
+
+<p>
+The branching makes the code execute in a different amount of time depending on
+the equality of the integers and the CPU's internal branch prediction state.
+</p>
+
+<p>
+The C code "<code>diff |= a ^ b</code>" should compile to something like
+the following, whose execution time does not depend on the equality of the
+integers:
+</p>
+
+<div class="passcrack">
+MOV EAX, [A]<br />
+XOR EAX, [B]<br />
+OR  [DIFF], EAX <br />
+</div>
+
 <h4>Why bother hashing?</h4>
 
 <p>
