@@ -349,7 +349,7 @@ SHA256 is 256 bits (32 bytes), so the salt should be at least 32 random bytes.
 
 <h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
 <p>
-This section covers the most common password hashing misconception: wacky
+This section covers another common password hashing misconception: wacky
 combinations of hash algorithms. It's easy to get carried away and try to
 combine different hash functions, hoping that the result will be more secure. In
 practice, though, there is no benefit to doing it. All it does is create
