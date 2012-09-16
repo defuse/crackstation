@@ -81,7 +81,7 @@ class URLParse
                                             "crackstation"
                                             );
     private static $FORCE_HTTPS = false;
-    private static $DEFAULT_TITLE = "CrackStation - Online Password Hash Cracking - MD5, SHA1, Linux, Zip, RAR, etc.";
+    private static $DEFAULT_TITLE = "CrackStation - Online Password Hash Cracking - MD5, SHA1, Linux, Rainbow Tables, etc.";
     private static $DEFAULT_META_DESC = "Crackstation is the most effective hash cracking service. We crack: MD5, SHA1, SHA2, WPA, and much more...";
     private static $DEFAULT_META_KEYWORDS = "md5 cracking, sha1 cracking, hash cracking, password cracking";
 
@@ -105,8 +105,8 @@ class URLParse
             "cracking-services" => array(
                 P_FILE => "cracking-services.php",
                 P_TITL => "CrackStation - Advanced Password Hash Cracking Services",
-                P_METD => "Hash and encryption cracking. ZIP, RAR, MD5, LM, WPA, WEP, ANY algorithm. Bulk cracking.",
-                P_METK => "password cracking, zip cracking, rar cracking, wpa cracking, bulk cracking, md5 cracking",
+                P_METD => "Hash and encryption cracking. MD5, LM, WPA, WEP, ANY algorithm. Bulk cracking.",
+                P_METK => "password cracking, wpa cracking, bulk cracking, md5 cracking",
                 ),
             "hashing-security.html" => array(
                 P_RDIR => "hashing-security",
