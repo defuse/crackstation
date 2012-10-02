@@ -348,16 +348,17 @@ SHA256 is 256 bits (32 bytes), so the salt should be at least 32 random bytes.
 </p>
 
 <h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
+
 <p>
 This section covers another common password hashing misconception: wacky
 combinations of hash algorithms. It's easy to get carried away and try to
 combine different hash functions, hoping that the result will be more secure. In
-practice, though, there is no benefit to doing it. All it does is create
-interoperability problems, and can sometimes even make the hashes less secure.
-Never try to invent your own crypto, always use a standard that has been
-designed by experts. Some will argue that using multiple hash functions makes
-the process of computing the hash slower, so cracking is slower, but there's a
-better way to make the cracking process slower as we'll see later.
+practice, though, there is very little benefit to doing it. All it does is
+create interoperability problems, and can sometimes even make the hashes less
+secure.  Never try to invent your own crypto, always use a standard that has
+been designed by experts. Some will argue that using multiple hash functions
+makes the process of computing the hash slower, so cracking is slower, but
+there's a better way to make the cracking process slower as we'll see later.
 </p>
 
 <p>Here are some examples of poor wacky hash functions I've seen suggested in forums on the internet.</p>
@@ -371,7 +372,33 @@ better way to make the cracking process slower as we'll see later.
 </ul> <br />
 
 <p>
-    Do not use any of these. None of the wacky combinations provide any additional security. 
+Do not use any of these.
+</p>
+
+<p>
+Note: This section has proven to be controversial. I've received a number of
+emails arguing that wacky hash functions are a good thing, because it's better
+if the attacker doesn't know which hash function is in use, it's less
+likely for an attacker to have pre-computed a rainbow table for the wacky hash
+function, and it takes longer to compute the hash function.
+</p>
+
+<p>
+An attacker cannot attack a hash when he doesn't know the algorithm, but note <a
+href="https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle"> Kerckhoffs's
+principle</a>, that the attacker will usually have access to the source code
+(especially if it's free or open source software), and that given a few
+password-hash pairs from the target system, it is not difficult to reverse
+engineer the algorithm. It does take longer to compute wacky hash functions, but
+only by a small constant factor. It's better to use an iterated algorithm that's
+designed to be extremely hard to parallelize (these are discussed below). And,
+properly salting the hash solves the rainbow table problem.
+</p>
+
+<p>
+Compare these minor benefits to the risks of accidentally implementing a
+completely insecure hash function and the interoperability problems wacky hashes
+create. It's clearly best to use a standard and well-tested algorithm.
 </p>
 
 <h3>Hash Collisions</h3>
