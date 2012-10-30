@@ -938,7 +938,7 @@ value).
 
 <p>
 The reason we need to use XOR instead of the "==" operator to compare integers
-is that "==" is usually translated/compiled/interpreted as a brach. For example,
+is that "==" is usually translated/compiled/interpreted as a branch. For example,
 the C code "<code>diff &amp;= a == b</code>" might compile to the following x86
 assembly:
 </p>
