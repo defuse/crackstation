@@ -465,14 +465,11 @@ that exist for some popular programming platforms.
     <tr><td>Any language on GNU/Linux or Unix</td><td>Read from <a href="http://en.wikipedia.org/wiki//dev/random">/dev/random</a> or /dev/urandom</td></tr>
 </table> <br />
 
-<p>
-The salt needs to be unique per-user per-password. Every time a user creates an
-account or changes their password, the password should be hashed using a new
-random salt. Never reuse a salt.  The salt also needs to be long, so that there
-are many possible salts. Make sure your salt is at least as long as the hash
-function's output. The salt should be stored in the user account table alongside
-the hash.
-</p>
+<p> The salt needs to be unique per-user per-password. Every time a user creates an account or
+changes their password, the password should be hashed using a new random salt. Never reuse a salt.
+The salt also needs to be long, so that there are many possible salts. As a rule of thumb, make your
+salt is at least as long as the hash function's output. The salt should be stored in the user
+account table alongside the hash.  </p>
 
 <h6>To Store a Password</h6>
 
@@ -495,6 +492,71 @@ the hash.
     <a href="#phpsourcecode">PHP</a>, <a href="#aspsourcecode">C#</a>,
     <a href="#javasourcecode">Java</a>, and <a href="#rubysourcecode">Ruby</a>.
 </p>
+
+<h6>In a Web Application, <b>always</b> hash on the server</h6>
+<br />
+<p>
+If you are writing a web application, you might wonder <em>where</em> to hash.
+Should the password be hashed in the user's browser with JavaScript, or should
+it be sent to the server "in the clear" and hashed there?
+</p>
+
+<p> Even if you are hashing the user's passwords in JavaScript, you still have
+to hash the hashes on the server. Consider a website that hashes users'
+passwords in the user's browser without hashing the hashes on the server. To
+authenticate a user, this website will accept a hash from the browser and check
+if that hash exactly matches the one in the database. This seems more secure
+than just hashing on the server, since the users' passwords are never sent to
+the server, but it's not.  </p>
+
+<p>
+The problem is that the client-side hash logically <em>becomes</em> the user's
+password. All the user needs to do to authenticate is tell the server the hash
+of their password. If a bad guy got a user's <em>hash</em> they could use it to
+authenticate to the server, without knowing the user's password! So, if the bad
+guy somehow steals the database of hashes from this hypothetical website,
+they'll have immediate access to everyone's accounts without having to guess any
+passwords.
+</p>
+
+<p>
+This isn't to say that you <em>shouldn't</em> hash in the browser, but if you
+do, you absolutely have to hash on the server too. Hashing in the browser is
+certainly a good idea, but consider the following points for your implementation:
+</p>
+
+<ul>
+    <li>
+        <p>
+        Client-side password hashing is <b>not</b> a substitute for HTTPS
+        (SSL/TLS).  If the connection between the browser and the server is
+        insecure, a man-in-the-middle can modify the JavaScript code as it is
+        downloaded to remove the hashing functionality and get the user's
+        password.
+        </p>
+    </li>
+
+    <li>
+        <p>
+        Some web browsers don't support JavaScript, and some users disable
+        JavaScript in their browser. So for maximum compatibility, your app
+        should detect whether or not the browser supports JavaScript and emulate
+        the client-side hash on the server if it doesn't.
+        </p>
+    </li>
+
+    <li>
+        <p>
+        You need to salt the client-side hashes too. The obvious solution is to
+        make the client-side script ask the server for the user's salt. Don't do
+        that, because it lets the bad guys check if a username is valid without
+        knowing the password. Since you're hashing and salting (with a good
+        salt) on the server too, it's OK to use the username (or email)
+        concatenated with a site-specific string (e.g. domain name) as the
+        client-side salt.
+        </p>
+    </li>
+</ul>
 
 <h4>Making Password Cracking Harder: Slow Hash Functions</h4>
 
