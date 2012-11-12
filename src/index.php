@@ -83,14 +83,6 @@ header('Content-Type: text/html; charset=utf-8');
 							    <a href="/downloads.htm">Tools & Downloads</a></li>-->
 							<?php if($name == "hashing-security") echo '<li class="last active">'; else echo '<li class="last">'; ?>
 						        <a href="/hashing-security.htm">Hashing Security</a></li>
-                            <li style="background: none; margin-left: 70px; text-align: right;">
-                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                <input type="hidden" name="cmd" value="_s-xclick">
-                                <input type="hidden" name="hosted_button_id" value="G26CP283D9XAG">
-                                <input type="image" style="border: none;" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                                </form>
-                            </li>
 						</ul>
 					</nav>
 				</header>
