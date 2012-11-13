@@ -1,0 +1,445 @@
+
+/* Some parts of this style sheet come from http://grc.com/ */
+
+/* CSS Sticky footer from: http://www.cssstickyfooter.com/using-sticky-footer-code.html */
+
+/* TAGS {{{1 */
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+	width:100%; 
+	height:100%;
+	color:black;
+	font-size:10pt;
+	font-family: verdana, tahoma, arial, helvetica, sans-serif, "MS Sans Serif";
+    background-color: white;
+}
+
+/*Opera Fix (css sticky footer) */
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;/
+}
+
+body, img, button, iframe, ul, li, hr  { 
+	margin:0; padding:0; border:0; 
+}
+
+table { 
+	margin:0;
+	padding:0;
+	text-align:left;
+	font-size:10pt; 
+}
+
+textarea {
+    resize: none;
+}
+
+/* GLOBAL (All Pages) Styles {{{1 */
+#wrap {
+    min-height: 100%;
+    width: 100%;
+    min-width: 900px; /* Must be big enough to fit content and it's p+m */
+}
+
+#homediv {
+	text-align: center; 
+	color: white;
+}
+
+#homediv h2 {
+	margin-top: 30px;
+}
+
+#homediv li {
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+.homelink {
+	color: white;
+	text-decoration: none;
+}
+
+.homeul {
+	text-align: left;
+	width: 420px;
+	margin: 0 auto;
+}
+
+#content {
+	text-align: left;
+	margin: 0 auto; 
+	width: 80%; 
+	max-width: 1000px; 
+	min-width: 800px;
+	margin-top:5px;
+	background-color:white;
+	padding-left: 30px;
+	padding-right:30px;
+
+	padding-top:5px;
+
+    /*overflow: auto;*/
+    padding-bottom: 140px; /* total #footer height + desired padding */
+
+}
+
+#contenthome {
+	margin-top:20px;
+}
+
+#contenthome li {
+    margin-bottom: 5px;
+}
+
+
+#content h1 {
+	width:100%;
+	padding-bottom:5px;
+	text-align: center;
+	padding-top: 0;
+	margin-top:0;
+	border-bottom: solid #000000 5px; /*#333333*/
+    font-size: 25px;
+    font-family: "Times New Roman", "Times", serif;
+    font-weight: normal;
+}
+
+#content h2 {
+	font-size: 16pt;
+    border-bottom: solid 1px #AAAAAA;
+    font-family: "Times New Roman", "Times", serif;
+    font-weight: normal;
+}
+
+#content h3 {
+	font-size: 13pt;
+}
+
+#content h4 {
+	font-size: 10pt;
+}
+
+.majorlink {
+	color:white;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+a:hover {
+	color:#FF0000;
+}
+
+#undergrad {
+	background-image: url('/images/undergrad.png');
+	height: 10px;
+	margin-top: 1px;
+	width: 100%;
+}
+
+#latest a:link {
+	color: red;
+}
+
+#latest a:hover {
+	color: white;
+}
+
+#latest a:visited {
+	color: red;
+}
+
+ul {
+    padding-left:40px;
+}
+
+.linkblock {
+    margin: 0 auto;
+    background:#ddffff;
+    border: solid #66ccdd 2px;
+}
+
+.linkblockheader {
+    margin-top:20px;
+    text-align:center;
+}
+
+.linkblock td {
+    padding-right:5px;
+    text-decoration:underline;
+}
+
+/* These DO NOT affect the PASTEBIN page! */
+.div1 {
+	background-color: #d4d4d4 ;
+	word-wrap: break-word;
+}
+
+.div0 {
+	word-wrap: break-word;
+}
+
+#footerborder {
+    background-image: url('images/undergrad-inverted.png');
+    height: 10px;
+}
+
+#footerwrapper {
+    position: relative;
+    margin-top: -105px; /* #footer total height (padding too) + 10px footerborder */
+    clear: both;
+    width: 100%;
+    min-width: 900px;
+}
+
+/* Hide the footer while printing */
+@media print {
+    #footerwrapper {
+        display:none;
+    }
+}
+
+
+#footer {
+    background-color: black;
+    /*border-top: solid #202020 1px;*/
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    color: white;
+    height: 80px;
+}
+
+#footer a {
+    color: #CCCCCC;
+}
+
+#footer a:hover {
+    color: red;
+}
+
+.codeskillbox {
+	background-color: white;
+	color: black;
+	font-size: 40px;
+	text-align: center;
+	border: solid black 1px;
+	margin: 0 auto;
+	margin-bottom: 30px;
+	width: 750px;
+}
+
+.codeskillheader {
+	background-color: #000;
+	color: white;
+	text-align: center;
+	padding: 5px;
+	font-size: 20px;
+	border-bottom: solid black 1px;
+}
+
+.honestywarebox {
+    background-color: #aadaff;
+    border: solid black 1px;
+    padding: 10px;
+}
+
+.honestywarebox h2 {
+    text-align: center;
+    border-style: none !important;
+    padding: 0;
+    margin: 0;
+}
+
+.code {
+    padding: 10px; 
+    font-family: monospace;
+    color: #c0c0c0;
+    background-color: #000000;
+    border-radius: 15px;
+    box-shadow: 6px 6px 4px 2px #888 ;
+    background-image: url('/images/code-top.png');
+    background-repeat: repeat-x;
+}
+
+.codehl {
+    font-weight: bold;
+}
+
+.badcode {
+    background-image: url('/images/grid-red.gif') !important;
+}
+/* PPHOS {{{1 */
+/* ============ PPHOS ================= */
+
+.hosval {
+    border: solid 1px gray;
+}
+
+.nopaddingatall {
+	padding: 0;
+	margin: 0;
+}
+
+.pphostbl {
+    width: 100%;
+    border-collapse:collapse;
+}
+
+.pphostbl th {
+    padding: 5px;
+    background-color: black;
+    color:white;
+    border: solid 1px gray;
+}
+
+.alt {
+    background-color: #e5e5e5;
+}
+
+
+/* PASSWORD BLOCKS {{{1 */
+/* ========== PASSWORD BLOCKS ========= */
+
+.blocksection h2 {
+    border-bottom: solid black 1px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.blocksection {
+    width: 700px;
+    margin: 0 auto;
+    border: solid black 3px;
+    margin-bottom: 20px;
+    background-color: #FFFFFF;
+}
+
+#blockfactory {
+
+}
+
+#blocksorter {
+
+}
+
+#passwordpractice {
+
+}
+
+#passwordsecurity {
+
+}
+
+.selectedBlock {
+    border: solid black 3px;
+    padding: 3px;
+    margin: 3px;
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.unselectedBlock {
+    border: solid black 1px;
+    padding: 3px;
+    margin: 3px;
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.typefactory {
+    padding: 10px;
+    border-top: solid black 1px;
+    border-bottom: solid black 1px;
+    display: none;
+    background-color: #DDDDDD;
+}
+
+#customfactory {
+    display:none;
+}
+
+#paddingfactory {
+    display:none;
+}
+
+#blockpreview {
+    text-align: center;
+    font-size: 15px;
+    margin: 20px;
+    display: none;
+}
+
+#blockview {
+    text-align: center;
+}
+
+.ftlink {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.starblock {
+    display: inline;
+}
+
+.ftlink:hover {
+    color: #0000CC;
+}
+
+#ftheader {
+    text-align: center; 
+    font-weight: bold;
+}
+
+.fakelink {
+    text-decoration: underline;
+    color: blue;
+}
+
+.restable {
+    width: 500px;
+    margin: 0 auto;
+    font-size: 12pt;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.restable td {
+    border: solid #000000 1px;
+    margin: 0;
+}
+
+.res1 {
+    background-color: #90EE90;
+}
+
+.res2 {
+    background-color: #FFFFE0;
+}
+
+.res3 {
+    background-color: #D87093;
+}
