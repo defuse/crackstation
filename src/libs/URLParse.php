@@ -148,7 +148,7 @@ class URLParse
 
     // Page to be displayed for invalid URLs
     private static $FILE_NOT_FOUND = array(
-                        P_FILE => "404.html",
+                        P_FILE => "404.php",
                         P_TITL => "File Not Found",
                         );
                         
