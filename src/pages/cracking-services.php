@@ -6,7 +6,8 @@
 
 <div class="box">
 <div class="padding">
-<h3>Salted Hash, WPA, WEP, UNIX, Linux, MySQL, and Rainbow Table Hash Cracking</h3>
+<h1>Advanced Password Cracking Services</h1>
+<h2>Salted Hash, WPA, WEP, UNIX, Linux, MySQL, and Rainbow Table Hash Cracking</h2>
 
 <p>CrackStation provides you with easy, inexpensive access to our massively effective password cracking dictionaries. 
 Prices are listed below in Canadian Dollars.</p>

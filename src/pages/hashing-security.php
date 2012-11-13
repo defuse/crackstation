@@ -1,6 +1,4 @@
-<div class="box">
-<div class="padding">
-			<h3>Salted Password Hashing - Doing it Right</h3>
+<h1>Salted Password Hashing - Doing it Right</h1>
 
 <p>
 If you're a web developer, you've probably had to make a user account system.
@@ -21,21 +19,20 @@ but why it should be done that way.
 
 <p>You may use the following links to jump to the different sections of this page.</p>
 
-<table id="shortcuts">
+<table class="shortcuts">
 <tbody><tr>
-    <td>1. <a href="#normalhashing" title="What are hash functions and why are they used?">What is password hashing?</a></td>
-    <td>2. <a href="#attacks" title="Methods for making hash cracking more efficient">How Hashes are Cracked</a></td>
+    <td><a href="#normalhashing" class="sca" title="What are hash functions and why are they used?">1. What is password hashing?</a></td>
+    <td><a href="#attacks" class="sca" title="Methods for making hash cracking more efficient">2. How Hashes are Cracked</a></td>
 
-    <td>3. <a href="#salt" title="Adding salt to render hash cracking attacks less effective">Adding Salt</a></td>
+    <td><a href="#salt" class="sca" title="Adding salt to render hash cracking attacks less effective">3. Adding Salt</a></td>
 </tr>
 <tr>
-    <td>4. <a href="#ineffective" title="The wrong way to do password hashing">Ineffective Hashing Methods</a></td>
-    <td>5. <a href="#properhashing" title="The right way to do password hashing, with salt">How to hash properly</a></td>
-    <td>6. <a href="#faq" title="Frequently asked questions about password hashing and salt">Frequently Asked Questions</a></td>
+    <td><a href="#ineffective" class="sca" title="The wrong way to do password hashing">4. Ineffective Hashing Methods</a></td>
+    <td><a href="#properhashing" class="sca" title="The right way to do password hashing, with salt">5. How to hash properly</a></td>
+    <td><a href="#faq" class="sca" title="Frequently asked questions about password hashing and salt">6. Frequently Asked Questions</a></td>
 </tr>
 </tbody></table>
 
-<br />
 <p>There is public domain password hashing source code at the bottom of this page:</p>
 
 <?php sourceCodeShortcuts(); ?>
@@ -43,26 +40,26 @@ but why it should be done that way.
 <?php
 function sourceCodeShortcuts() {
 ?>
-    <table id="shortcuts" style="text-align: center;">
+    <table class="shortcuts" style="text-align: center;">
     <tbody>
     <tr>
-        <td><a href="#phpsourcecode" title="PHP password hashing example source code">PHP Source Code</a></td>
-        <td><a href="#javasourcecode" title="Java password hashing example source code">Java Source Code</a></td>
-        <td><a href="#aspsourcecode" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
-        <td><a href="#rubysourcecode" title="Ruby PBKDF2 password hashing code">Ruby (on Rails) Source Code</a></td>
+        <td><a href="#phpsourcecode" class="sca" title="PHP password hashing example source code">PHP Source Code</a></td>
+        <td><a href="#javasourcecode" class="sca" title="Java password hashing example source code">Java Source Code</a></td>
+        <td><a href="#aspsourcecode" class="sca" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
+        <td><a href="#rubysourcecode" class="sca" title="Ruby PBKDF2 password hashing code">Ruby (on Rails) Source Code</a></td>
     </tr>
     </tbody>
-    </table><br />
+    </table>
 <?
 }
 ?>
 
 <a name="normalhashing"></a>
-<h3>What is password hashing?</h3>
+<h2>What is password hashing?</h2>
         <div class="passcrack" style="text-align: center;">
-            hash("hello") = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br>
-            hash("hbllo") = 58756879c05c68dfac9866712fad6a93f8146f337a69afe7dd238f3364946366<br>
-            hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542<br>
+            hash("hello") = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br />
+            hash("hbllo") = 58756879c05c68dfac9866712fad6a93f8146f337a69afe7dd238f3364946366<br />
+            hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542<br />
         </div>
 <p>
 Hash algorithms are one way functions. They turn any amount of data into a
@@ -86,7 +83,6 @@ account system is as follows:
     <li>If the hashes match, the user is granted access. If not, the user is told they entered invalid login credentials.</li>
     <li>Steps 3 and 4 repeat everytime someone tries to login to their account.</li>
 </ol>
-<br />
 
 <p>
 In step 4, never tell the user if it was the username or password they got wrong. Always display
@@ -117,33 +113,33 @@ hashing the password does not meet our needs for security.
 <p>The next section will discuss some of the common attacks used to crack plain password hashes.</p>
 
 <a name="attacks"></a>
-<h3>How Hashes are Cracked</h3>
+<h2>How Hashes are Cracked</h2>
 <ul class="moveul" >
 <li>
-    <h4>Dictionary and Brute Force Attacks</h4>
+    <h3>Dictionary and Brute Force Attacks</h3>
     <table style="margin: 0 auto;">
     <tbody><tr>
     <td>
     <div class="passcrack" title="Cracking a hash with a wordlist">
         <center>Dictionary Attack</center><br />
-        Trying apple &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: failed<br>
-        Trying blueberry &nbsp;&nbsp;&nbsp;: failed<br>
-        Trying justinbeiber : failed<br>
+        Trying apple &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: failed<br />
+        Trying blueberry &nbsp;&nbsp;&nbsp;: failed<br />
+        Trying justinbeiber : failed<br />
         <center>...</center>
-        Trying letmein &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: failed<br>
+        Trying letmein &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: failed<br />
 
-        <span style="color: green;">Trying s3cr3t &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: success!</span><br>
+        <span style="color: green;">Trying s3cr3t &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: success!</span><br />
     </div>
     </td>
     <td>
     <div class="passcrack" title="Cracking a hash by brute force">
         <center>Brute Force Attack</center><br />
-        Trying aaaa : failed<br>
-        Trying aaab : failed<br>
-        Trying aaac : failed<br>
+        Trying aaaa : failed<br />
+        Trying aaab : failed<br />
+        Trying aaac : failed<br />
         <center>...</center>
-        Trying acdb : failed<br>
-        <span style="color: green;">Trying acdc : success!</span><br>
+        Trying acdb : failed<br />
+        <span style="color: green;">Trying acdc : success!</span><br />
     </div>
     </td>
     </tr>
@@ -182,14 +178,14 @@ hashing the password does not meet our needs for security.
 </li>
 
 <li>
-    <h4>Lookup Tables</h4>
+    <h3>Lookup Tables</h3>
     <center>
-    <span class="passcrack" style="display: inline-block; text-align: left;" title="Cracking many hashes with a pre-computed lookup table">
-        <span style="color: green;">Searching: 5f4dcc3b5aa765d61d8327deb882cf99: FOUND: password5</span><br>
-        Searching: 6cbe615c106f422d23669b610b564800: &nbsp;not in database<br>
-        <span style="color: green;">Searching: 630bf032efe4507f2c57b280995925a9: FOUND: letMEin12 </span><br>
-        <span style="color: green;">Searching: 386f43fab5d096a7a66d67c8f213e5ec: FOUND: mcd0nalds</span><br>
-        <span style="color: green;">Searching: d5ec75d5fe70d428685510fae36492d9: FOUND: p@ssw0rd!</span><br>
+    <div class="passcrack" style="text-align: center;" title="Cracking many hashes with a pre-computed lookup table">
+        <span style="color: green;">Searching: 5f4dcc3b5aa765d61d8327deb882cf99: FOUND: password5</span><br />
+        Searching: 6cbe615c106f422d23669b610b564800: &nbsp;not in database<br />
+        <span style="color: green;">Searching: 630bf032efe4507f2c57b280995925a9: FOUND: letMEin12 </span><br />
+        <span style="color: green;">Searching: 386f43fab5d096a7a66d67c8f213e5ec: FOUND: mcd0nalds</span><br />
+        <span style="color: green;">Searching: d5ec75d5fe70d428685510fae36492d9: FOUND: p@ssw0rd!</span><br />
     </span>
     </center>
 
@@ -218,14 +214,14 @@ hashing the password does not meet our needs for security.
 </li>
 
 <li>
-    <h4>Reverse Lookup Tables</h4>
+    <h3>Reverse Lookup Tables</h3>
     <center>
-    <span class="passcrack" style="display: inline-block; text-align: left;" title="Cracking many hashes with a pre-computed lookup table">
-        <span style="color: green;">Searching for hash(apple) in users' hash list... &nbsp;&nbsp;&nbsp;&nbsp;: Matches [alice3, 0bob0, charles8]</span><br>
-        <span style="color: green;">Searching for hash(blueberry) in users' hash list... : Matches [usr10101, timmy, john91]</span><br>
-        <span style="color: green;">Searching for hash(letmein) in users' hash list... &nbsp;&nbsp;: Matches [wilson10, dragonslayerX, joe1984]</span><br>
-        <span style="color: green;">Searching for hash(s3cr3t) in users' hash list... &nbsp;&nbsp;&nbsp;: Matches [bruce19, knuth1337, john87]</span><br>
-        <span>Searching for hash(z@29hjja) in users' hash list... &nbsp;: No users used this password</span><br>
+    <div class="passcrack" style="text-align: left;" title="Cracking many hashes with a pre-computed lookup table">
+        <span style="color: green;">Searching for hash(apple) in users' hash list... &nbsp;&nbsp;&nbsp;&nbsp;: Matches [alice3, 0bob0, charles8]</span><br />
+        <span style="color: green;">Searching for hash(blueberry) in users' hash list... : Matches [usr10101, timmy, john91]</span><br />
+        <span style="color: green;">Searching for hash(letmein) in users' hash list... &nbsp;&nbsp;: Matches [wilson10, dragonslayerX, joe1984]</span><br />
+        <span style="color: green;">Searching for hash(s3cr3t) in users' hash list... &nbsp;&nbsp;&nbsp;: Matches [bruce19, knuth1337, john87]</span><br />
+        <span>Searching for hash(z@29hjja) in users' hash list... &nbsp;: No users used this password</span><br />
     </span>
     </center>
     <p>
@@ -243,7 +239,7 @@ hashing the password does not meet our needs for security.
 </li>
 
 <li>
-    <h4>Rainbow Tables</h4>
+    <h3>Rainbow Tables</h3>
     <p>
     Rainbow tables are a time-memory trade-off technique. They are like lookup
     tables, except that they sacrifice hash cracking speed to make the lookup
@@ -261,7 +257,7 @@ lookup tables and rainbow tables to crack a hash.
 </p>
 
 <a name="salt"></a>
-<h3>Adding Salt</h3>
+<h2>Adding Salt</h2>
 <div class="passcrack" style="text-align: center;" title="Salt example">
     hash("hello") &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824<br />
     hash("hello" + "QxLUF1bgIAdeQX") = 9e209040c863f84a31e719795b2577523954739fe5ed3b58a75cff2127075ed1<br />
@@ -298,14 +294,14 @@ In the next section, we'll look at how salt is commonly implemented incorrectly.
 </p>
 
 <a name="ineffective"></a>
-<h3>The <span style="color: red;">WRONG</span> Way: Short Salt &amp; Salt Reuse</h3>
+<h2>The <span style="color: red;">WRONG</span> Way: Short Salt &amp; Salt Reuse</h2>
 
 <p>
 The most common salt implementation errors are reusing the same salt in multiple
 hashes, or using a salt that is too short.
 </p>
 
-<h4>Salt Reuse</h4>
+<h3>Salt Reuse</h3>
 
 <p>
 A common mistake is to use the same salt in each hash. Either the salt is
@@ -322,7 +318,7 @@ easier to crack hashes generated by the product.
 A new random salt must be generated each time a user creates an account or changes their password.
 </p>
 
-<h4>Short Salt</h4>
+<h3>Short Salt</h3>
 
 <p>
 If the salt is too short, an attacker can build a lookup table for every
@@ -347,7 +343,7 @@ is the same size as the output of the hash function. For example, the output of
 SHA256 is 256 bits (32 bytes), so the salt should be at least 32 random bytes.
 </p>
 
-<h3>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h3>
+<h2>The <span style="color: red;">WRONG</span> Way: Double Hashing &amp; Wacky Hash Functions</h2>
 
 <p>
 This section covers another common password hashing misconception: wacky
@@ -369,7 +365,7 @@ there's a better way to make the cracking process slower as we'll see later.
     <li><span class="ic">sha1(sha1(password))</span></li>
     <li><span class="ic">sha1(str_rot13(password + salt))</span></li>
     <li><span class="ic">md5(sha1(md5(md5(password) + sha1(password)) + md5(password)))</span></li>
-</ul> <br />
+</ul> 
 
 <p>
 Do not use any of these.
@@ -401,7 +397,7 @@ completely insecure hash function and the interoperability problems wacky hashes
 create. It's clearly best to use a standard and well-tested algorithm.
 </p>
 
-<h3>Hash Collisions</h3>
+<h2>Hash Collisions</h2>
 
 <p>
 Because hash functions map arbitrary amounts of data to fixed-length strings,
@@ -424,7 +420,7 @@ WHIRLPOOL if possible.
 </p>
 
 <a name="properhashing"></a>
-<h3>The <span style="color: green;">RIGHT</span> Way: How to Hash Properly</h3>
+<h2>The <span style="color: green;">RIGHT</span> Way: How to Hash Properly</h2>
 
 <p>
 This section describes exactly how passwords should be hashed. The first
@@ -433,7 +429,7 @@ following subsections explain how the basics can be augmented to make the hashes
 even harder to crack.
 </p>
 
-<h4>The Basics: Hashing with Salt</h4>
+<h3>The Basics: Hashing with Salt</h3>
 
 <p>
 We've seen how malicious hackers can crack plain hashes very quickly using
@@ -463,7 +459,7 @@ that exist for some popular programming platforms.
     <tr><td>Perl</td><td><a href="http://search.cpan.org/~mkanat/Math-Random-Secure-0.06/lib/Math/Random/Secure.pm">Math::Random::Secure</a></td></tr>
     <tr><td>C/C++ (Windows API)</td><td><a href="http://en.wikipedia.org/wiki/CryptGenRandom">CryptGenRandom</a></td></tr>
     <tr><td>Any language on GNU/Linux or Unix</td><td>Read from <a href="http://en.wikipedia.org/wiki//dev/random">/dev/random</a> or /dev/urandom</td></tr>
-</table> <br />
+</table> 
 
 <p> The salt needs to be unique per-user per-password. Every time a user creates an account or
 changes their password, the password should be hashed using a new random salt. Never reuse a salt.
@@ -471,7 +467,7 @@ The salt also needs to be long, so that there are many possible salts. As a rule
 salt is at least as long as the hash function's output. The salt should be stored in the user
 account table alongside the hash.  </p>
 
-<h6>To Store a Password</h6>
+<h4>To Store a Password</h4>
 
 <ol>
     <li>Generate a long random salt using a CSPRNG.</li>
@@ -479,13 +475,13 @@ account table alongside the hash.  </p>
     <li>Save both the salt and the hash in the user's database record.</li>
 </ol>
 
-<h6>To Validate a Password</h6>
+<h4>To Validate a Password</h4>
 
 <ol>
     <li>Retrieve the user's salt and hash from the database.</li>
     <li>Prepend the salt to the given password and hash it using the same hash function.</li>
     <li>Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.</li>
-</ol><br />
+</ol>
 
 <p>
     At the bottom of this page, there are implementations of salted password hashing in
@@ -493,8 +489,7 @@ account table alongside the hash.  </p>
     <a href="#javasourcecode">Java</a>, and <a href="#rubysourcecode">Ruby</a>.
 </p>
 
-<h6>In a Web Application, <b>always</b> hash on the server</h6>
-<br />
+<h4>In a Web Application, <b>always</b> hash on the server</h4>
 <p>
 If you are writing a web application, you might wonder <em>where</em> to hash.
 Should the password be hashed in the user's browser with JavaScript, or should
@@ -558,7 +553,7 @@ certainly a good idea, but consider the following points for your implementation
     </li>
 </ul>
 
-<h4>Making Password Cracking Harder: Slow Hash Functions</h4>
+<h3>Making Password Cracking Harder: Slow Hash Functions</h3>
 
 <p>
     Salt ensures that attackers can't use specialized attacks like lookup tables
@@ -620,7 +615,7 @@ certainly a good idea, but consider the following points for your implementation
     the same way you would hash a normal password.
 </p>
 
-<h4>Impossible-to-crack Hashes: Keyed Hashes and Password Hashing Hardware</h4>
+<h3>Impossible-to-crack Hashes: Keyed Hashes and Password Hashing Hardware</h3>
 
 <p>
     As long as an attacker can use a hash to check whether a password guess is
@@ -672,7 +667,7 @@ certainly a good idea, but consider the following points for your implementation
 </p>
 
 <a name="othersecurity"></a>
-<h3>Other Security Measures</h3>
+<h2>Other Security Measures</h2>
 
 <p>
 Password hashing protects passwords in the event of a security breach. It does
@@ -711,8 +706,8 @@ that breaches are detected and responded to promptly.
 </p>
 
 <a name="faq"></a>
-<h3>Frequently Asked Questions</h3>
-<h4>What hash algorithm should I use?</h4>
+<h2>Frequently Asked Questions</h2>
+<h3>What hash algorithm should I use?</h3>
 <span style="color: green;"><b>DO</b></span> use:
 
 <ul class="moveul">
@@ -727,14 +722,15 @@ that breaches are detected and responded to promptly.
     <li>Any modern well-tested cryptographic hash algorithm, such as SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
     <li>Well-designed key stretching algorithms such as <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and <a href="http://www.tarsnap.com/scrypt.html">scrypt</a>.</li>
     <li>Secure versions of <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a> ($2y$, $5$, $6$)</li>
-</ul><br />
+</ul>
+<br />
 <span style="color: red;"><b>DO NOT</b></span> use:
 
 <ul class="moveul">
     <li>Outdated hash functions like MD5 or SHA1.</li>
     <li>Insecure versions of crypt ($1$, $2$, $2a$, $2x$, $3$).</li>
     <li>Any algorithm that you designed yourself. Only use technology that is in the public domain and has been well-tested by experienced cryptographers.</li>
-</ul><br />
+</ul>
 
 <p>
     Even though there are no cryptographic attacks on MD5 or SHA1 that make
@@ -743,7 +739,7 @@ that breaches are detected and responded to promptly.
     recommend using them. An exception to this rule is PBKDF2, which is
     frequently implemented using SHA1 as the underlying hash function.
 </p>
-<h4>How should I allow users to reset their password when they forget it?</h4>
+<h3>How should I allow users to reset their password when they forget it?</h3>
 
 <p>
     It is my personal opinion that all password reset mechanisms in widespread
@@ -783,7 +779,7 @@ random binary blob used only to identify a record in a database table.
     Never send the user a new password over email.
 </p>
 
-<h4>What should I do if my user account database gets leaked/hacked?</h4>
+<h3>What should I do if my user account database gets leaked/hacked?</h3>
 
 <p>
 Your first priority is to determine how the system was compromised and patch
@@ -830,7 +826,7 @@ users to look over their recent and future bills closely and cancel their
 credit card.
 </p>
 
-<h4>What should my password policy be? Should I enforce strong passwords?</h4>
+<h3>What should my password policy be? Should I enforce strong passwords?</h3>
 <p>
 If your service doesn't have strict security requirements, then don't limit your
 users. I recommend showing users information about the strength of their
@@ -847,7 +843,7 @@ business setting, encourage employees to use paid time to memorize and practice
 their password.
 </p>
 
-<h4>If an attacker has access to my database, can't they just replace the hash of my password with their own hash and login?</h4>
+<h3>If an attacker has access to my database, can't they just replace the hash of my password with their own hash and login?</h3>
 
 <p>
 Yes, but if someone has accesss to your database, they probably already have
@@ -865,8 +861,8 @@ code should be able to read and write to the user table, but the 'login' code
 should only be able to read.
 </p>
 
-<h4>Why do I have to use a special algorithm like HMAC? Why can't I just append
-the password to the secret key?</h4>
+<h3>Why do I have to use a special algorithm like HMAC? Why can't I just append
+the password to the secret key?</h3>
 
 <p> Hash functions like MD5, SHA1, and SHA2 use the <a href="http://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction">
 Merkle–Damgård construction</a>, which makes them vulnerable to what are known
@@ -893,16 +889,16 @@ HMAC.
 </p>
 
 
-<h4>Should the salt come before or after the password?</h4>
+<h3>Should the salt come before or after the password?</h3>
 
 <p>
 It doesn't matter, but pick one and stick with it for interoperability's sake.
 Having the salt come before the password seems to be more common.
 </p>
 
-<h4>Why does the hashing code on this page compare the hashes in
+<h3>Why does the hashing code on this page compare the hashes in
 &quot;length-constant&quot;
-time?</h4>
+time?</h3>
 
 <p>
 Comparing the hashes in &quot;length-constant&quot; time ensures that an
@@ -961,7 +957,7 @@ on an extremely slow processor).
 </p>
 
 <a name="slowequals"></a>
-<h4>How does the SlowEquals code work?</h4>
+<h3>How does the SlowEquals code work?</h3>
 
 <p>
 The previous question explains why SlowEquals is necessary, this one explains
@@ -1033,7 +1029,7 @@ XOR EAX, [B]<br />
 OR  [DIFF], EAX <br />
 </div>
 
-<h4>Why bother hashing?</h4>
+<h3>Why bother hashing?</h3>
 
 <p>
 Your users are entering their password into your website. They are trusting you
@@ -1045,14 +1041,15 @@ users'. You are responsible for your users' security.
 </p>
 
 <a name="phpsourcecode"></a>
-<h3>PHP PBKDF2 Password Hashing Code</h3>
+<h2>PHP PBKDF2 Password Hashing Code</h2>
 <?php sourceCodeShortcuts(); ?>
 
+<p>
 The following code is a secure implementation of PBKDF2 hashing in PHP. You can find a test suite
-and benchmark code for it on <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Cyber-Security's
+and benchmark code for it on <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Security's
 PBKDF2 for PHP</a> page. The code is in the public domain, so you may use it for any purpose
 whatsoever.
-<br /><br />
+</p>
 
 <div class="passcrack">
 &lt;?php<br />
@@ -1167,7 +1164,7 @@ function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output =
 </div>
 
 <a name="javasourcecode"></a>
-<h3>Java PBKDF2 Password Hashing Code</h3>
+<h2>Java PBKDF2 Password Hashing Code</h2>
 <?php sourceCodeShortcuts(); ?>
 <p>
     The following code is a secure implementation of PBKDF2 hashing in Java.
@@ -1385,7 +1382,7 @@ public class PasswordHash<br />
 </div>
 
 			<a name="aspsourcecode"></a>
-<h3>ASP.NET (C#) Password Hashing Code</h3>
+<h2>ASP.NET (C#) Password Hashing Code</h2>
 <?php sourceCodeShortcuts(); ?>
 <p>
 The following code is a secure implementation of salted hashing in C# for ASP.NET. It is in the
@@ -1488,7 +1485,7 @@ namespace PasswordHash<br />
 </div>
 
 <a name="rubysourcecode"></a>
-<h3>Ruby (on Rails) Password Hashing Code</h3>
+<h2>Ruby (on Rails) Password Hashing Code</h2>
 <?php sourceCodeShortcuts(); ?>
 <p>
 The following is a secure implementation of salted PBKDF2 password hashing in Ruby. The code is
@@ -1586,10 +1583,7 @@ module PasswordHash<br />
 end
 </div>
 
-</div> <!-- body stuff -->
-<br />
 <div style="text-align: center;">
-    <h4>Article and code written by <a href="https://defuse.ca/">Defuse Cyber-Security.</a></h4>
+    <h4>Article and code written by <a href="https://defuse.ca/">Defuse Security.</a></h4>
 </div>
 
-</div>

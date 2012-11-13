@@ -79,7 +79,7 @@ function CrackHashes($hashes)
         }
     }
 	echo "</table>";
-    echo '<p style="font-size: 8pt;"><strong>Color Codes:</strong> <span style="background-color: #002c00;">Green:</span> Exact match, <span style="background-color: #2c2c00;">Yellow:</span> Partial match, <span style="background-color: #2c0000;">Red:</span> Not found.</p>';
+    echo '<p style="font-size: 8pt;"><strong>Color Codes:</strong> <span style="background-color: #00FF00;">Green:</span> Exact match, <span style="background-color: #FFFF00;">Yellow:</span> Partial match, <span style="background-color: #FF0000;">Red:</span> Not found.</p>';
     incrementCounter($cracked_increment, $attempt_increment);
     return true;
 }
@@ -90,8 +90,7 @@ function CrackHashes($hashes)
  };
  </script>
 
-<div class="box">
-    <div class="padding">
+    <h1>Free Password Hash Cracker</h1>
         <p>
             Enter up to 10 non-salted hashes:
         </p>
@@ -99,7 +98,7 @@ function CrackHashes($hashes)
         <table style="width: 100%;">
         <tr>
             <td style="width: 550px;">
-                <textarea style="width: 100%; height: 180px;" name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea>
+                <textarea style="width: 100%; height: 180px; border: solid black 1px; background-color: #e9e9e9;" name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea>
             </td>
             <td>
                 <center>
@@ -113,7 +112,7 @@ function CrackHashes($hashes)
         </table>
         </form>
         <p style="font-size: 8pt; margin: 0; padding: 0;">
-        <b>Supported:</b> LM, NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
+        <b>Supports:</b> LM, NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
         </p>
         <div class="crackresults">
         <?php
@@ -150,12 +149,9 @@ function CrackHashes($hashes)
         }
         ?>
         </div>
-    </div>
-</div>
 
-<br /><br />
 <a name="cracking-hashes"></a>
-<h3>How Crackstation Cracks Hashes</h3>
+<h2>How Crackstation Cracks Hashes</h2>
 
 <p>
 Crackstation uses massive pre-computed lookup tables to crack password hashes. These tables store a mapping between the hash of a password, and the correct password for that hash. The hash values are indexed so that it is possible to quickly search the database for a given hash. If the hash is present in the database, the password can be recovered in less only a fraction of a second. This cracking method only works for "unsalted" hashes. For information on password hashing systems that are not vulnerable to pre-computed lookup tables, see our <a href="hashing-security.htm">hashing security page</a>.
