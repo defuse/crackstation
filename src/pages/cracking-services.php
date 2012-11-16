@@ -56,7 +56,7 @@ Prices are listed below in Canadian Dollars.</p>
     </tr>
 </table>
 <br />
-<p>Please email orders to <a href="mailto:crackstation@defuse.ca">crackstation@defuse.ca</a>. We accept PayPal and BitCoin payments. Prices are in Canadian Dollars (CAD).</p>
+<p>Please email orders to <a href="mailto:crackstation@defuse.ca">crackstation@defuse.ca</a> (<a href="/contact-us.htm">public key</a>). We accept PayPal and BitCoin payments. Prices are in Canadian Dollars (CAD).</p>
 
 <p>Please note that because we do the same amount of work, we must ask for payment regardless of whether the hash is cracked or not. We will, however, only charge 50% of the prices listed here if we cannot crack your password, to give us incentive to maintain the best password cracking dictionaries on the Internet. When we can't crack it, you are paying for the knowledge that the password cannot be cracked by the one of the best password cracking dictionaries on the Internet.</p>
 </div>
