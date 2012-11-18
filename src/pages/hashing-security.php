@@ -1051,6 +1051,9 @@ PBKDF2 for PHP</a> page. The code is in the public domain, so you may use it for
 whatsoever.
 </p>
 
+<p style="text-align: center;">
+    <strong><a href="/source/PasswordHash.php">Download PasswordHash.php</a></strong>
+</p>
 <?php printSourceFile("source/PasswordHash.php", false); ?>
 
 <a name="javasourcecode"></a>
@@ -1059,6 +1062,10 @@ whatsoever.
 <p>
     The following code is a secure implementation of PBKDF2 hashing in Java.
     The code is in the public domain, so you may use it for any purpose whatsoever.
+</p>
+
+<p style="text-align: center;">
+    <strong><a href="/source/PasswordHash.java">Download PasswordHash.java</a></strong>
 </p>
 
 <?php printSourceFile("source/PasswordHash.java", false); ?>
@@ -1071,6 +1078,9 @@ The following code is a secure implementation of salted hashing in C# for ASP.NE
 public domain, so you may use it for any purpose whatsoever.
 </p>
 
+<p style="text-align: center;">
+    <strong><a href="/source/PasswordHash.cs">Download PasswordHash.cs</a></strong>
+</p>
 <?php printSourceFile("source/PasswordHash.cs", false); ?>
 
 <a name="rubysourcecode"></a>
@@ -1081,6 +1091,9 @@ The following is a secure implementation of salted PBKDF2 password hashing in Ru
 public domain, so you may use it for any purpose whatsoever.
 </p>
 
+<p style="text-align: center;">
+    <strong><a href="/source/PasswordHash.rb">Download PasswordHash.rb</a></strong>
+</p>
 <?php printSourceFile("source/PasswordHash.rb", false); ?>
 
 <div style="text-align: center;">
