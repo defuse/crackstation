@@ -22,6 +22,28 @@ file_put_contents("/dev/random", $entropy);
 require_once('libs/URLParse.php'); 
 require_once('libs/hitcounter.php');
 require_once('libs/phpcount.php');
+require_once('libs/VimHighlight.php');
+
+function printHlString($text, $ft, $numbers = false) {
+    $hl = new VimHighlight();
+    $hl->caching = true;
+    $hl->color_scheme = "dw_cyan";
+    $hl->show_lines = $numbers;
+    $hl->use_css = true;
+    $hl->file_type = $ft;
+    $hl->setVimCommand("vim");
+    echo '<div class="vimhighlight">' . $hl->processText($text, true) . '</div>';
+}
+
+function printSourceFile($path, $numbers = false) {
+    $hl = new VimHighlight();
+    $hl->caching = true;
+    $hl->color_scheme = "dw_cyan";
+    $hl->show_lines = $numbers;
+    $hl->use_css = true;
+    $hl->setVimCommand("vim");
+    echo '<div class="vimhighlight">' . $hl->processFile($path, true) . '</div>';
+}
 
 $name = URLParse::ProcessURL();
 PHPCount::AddHit($name, $_SERVER['REMOTE_ADDR']);
@@ -51,6 +73,7 @@ header('Content-Type: text/html; charset=utf-8');
 <link rel="stylesheet" media="all" type="text/css" href="/mainmenu2.css" />
 <link rel="stylesheet" media="all" type="text/css" href="/main.css" />
 <link rel="stylesheet" media="all" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" media="all" type="text/css" href="/vimhl.css" />
 <!--[if !IE 7]>
 	<style type="text/css">
 		#wrap {display:table;height:100%}
