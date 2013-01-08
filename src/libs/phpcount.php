@@ -45,7 +45,7 @@ define("HIT_OLD_AFTER_SECONDS", 4 * 7 * 24 * 3600);
 // MySQL Login and Database Information
 $dbserver = "localhost";
 $username = "phpcount";
-$password = "YRgPlRJgTY9C";
+$password = "nbJWxucjlOzPOJv6";
 $database = "phpcount";
 
 $phpcount_con = mysql_connect($dbserver, $username, $password);
