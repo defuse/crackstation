@@ -17,7 +17,7 @@ date_default_timezone_set("UTC");
 
 //Strengthen the server's CSPRNG
 $entropy = implode(gettimeofday()) . implode($_SERVER) . implode($_GET) . implode($_POST) . implode($_COOKIE) . implode($_ENV) . microtime() . mt_rand() . mt_rand();
-file_put_contents("/dev/random", $entropy);
+file_put_contents("/dev/urandom", $entropy);
 
 require_once('libs/URLParse.php'); 
 require_once('libs/hitcounter.php');
