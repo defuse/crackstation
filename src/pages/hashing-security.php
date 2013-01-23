@@ -392,6 +392,11 @@ properly salting the hash solves the rainbow table problem.
 </p>
 
 <p>
+If you really want to use a standardized &quot;wacky&quot; hash function like HMAC, then it's OK.
+But if your reason for doing so is to make the hash computation slower, read the section below about key stretching first.
+</p>
+
+<p>
 Compare these minor benefits to the risks of accidentally implementing a
 completely insecure hash function and the interoperability problems wacky hashes
 create. It's clearly best to use a standard and well-tested algorithm.
