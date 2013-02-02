@@ -166,7 +166,8 @@ header('Content-Type: text/html; charset=utf-8');
             <td><?php echo $unique; ?></td>
         </tr>
     </table>
-    Copyright &copy; 2012 <a href="/about.htm">Defuse Security</a> | 
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0; vertical-align: bottom;" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a>
+<a href="/about.htm">Defuse Security</a> | 
     <a href="/pastebin.htm">Secure Pastebin</a> | 
     <a href="/passgen.htm">Password Generator</a>
     </div> <!-- end footer -->
