@@ -50,6 +50,31 @@ textarea {
     min-width: 900px; /* Must be big enough to fit content and it's p+m */
 }
 
+#sm {
+    text-align: center;
+    position: absolute;
+    top: 62px;
+    right: 30px;
+    font-size: 16pt;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#sm a {
+    color: white;
+    text-decoration: none;
+}
+
+#sm a:hover {
+    color: #00FFFF;
+}
+
+#twitterlogo {
+    vertical-align: middle;
+    margin-right: 2px;
+    padding-bottom: 2px;
+}
+
 #homediv {
 	text-align: center; 
 	color: white;
