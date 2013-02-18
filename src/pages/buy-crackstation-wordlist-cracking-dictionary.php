@@ -46,7 +46,7 @@ human password hashes to motivate their move to a better salting scheme.
 <h2>Step 1: Pay as much as you want.</h2>
 
 <p>
-The wordlist is being sold using a "pay as much as you want" model. That means
+The wordlist is being sold using a "pay what you want" model. That means
 you can pay absolutely any amount of money you want for the wordlist. Even
 nothing. Use the PayPal donate button, Bitcoin address, or Litecoin address
 below to make your payment.
@@ -62,7 +62,7 @@ Think about the following points when deciding how much to pay:
 
 <ul>
     <li>
-        If I wasn't doing a "pay as much as you want" I would set the price at
+        If I wasn't doing a "pay what want" I would set the price at
         $20.
     </li>
     <li>
