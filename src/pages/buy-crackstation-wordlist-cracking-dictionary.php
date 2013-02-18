@@ -105,6 +105,10 @@ Think about the following points when deciding how much to pay:
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
+    <br /><br />
+    <a id="wldl2" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
+        Mega Mirror
+    </a>
 </div>
 
 <p>
