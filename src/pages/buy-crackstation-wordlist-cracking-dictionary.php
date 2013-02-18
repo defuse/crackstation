@@ -101,14 +101,15 @@ Think about the following points when deciding how much to pay:
 <h2>Step 2: Download!</h2>
 
 <div style="text-align: center;">
-    <a id="wldl" href="http://defuse.ca/files/crackstation.txt.gz">
-        <span style="font-size: 20pt;">Click Here to Download (HTTP)</span>
+    <a id="wldl" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
+        <span style="font-size: 20pt;">Click Here to Download (Mega)</span>
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
     <br /><br />
-    <a id="wldl2" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
-        Mega Mirror <br /><span style="font-size: 8pt;">(faster)</span>
+    <a id="wldl2" href="http://defuse.ca/files/crackstation.txt.gz">
+        Mirror <br />
+        <span style="font-size: 8pt;">(slow)</span>
     </a>
 </div>
 
