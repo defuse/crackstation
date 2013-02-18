@@ -66,13 +66,14 @@ Think about the following points when deciding how much to pay:
         $20.
     </li>
     <li>
+        The money will be used to pay my tuition.
+    </li>
+    <li>
         It took about 2 to 3 weeks of full-time work to make this dictionary
         (searching, downloading, scripting, processing).
     </li>
     <li>
-        I will not be offended by small payments. If you
-        only have 3 cents left in your Paypal account, I'll accept it. Lots of
-        small payments add up!
+        I will not be offended by small payments.
     </li>
     <li>
         If you really have no money, consider sharing this page with one
