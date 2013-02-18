@@ -63,7 +63,7 @@ Think about the following points when deciding how much to pay:
 <ul>
     <li>
         If I wasn't doing a "pay what want" I would set the price at
-        $20.
+        $5.
     </li>
     <li>
         The money will be used to pay my tuition.
