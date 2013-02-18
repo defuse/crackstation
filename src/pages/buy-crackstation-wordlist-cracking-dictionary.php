@@ -101,7 +101,7 @@ Think about the following points when deciding how much to pay:
 
 <div style="text-align: center;">
     <a id="wldl" href="http://defuse.ca/files/crackstation.txt.gz">
-        <span style="font-size: 20pt;">Click Here to Download</span>
+        <span style="font-size: 20pt;">Click Here to Download (HTTP)</span>
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
