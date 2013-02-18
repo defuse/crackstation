@@ -107,9 +107,16 @@ Think about the following points when deciding how much to pay:
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
     <br /><br />
+    <a id="wldl" href="https://thepiratebay.se/torrent/8159583">
+        <span style="font-size: 20pt;">Torrent Mirror</span>
+    </a>
+    <br />
+    <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&dn=CrackStation.Password.Cracking.Dictionary&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
+    <span style="font-size: 8pt;">magnet link</span></a>
+    <br /><br />
     <a id="wldl2" href="http://defuse.ca/files/crackstation.txt.gz">
-        Mirror <br />
-        <span style="font-size: 8pt;">(slow)</span>
+        HTTP Mirror <br />
+        <span style="font-size: 8pt;">(very slow)</span>
     </a>
 </div>
 
