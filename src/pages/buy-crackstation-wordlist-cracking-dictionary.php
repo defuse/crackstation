@@ -115,6 +115,10 @@ Think about the following points when deciding how much to pay:
 <strong>Sharing and Licensing</strong>
 </p>
 
+<div style="text-align: center;">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="/images/cc-by-sa-big.png" /></a>.
+</div>
+
 <p>
 You <em>are</em> allowed to share the list. It is licensed under the <a
 href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons
