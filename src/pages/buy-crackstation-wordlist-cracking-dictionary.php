@@ -108,7 +108,7 @@ Think about the following points when deciding how much to pay:
     </a>
     <br /><br />
     <a id="wldl2" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
-        Mega Mirror
+        Mega Mirror <br /><span style="font-size: 8pt;">(faster)</span>
     </a>
 </div>
 
