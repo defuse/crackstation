@@ -43,7 +43,7 @@ list, we were able to crack 49.98% of one customer's set of 373,000
 human password hashes to motivate their move to a better salting scheme.
 </p>
 
-<h2>Step 1: Pay as much as you want.</h2>
+<h2>Step 1: Pay what you want.</h2>
 
 <p>
 The wordlist is being sold using a "pay what you want" model. That means
