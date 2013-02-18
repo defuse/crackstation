@@ -468,3 +468,12 @@ ul {
 .res3 {
     background-color: #D87093;
 }
+
+#wldl {
+    color: black;
+    text-decoration: none;
+}
+
+#wldl:hover {
+    color: green;
+}

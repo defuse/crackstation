@@ -135,6 +135,17 @@ class URLParse
                 P_METD => "What CrackStation is and why we exist",
                 P_METK => "crackstation contact",
                 ),
+            "thank-you" => array(
+                P_FILE => "thank-you.php",
+                P_TITL => "Thanks!",
+                P_METD => "Donation Confirmation Page"
+                ),
+            "buy-crackstation-wordlist-password-cracking-dictionary" => array(
+                P_FILE => "buy-crackstation-wordlist-cracking-dictionary.php",
+                P_TITL => "CrackStation's Password Cracking Dictionary (Pay what you want!)",
+                P_METD => "Download CrackStation's password cracking wordlist.",
+                P_METK => "password cracking wordlist, biggest password cracking wordlist, cracking dictionary",
+                ),
             "legal-privacy.html" => array(
                 P_RDIR => "legal-privacy"
                 ),
