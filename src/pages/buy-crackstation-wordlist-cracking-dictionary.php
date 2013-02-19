@@ -24,7 +24,7 @@ alphabetical order. Lines are separated with a newline "\n" character.
 
 <p>
 You can test the list without downloading it by giving SHA256 hashes to the <a
-href="/">free hash cracker</a>. Here's a <a
+href="/">free hash cracker</a> or to <a href="https://twitter.com/plzcrack">@PlzCrack</a> on twitter. Here's a <a
 href="https://defuse.ca/checksums.htm"> tool for computing hashes easily</a>.
 Here are the results of cracking <a
 href="https://defuse.ca/blog/cracking-linkedin-hashes-with-crackstation">LinkedIn's</a>
