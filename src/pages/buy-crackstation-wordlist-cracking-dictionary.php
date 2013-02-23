@@ -143,13 +143,13 @@ There are about 64 million passwords in this list!
         <br />
         GZIP-compressed. 247 MiB compressed. 684 MiB uncompressed.
     </a>
-    <!--<br /><br />
-    <a class="wldl" href="https://thepiratebay.se/torrent/8159583">
+    <br /><br />
+    <a class="wldl" href="https://thepiratebay.se/torrent/8182231">
         <span style="font-size: 16pt;">Torrent Mirror</span>
     </a>
     <br />
-    <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&dn=CrackStation.Password.Cracking.Dictionary&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
-    <span style="font-size: 8pt;">magnet link</span></a>-->
+    <a style="color: black;" href="magnet:?xt=urn:btih:7ae809ccd7f0778328ab4b357e777040248b8c7f&amp;dn=CrackStation.Human.Passwords.Only&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&amp;tr=udp%3A%2F%2Ftracker.istole.it%3A6969&amp;tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
+    <span style="font-size: 8pt;">magnet link</span></a>
     <br /><br />
     <a class="wldl2" href="http://defuse.ca/files/crackstation-human-only.txt.gz" style="font-size: 12pt;">
         HTTP Mirror <br />
