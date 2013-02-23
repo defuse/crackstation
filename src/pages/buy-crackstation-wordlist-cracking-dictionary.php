@@ -85,10 +85,10 @@ Think about the following points when deciding how much to pay:
 <br />
 <center>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="PNMQT9EL48KBA">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="hidden" name="hosted_button_id" value="PNMQT9EL48KBA" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" />
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </form>
 </center>
 
@@ -101,20 +101,20 @@ Think about the following points when deciding how much to pay:
 <h2>Step 2: Download!</h2>
 
 <div style="text-align: center;">
-    <a id="wldl" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
+    <a class="wldl" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
         <span style="font-size: 20pt;">Click Here to Download (Mega)</span>
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
     <br /><br />
-    <a id="wldl" href="https://thepiratebay.se/torrent/8159583">
+    <a class="wldl" href="https://thepiratebay.se/torrent/8159583">
         <span style="font-size: 20pt;">Torrent Mirror</span>
     </a>
     <br />
-    <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&dn=CrackStation.Password.Cracking.Dictionary&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
+    <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&amp;dn=CrackStation.Password.Cracking.Dictionary&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&amp;tr=udp%3A%2F%2Ftracker.istole.it%3A6969&amp;tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
     <span style="font-size: 8pt;">magnet link</span></a>
     <br /><br />
-    <a id="wldl2" href="http://defuse.ca/files/crackstation.txt.gz">
+    <a class="wldl2" href="http://defuse.ca/files/crackstation.txt.gz">
         HTTP Mirror <br />
         <span style="font-size: 8pt;">(very slow)</span>
     </a>
@@ -138,20 +138,20 @@ There are about 64 million passwords in this list!
 </p>
 
 <div style="text-align: center;">
-    <a id="wldl" href="https://mega.co.nz/#!3VZiEJ4L!TitrTiiwygI2I_7V2bRWBH6rOqlcJ14tSjss2qR5dqo">
+    <a class="wldl" href="https://mega.co.nz/#!3VZiEJ4L!TitrTiiwygI2I_7V2bRWBH6rOqlcJ14tSjss2qR5dqo">
         <span style="font-size: 16pt;">Click Here to Download (Mega)</span>
         <br />
         GZIP-compressed. 247 MiB compressed. 684 MiB uncompressed.
     </a>
     <!--<br /><br />
-    <a id="wldl" href="https://thepiratebay.se/torrent/8159583">
+    <a class="wldl" href="https://thepiratebay.se/torrent/8159583">
         <span style="font-size: 16pt;">Torrent Mirror</span>
     </a>
     <br />
     <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&dn=CrackStation.Password.Cracking.Dictionary&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
     <span style="font-size: 8pt;">magnet link</span></a>-->
     <br /><br />
-    <a id="wldl2" href="http://defuse.ca/files/crackstation-human-only.txt.gz" style="font-size: 12pt;">
+    <a class="wldl2" href="http://defuse.ca/files/crackstation-human-only.txt.gz" style="font-size: 12pt;">
         HTTP Mirror <br />
         <span style="font-size: 8pt;">(very slow)</span>
     </a>
