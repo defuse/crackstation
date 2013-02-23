@@ -1,8 +1,8 @@
 <h1>CrackStation's Password Cracking Dictionary</h1>
 
 <p>
-I am releasing CrackStation's main password cracking dictionary (1,493,677,782 words,
-15GB) for download.
+I am releasing CrackStation's main password cracking dictionary (1,493,677,782
+words, 15GB) for download.
 </p>
 
 <h2>What's in the list?</h2>
@@ -120,6 +120,35 @@ Think about the following points when deciding how much to pay:
     </a>
 </div>
 
+<a name="humanpasswords"></a>
+<h3>Smaller Wordlist (Human Passwords Only)</h3>
+
+<p>
+I got some requests for a wordlist with just the "real human" passwords leaked
+from various website databases. This smaller list contains just those passwords.
+</p>
+
+<div style="text-align: center;">
+    <a id="wldl" href="https://mega.co.nz/#!3VZiEJ4L!TitrTiiwygI2I_7V2bRWBH6rOqlcJ14tSjss2qR5dqo">
+        <span style="font-size: 16pt;">Click Here to Download (Mega)</span>
+        <br />
+        GZIP-compressed. 247 MiB compressed. 684 MiB uncompressed.
+    </a>
+    <!--<br /><br />
+    <a id="wldl" href="https://thepiratebay.se/torrent/8159583">
+        <span style="font-size: 16pt;">Torrent Mirror</span>
+    </a>
+    <br />
+    <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&dn=CrackStation.Password.Cracking.Dictionary&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
+    <span style="font-size: 8pt;">magnet link</span></a>-->
+    <br /><br />
+    <a id="wldl2" href="http://defuse.ca/files/crackstation-human-only.txt.gz" style="font-size: 12pt;">
+        HTTP Mirror <br />
+        <span style="font-size: 8pt;">(very slow)</span>
+    </a>
+</div>
+
+
 <p>
 <strong>Sharing and Licensing</strong>
 </p>
@@ -129,10 +158,10 @@ Think about the following points when deciding how much to pay:
 </div>
 
 <p>
-You <em>are</em> allowed to share the list. It is licensed under the <a
-href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons
-Attribution-ShareAlike 3.0</a> license. If you do share it, I would appreciate
-it if you included a link to this page.
+You <em>are</em> allowed to share these lists. They are both is licensed under
+the <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative
+Commons Attribution-ShareAlike 3.0</a> license. If you do share them, I would
+appreciate it if you included a link to this page.
 </p>
 
 <p>
