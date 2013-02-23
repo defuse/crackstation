@@ -120,12 +120,21 @@ Think about the following points when deciding how much to pay:
     </a>
 </div>
 
+<h4>Checksums (crackstation.txt.gz)</h4>
+
+<pre>
+MD5:    4748a72706ff934a17662446862ca4f8
+SHA1:   efa3f5ecbfba03df523418a70871ec59757b6d3f
+SHA256: a6dc17d27d0a34f57c989741acdd485b8aee45a6e9796daf8c9435370dc61612
+</pre>
+
 <a name="humanpasswords"></a>
 <h3>Smaller Wordlist (Human Passwords Only)</h3>
 
 <p>
 I got some requests for a wordlist with just the "real human" passwords leaked
 from various website databases. This smaller list contains just those passwords.
+There are about 64 million passwords in this list!
 </p>
 
 <div style="text-align: center;">
@@ -148,28 +157,24 @@ from various website databases. This smaller list contains just those passwords.
     </a>
 </div>
 
+<h4>Checksums (crackstation-human-only.txt.gz)</h4>
 
-<p>
-<strong>Sharing and Licensing</strong>
-</p>
+<pre>
+MD5:    fbc3ca43230086857aac9b71b588a574
+SHA1:   116c5f60b50e80681842b5716be23951925e5ad3
+SHA256: 201f8815c71a47d39775304aa422a505fc4cca18493cfaf5a76e608a72920267
+</pre>
+
+<h3>Sharing and Licensing</h3>
 
 <div style="text-align: center;">
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="/images/cc-by-sa-big.png" /></a>.
 </div>
 
 <p>
-You <em>are</em> allowed to share these lists. They are both is licensed under
+You <em>are</em> allowed to share these lists! They are both is licensed under
 the <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative
 Commons Attribution-ShareAlike 3.0</a> license. If you do share them, I would
 appreciate it if you included a link to this page.
 </p>
 
-<p>
-<strong>Checksums</strong>
-</p>
-
-<pre>
-MD5:    4748a72706ff934a17662446862ca4f8
-SHA1:   efa3f5ecbfba03df523418a70871ec59757b6d3f
-SHA256: a6dc17d27d0a34f57c989741acdd485b8aee45a6e9796daf8c9435370dc61612
-</pre>
