@@ -146,6 +146,12 @@ class URLParse
                 P_METD => "Download CrackStation's password cracking wordlist.",
                 P_METK => "password cracking wordlist, biggest password cracking wordlist, cracking dictionary",
                 ),
+            "how-crackstation-works" => array(
+                P_FILE => "how-crackstation-works.php",
+                P_TITL => "How CrackStation Works",
+                P_METD => "How CrackStation's non-salted hash cracking system works.",
+                P_METK => "hash lookup table, binary search, hash cracking"
+                ),
             "legal-privacy.html" => array(
                 P_RDIR => "legal-privacy"
                 ),

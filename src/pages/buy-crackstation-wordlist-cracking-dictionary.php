@@ -113,11 +113,6 @@ Think about the following points when deciding how much to pay:
     <br />
     <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&amp;dn=CrackStation.Password.Cracking.Dictionary&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&amp;tr=udp%3A%2F%2Ftracker.istole.it%3A6969&amp;tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
     <span style="font-size: 8pt;">magnet link</span></a>
-    <br /><br />
-    <a class="wldl2" href="http://defuse.ca/files/crackstation.txt.gz">
-        HTTP Mirror <br />
-        <span style="font-size: 8pt;">(very slow)</span>
-    </a>
 </div>
 
 <h4>Checksums (crackstation.txt.gz)</h4>
@@ -150,11 +145,6 @@ There are about 64 million passwords in this list!
     <br />
     <a style="color: black;" href="magnet:?xt=urn:btih:7ae809ccd7f0778328ab4b357e777040248b8c7f&amp;dn=CrackStation.Human.Passwords.Only&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&amp;tr=udp%3A%2F%2Ftracker.istole.it%3A6969&amp;tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
     <span style="font-size: 8pt;">magnet link</span></a>
-    <br /><br />
-    <a class="wldl2" href="http://defuse.ca/files/crackstation-human-only.txt.gz" style="font-size: 12pt;">
-        HTTP Mirror <br />
-        <span style="font-size: 8pt;">(very slow)</span>
-    </a>
 </div>
 
 <h4>Checksums (crackstation-human-only.txt.gz)</h4>
