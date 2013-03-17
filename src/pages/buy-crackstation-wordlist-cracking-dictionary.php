@@ -162,7 +162,7 @@ SHA256: 201f8815c71a47d39775304aa422a505fc4cca18493cfaf5a76e608a72920267
 </div>
 
 <p>
-You <em>are</em> allowed to share these lists! They are both is licensed under
+You <em>are</em> allowed to share these lists! They are both licensed under
 the <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative
 Commons Attribution-ShareAlike 3.0</a> license. If you do share them, I would
 appreciate it if you included a link to this page.
