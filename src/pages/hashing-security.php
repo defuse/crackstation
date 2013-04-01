@@ -626,7 +626,7 @@ certainly a good idea, but consider the following points for your implementation
     As long as an attacker can use a hash to check whether a password guess is
     right or wrong, they can run a dictionary or brute-force attack on the hash.
     The next step is to add a <b>secret key</b> to the hash so that only someone
-    who knows the key can use the hash validate a password. This can be
+    who knows the key can use the hash to validate a password. This can be
     accomplished two ways. Either the hash can be encrypted using a cipher like
     AES, or the secret key can be included in the hash using a keyed hash
     algorithm like <a href="http://en.wikipedia.org/wiki/HMAC">HMAC</a>.
