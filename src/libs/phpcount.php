@@ -42,20 +42,15 @@
 //should count as another unique hit.
 define("HIT_OLD_AFTER_SECONDS", 4 * 7 * 24 * 3600);
 
-// MySQL Login and Database Information
-$dbserver = "localhost";
-$username = "phpcount";
-$password = "nbJWxucjlOzPOJv6";
-$database = "phpcount";
-
-$phpcount_con = mysql_connect($dbserver, $username, $password);
-
+require_once("/etc/creds.php");
+$creds = Creds::getCredentials("cs_phpcount");
+$phpcount_con = mysql_connect($creds[C_HOST], $creds[C_USER], $creds[C_PASS]);
 if(!$phpcount_con)
 {
 	die("Count not connect to PHPCount MySQL server!");
 }
-
-mysql_select_db($database, $phpcount_con) or die("Count not select PHPCount database.");
+mysql_select_db($creds[C_DATB], $phpcount_con) or die("Count not select PHPCount database.");
+unset($creds);
 
 class PHPCount
 {
