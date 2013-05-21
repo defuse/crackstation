@@ -1057,9 +1057,9 @@ whatsoever.
 </p>
 
 <p style="text-align: center;">
-    <strong><a href="/source/PasswordHash.php">Download PasswordHash.php</a></strong>
+    <strong><a href="/source/password-hashing/PasswordHash.php">Download PasswordHash.php</a></strong>
 </p>
-<?php printSourceFile("source/PasswordHash.php", false); ?>
+<?php printSourceFile("source/password-hashing/PasswordHash.php", false); ?>
 
 <a name="javasourcecode"></a>
 <h2>Java PBKDF2 Password Hashing Code</h2>
@@ -1070,10 +1070,10 @@ whatsoever.
 </p>
 
 <p style="text-align: center;">
-    <strong><a href="/source/PasswordHash.java">Download PasswordHash.java</a></strong>
+    <strong><a href="/source/password-hashing/PasswordHash.java">Download PasswordHash.java</a></strong>
 </p>
 
-<?php printSourceFile("source/PasswordHash.java", false); ?>
+<?php printSourceFile("source/password-hashing/PasswordHash.java", false); ?>
 
 			<a name="aspsourcecode"></a>
 <h2>ASP.NET (C#) Password Hashing Code</h2>
@@ -1084,9 +1084,9 @@ public domain, so you may use it for any purpose whatsoever.
 </p>
 
 <p style="text-align: center;">
-    <strong><a href="/source/PasswordHash.cs">Download PasswordHash.cs</a></strong>
+    <strong><a href="/source/password-hashing/PasswordHash.cs">Download PasswordHash.cs</a></strong>
 </p>
-<?php printSourceFile("source/PasswordHash.cs", false); ?>
+<?php printSourceFile("source/password-hashing/PasswordHash.cs", false); ?>
 
 <a name="rubysourcecode"></a>
 <h2>Ruby (on Rails) Password Hashing Code</h2>
@@ -1097,9 +1097,9 @@ public domain, so you may use it for any purpose whatsoever.
 </p>
 
 <p style="text-align: center;">
-    <strong><a href="/source/PasswordHash.rb">Download PasswordHash.rb</a></strong>
+    <strong><a href="/source/password-hashing/PasswordHash.rb">Download PasswordHash.rb</a></strong>
 </p>
-<?php printSourceFile("source/PasswordHash.rb", false); ?>
+<?php printSourceFile("source/password-hashing/PasswordHash.rb", false); ?>
 
 <div style="text-align: center;">
     <h4>Article and code written by <a href="https://defuse.ca/">Defuse Security.</a></h4>

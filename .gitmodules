@@ -1,0 +1,3 @@
+[submodule "src/source/password-hashing"]
+	path = src/source/password-hashing
+	url = git@git.defuse.ca:gits/password-hashing.git
