@@ -1059,6 +1059,11 @@ whatsoever.
 <p style="text-align: center;">
     <strong><a href="/source/password-hashing/PasswordHash.php">Download PasswordHash.php</a></strong>
 </p>
+<p style="text-align: center;">
+    If you need compatible PHP and C# implementations, see <a
+    href="https://github.com/defuse/password-hashing/tree/master/compatible">here</a>.
+</p>
+
 <?php printSourceFile("source/password-hashing/PasswordHash.php", false); ?>
 
 <a name="javasourcecode"></a>
@@ -1085,6 +1090,11 @@ public domain, so you may use it for any purpose whatsoever.
 
 <p style="text-align: center;">
     <strong><a href="/source/password-hashing/PasswordHash.cs">Download PasswordHash.cs</a></strong>
+</p>
+
+<p style="text-align: center;">
+    If you need compatible PHP and C# implementations, see <a
+    href="https://github.com/defuse/password-hashing/tree/master/compatible">here</a>.
 </p>
 <?php printSourceFile("source/password-hashing/PasswordHash.cs", false); ?>
 
