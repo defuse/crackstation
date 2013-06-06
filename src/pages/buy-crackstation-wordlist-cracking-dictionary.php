@@ -100,6 +100,12 @@ Think about the following points when deciding how much to pay:
 
 <h2>Step 2: Download!</h2>
 
+<p>
+    <strong>Please note:</strong> Some people have had problems downloading the
+    word lists using the Mega link. It is highly recommended that you try the
+    torrent download first.
+</p>
+
 <div style="text-align: center;">
     <a class="wldl" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
         <span style="font-size: 20pt;">Click Here to Download (Mega)</span>
