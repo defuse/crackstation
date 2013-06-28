@@ -90,12 +90,12 @@ header('Content-Type: text/html; charset=utf-8');
 <div id="masthead">
     <div style="font-size:30px;"><img src="/images/1by1.gif" alt="CrackStation" /></div>
     <div id="sm">
+        <a href="https://defuse.ca/" title="Defuse Security">Defuse.ca</a>
+        &nbsp;&middot;&nbsp;
         <a href="https://twitter.com/defusesec" title="Follow @DefuseSec on twitter!">
             <img id="twitterlogo" src="/images/twitter.png" alt="Follow me on twitter!" height="25" width="30" />
             Twitter
         </a>
-        &nbsp;&middot;&nbsp;
-        <a href="https://defuse.ca/blog/" title="Defuse Security's Blog.">Blog</a>
     </div>
 </div>
 
