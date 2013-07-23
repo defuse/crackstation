@@ -103,7 +103,7 @@ function CrackHashes($hashes)
             <td>
                 <center>
                 <?php
-                    echo recaptcha_get_html($rec_pub_key);
+                    echo recaptcha_get_html($rec_pub_key, null, true);
                 ?>
                 <input type="submit" name="crack" value="Crack Hashes" style="width: 200px; margin-top: 10px;" />
                 </center>
