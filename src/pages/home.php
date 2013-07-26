@@ -91,6 +91,9 @@ function CrackHashes($hashes)
  </script>
 
     <h1>Free Password Hash Cracker</h1>
+        <div class="downloaddiv">
+            <a class="downloadlink" href="/buy-crackstation-wordlist-password-cracking-dictionary.htm">Download CrackStation's Dictionaries</a>
+        </div>
         <p>
             Enter up to 10 non-salted hashes:
         </p>

@@ -103,3 +103,14 @@ ul, ol {
     background-repeat: repeat-x;
 }
 
+.downloaddiv {
+    padding: 10px;
+    font-size: 16pt;
+    text-align: center;
+}
+
+.downloadlink {
+    color: black;
+    border: solid green 3px;
+    padding: 5px;
+}
