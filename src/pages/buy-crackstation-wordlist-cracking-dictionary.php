@@ -66,7 +66,7 @@ Think about the following points when deciding how much to pay:
         $5.
     </li>
     <li>
-        The money will be used to pay my tuition.
+        The money will be used for security research and development projects.
     </li>
     <li>
         It took about 2 to 3 weeks of full-time work to make this dictionary
@@ -107,18 +107,15 @@ Think about the following points when deciding how much to pay:
 </p>
 
 <div style="text-align: center;">
-    <a class="wldl" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
-        <span style="font-size: 20pt;">Click Here to Download (Mega)</span>
+    <a class="wldl" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&dn=CrackStation.Password.Cracking.Dictionary&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Fopen.demonii.com%3A1337">
+        <span style="font-size: 20pt;">Torrent (Magnet Link)</span>
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
     <br /><br />
-    <a class="wldl" href="https://thepiratebay.se/torrent/8159583">
-        <span style="font-size: 20pt;">Torrent Mirror</span>
+    <a class="wldl" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
+        <span style="font-size: 16pt;">Mega Mirror</span>
     </a>
-    <br />
-    <a style="color: black;" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&amp;dn=CrackStation.Password.Cracking.Dictionary&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&amp;tr=udp%3A%2F%2Ftracker.istole.it%3A6969&amp;tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
-    <span style="font-size: 8pt;">magnet link</span></a>
 </div>
 
 <h4>Checksums (crackstation.txt.gz)</h4>
@@ -139,18 +136,16 @@ There are about 64 million passwords in this list!
 </p>
 
 <div style="text-align: center;">
-    <a class="wldl" href="https://mega.co.nz/#!3VZiEJ4L!TitrTiiwygI2I_7V2bRWBH6rOqlcJ14tSjss2qR5dqo">
-        <span style="font-size: 16pt;">Click Here to Download (Mega)</span>
+    <a class="wldl" href="magnet:?xt=urn:btih:7ae809ccd7f0778328ab4b357e777040248b8c7f&dn=CrackStation.Human.Passwords.Only&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Fopen.demonii.com%3A1337">
+        <span style="font-size: 16pt;">Torrent (Magnet Link)</span>
         <br />
         GZIP-compressed. 247 MiB compressed. 684 MiB uncompressed.
     </a>
     <br /><br />
-    <a class="wldl" href="https://thepiratebay.se/torrent/8182231">
-        <span style="font-size: 16pt;">Torrent Mirror</span>
+    <a class="wldl" href="https://mega.co.nz/#!3VZiEJ4L!TitrTiiwygI2I_7V2bRWBH6rOqlcJ14tSjss2qR5dqo">
+        <span style="font-size: 16pt;">Mega Mirror</span>
     </a>
     <br />
-    <a style="color: black;" href="magnet:?xt=urn:btih:7ae809ccd7f0778328ab4b357e777040248b8c7f&amp;dn=CrackStation.Human.Passwords.Only&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&amp;tr=udp%3A%2F%2Ftracker.istole.it%3A6969&amp;tr=udp%3A%2F%2Ftracker.ccc.de%3A80">
-    <span style="font-size: 8pt;">magnet link</span></a>
 </div>
 
 <h4>Checksums (crackstation-human-only.txt.gz)</h4>
