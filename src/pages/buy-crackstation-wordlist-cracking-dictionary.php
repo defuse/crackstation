@@ -66,18 +66,18 @@ Think about the following points when deciding how much to pay:
         $5.
     </li>
     <li>
-        The money will be used for security research and development projects.
+        The money will be used for open source security research and development projects.
     </li>
     <li>
-        It took about 2 to 3 weeks of full-time work to make this dictionary
+        It took about 3 weeks of full-time work to make this dictionary
         (searching, downloading, scripting, processing).
     </li>
     <li>
         I will not be offended by small payments.
     </li>
     <li>
-        If you really have no money, consider sharing this page with one
-        interested person to be the equivalent of paying $1.00.
+        If you have no money or don't want to pay, seeding the torrents and
+        sharing this page with your friends is appreciated!
     </li>
 </ul>
 
