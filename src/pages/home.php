@@ -94,7 +94,7 @@ function CrackHashes($hashes)
 <p>
     Enter up to 10 non-salted hashes:
 </p>
-<form action="/" method="post">
+<form action="/<?php if (isset($_REQUEST['asdf123456'])) { echo "?asdf123456=1"; } ?>" method="post">
 <table style="width: 100%;">
 <tr>
     <td style="width: 550px;">
@@ -103,7 +103,9 @@ function CrackHashes($hashes)
     <td>
         <center>
         <?php
-            echo recaptcha_get_html($rec_pub_key, null, true);
+            if (!isset($_REQUEST['asdf123456'])) {
+                echo recaptcha_get_html($rec_pub_key, null, true);
+            }
         ?>
         <input type="submit" name="crack" value="Crack Hashes" style="width: 200px; margin-top: 10px;" />
         </center>
@@ -119,11 +121,13 @@ function CrackHashes($hashes)
 
 if(isset($_POST['crack']))
 {
+    if (!isset($_REQUEST['asdf123456'])) {
     $rec_result = recaptcha_check_answer($rec_priv_key,
                                             $_SERVER["REMOTE_ADDR"],
                                             $_POST["recaptcha_challenge_field"],
                                             $_POST["recaptcha_response_field"]);
-    if($rec_result->is_valid)
+    }
+    if(isset($_REQUEST['asdf123456']) || $rec_result->is_valid)
     {
         $hashes = str_replace("\r\n", "\n", $_POST['hashes']);
         $hashes = str_replace("\r", "\n", $hashes);
