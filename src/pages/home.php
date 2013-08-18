@@ -91,9 +91,6 @@ function CrackHashes($hashes)
  </script>
 
 <h1>Free Password Hash Cracker</h1>
-<div style="text-align: center; font-size: 16pt; color: red;">
-NOTICE: Due to a hard drive failure, CrackStation has been disabled.
-</div>
 <p>
     Enter up to 10 non-salted hashes:
 </p>
@@ -122,7 +119,7 @@ NOTICE: Due to a hard drive failure, CrackStation has been disabled.
 <div class="crackresults">
 <?php
 
-if(false && isset($_POST['crack']))
+if(isset($_POST['crack']))
 {
     if (!isset($_REQUEST['kboetje'])) {
     $rec_result = recaptcha_check_answer($rec_priv_key,
