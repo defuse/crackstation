@@ -137,6 +137,12 @@ header('Content-Type: text/html; charset=utf-8');
 <div id="undergrad"></div>
 <!--<![endif]-->
 
+<div style="padding: 10px; border-bottom: solid #CC0000 5px; text-align: center; font-size: 16pt;">
+<b>News:</b>
+I'm crowdfunding <a href="http://www.indiegogo.com/projects/better-web-forums">a
+better web forum</a>. Please contribute if you can.
+</div>
+
 <!--[If gt IE 6]>
 <div id="undergrad"></div>
 <![endif]-->
