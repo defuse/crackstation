@@ -24,7 +24,9 @@ mb_language('uni');
 mb_internal_encoding('UTF-8');
 
 require_once('recaptchalib.php');
+require_once('inc/CrackHashes.php');
 
+/* Get the recaptcha credentials from a protected file. */
 require_once('/etc/creds.php');
 $rec_pub_creds = Creds::getCredentials("cs_recaptcha_pub");
 $rec_pub_key = $rec_pub_creds[C_PASS];
@@ -45,106 +47,55 @@ function trim_value(&$value)
     $value = trim($value, "*"); // For MySQL 4.1+ hashes
 }
 
-// http://wezfurlong.org/blog/2006/nov/http-post-from-php-without-curl/
-function do_post_request($url, $data, $optional_headers = null)
-{
-  $params = array('http' => array(
-              'method' => 'POST',
-              'content' => $data
-            ));
-  if ($optional_headers !== null) {
-    $params['http']['header'] = $optional_headers;
-  }
-  $ctx = stream_context_create($params);
-  $fp = @fopen($url, 'rb', false, $ctx);
-  if (!$fp) {
-      return FALSE;
-  }
-  $response = @stream_get_contents($fp);
-  if ($response === false) {
-      return FALSE;
-  }
-  return $response;
-}
-
-function CrackHashes($hashes)
-{
-    $attempt_increment = count($hashes);
-    $cracked_increment = 0;
-	echo "<table class=\"results\">";
-	echo "<tr><th>Hash</th><th>Type</th><th>Result</th></tr>";
-    $creds = Creds::getCredentials("cs_cracking_server");
-    $url = "http://" . $creds[C_HOST] . "/" . $creds[C_DATB];
-    unset($creds);
-    $result = do_post_request($url, "hashes=" . urlencode(implode(",", $hashes)));
-    if($result === FALSE)
-        return false;
-    $result = explode("\n", $result);
-    foreach($result as $line)
-    {
-        $data = explode("||#||", $line);
-        if(count($data) == 4)
-        {
-            $cracked_increment++;
-            $hash = "";
-            while(strlen($data[3]) > 0)
-            {
-                $hash .= htmlspecialchars(substr($data[3], 0, 64), ENT_QUOTES) . "<br />";
-                $data[3] = substr($data[3], 64);
-            }
-            $type = htmlspecialchars($data[1], ENT_QUOTES);
-            $pass = htmlspecialchars($data[2], ENT_QUOTES);
-            if($data[0] == "FULLMATCH")
-                echo '<tr class="suc">';
-            elseif($data[0] == "PARTIALMATCH")
-                echo '<tr class="part">';
-            echo "<td>$hash</td><td>$type</td><td>$pass</td></tr>";
-        }
-        elseif(count($data) == 2 && $data[0] == "NOTFOUND")
-        {
-            $hash = htmlspecialchars($data[1], ENT_QUOTES);
-            echo "<tr class=\"fail\"><td>$hash</td><td>Unknown</td><td>Not Found</td></tr>";
-        }
-    }
-	echo "</table>";
-    echo '<p style="font-size: 8pt;"><strong>Color Codes:</strong> <span style="background-color: #00FF00;">Green:</span> Exact match, <span style="background-color: #FFFF00;">Yellow:</span> Partial match, <span style="background-color: #FF0000;">Red:</span> Not found.</p>';
-    incrementCounter($cracked_increment, $attempt_increment);
-    return true;
-}
 ?>
- <script type="text/javascript">
- var RecaptchaOptions = {
-    theme : 'blackglass'
- };
- </script>
+<!-- Set the recaptcha theme. -->
+<script type="text/javascript">
+var RecaptchaOptions = {
+   theme : 'blackglass'
+};
+</script>
 
 <h1>Free Password Hash Cracker</h1>
 <p>
     Enter up to 10 non-salted hashes:
 </p>
+
+<!-- Hash cracking form. -->
 <form action="/" method="post">
 <table style="width: 100%;">
 <tr>
     <td style="width: 550px;">
-        <textarea style="width: 100%; height: 180px; border: solid black 1px; background-color: #e9e9e9;" name="hashes" ><?php if(isset($_POST['hashes'])) echo htmlspecialchars($_POST['hashes'], ENT_QUOTES); ?></textarea>
+        <textarea
+            style="width: 100%; height: 180px; border: solid black 1px; background-color: #e9e9e9;"
+            name="hashes" ><?php 
+                if(isset($_POST['hashes'])) {
+                    echo htmlspecialchars($_POST['hashes'], ENT_QUOTES);
+                } 
+        ?></textarea>
     </td>
     <td>
         <center>
-        <?php
-            echo recaptcha_get_html($rec_pub_key, null, true);
-        ?>
-        <input type="submit" name="crack" value="Crack Hashes" style="width: 200px; margin-top: 10px;" />
+            <?php
+                echo recaptcha_get_html($rec_pub_key, null, true);
+            ?>
+            <input type="submit" name="crack" value="Crack Hashes" style="width: 200px; margin-top: 10px;" />
         </center>
     </td>
 </tr>
 </table>
 </form>
+
+<!-- Supported hash types. -->
 <p style="font-size: 8pt; margin: 0; padding: 0;">
-<b>Supports:</b> LM, NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224, sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+	<br />
+<b>Supports:</b>
+LM, NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224,
+sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+
+<br />
 </p>
+
+<!-- Crack results (only shown after a POST) -->
 <div class="crackresults">
 <?php
-
 if(isset($_POST['crack']))
 {
     $rec_result = recaptcha_check_answer(
@@ -164,24 +115,34 @@ if(isset($_POST['crack']))
         {
             if(!CrackHashes($hashes))
             {
-                echo "<p style=\"color: red;\"><b>There was an error connecting to the CrackStation database. We will fix this shortly.</b></p>";
+                echo "<p style=\"color: red;\">
+                        <b>There was an error connecting to the CrackStation
+                        database. We will fix this shortly.</b>
+                      </p>";
             }
         }
         else
         {
-            echo "<p style=\"color: red;\"><b>Please enter <strong>10</strong> or less hashes.</b></p>";
+            echo "<p style=\"color: red;\">
+                    <b>Please enter <strong>10</strong> or less hashes.</b>
+                  </p>";
         }
     }
     else
     {
-        echo "<p style=\"color: red;\"><b>Incorrect captcha. Please try again.</b></p>";
+        echo "<p style=\"color: red;\">
+                <b>Incorrect captcha. Please try again.</b>
+              </p>";
     }
 }
 ?>
 </div>
 
 <div class="downloaddiv">
-    <a class="downloadlink" href="/buy-crackstation-wordlist-password-cracking-dictionary.htm">Download CrackStation's Wordlist</a>
+    <a class="downloadlink"
+       href="/buy-crackstation-wordlist-password-cracking-dictionary.htm">
+            Download CrackStation's Wordlist
+    </a>
 </div>
 
 <a name="cracking-hashes"></a>
@@ -202,9 +163,9 @@ href="hashing-security.htm">hashing security page</a>.
 Crackstation's lookup tables were created by extracting every word from the
 Wikipedia databases and adding with every password list we could find. We also
 applied intelligent word mangling (brute force hybrid) to our wordlists to make
-them much more effective. For MD5 and SHA1 hashes, we have a 190GB, 15-billion-entry
-lookup table, and for other hashes, we have a 19GB 1.5-billion-entry lookup
-table.
+them much more effective. For MD5 and SHA1 hashes, we have a 190GB,
+15-billion-entry lookup table, and for other hashes, we have a 19GB
+1.5-billion-entry lookup table.
 </p>
 
 <p>
