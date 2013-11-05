@@ -4,8 +4,13 @@ mb_internal_encoding('UTF-8');
 
 require_once('recaptchalib.php');
 
-$rec_pub_key = "6LeKzs0SAAAAALT5EZVDjlNHtYeuU_2rWlMGvDho";
-$rec_priv_key = "6LeKzs0SAAAAACV1bvVMaC5haTQT-yHc_-FMbQyn";
+require_once('/etc/creds.php');
+$rec_pub_creds = Creds::getCredentials("cs_recaptcha_pub");
+$rec_pub_key = $rec_pub_creds[C_PASS];
+unset($rec_pub_creds);
+$rec_priv_creds = Creds::getCredentials("cs_recaptcha_priv");
+$rec_priv_key = $rec_priv_creds[C_PASS];
+unset($rec_priv_creds);
 
 if(isset($_GET['p']))
 {
