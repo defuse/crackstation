@@ -23,7 +23,7 @@
 mb_language('uni');
 mb_internal_encoding('UTF-8');
 
-require_once('recaptchalib.php');
+require_once('libs/recaptchalib.php');
 require_once('inc/CrackHashes.php');
 
 /* Get the recaptcha credentials from a protected file. */
