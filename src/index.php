@@ -114,7 +114,6 @@ header('Content-Type: text/html; charset=utf-8');
         <ul class="leftbutton">
             <li><a href="/">&nbsp;Free Hash Cracker</a></li>
             <li><a href="buy-crackstation-wordlist-password-cracking-dictionary.htm">&nbsp;Wordlist Download</a></li>
-            <li><a href="/cracking-services.htm">&nbsp;Advanced Services</a></li>
             <li><a href="/about-us.htm">&nbsp;About Us</a></li>
             <li><a href="/contact-us.htm">&nbsp;Contact Us</a></li>
             <li><a href="/legal-privacy.htm">&nbsp;ToS &amp; Privacy Policy</a></li>
