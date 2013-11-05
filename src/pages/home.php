@@ -52,7 +52,9 @@ function CrackHashes($hashes)
     $cracked_increment = 0;
 	echo "<table class=\"results\">";
 	echo "<tr><th>Hash</th><th>Type</th><th>Result</th></tr>";
-    $url = "http://site-two.defuse.ca:1985/crack.php";
+    $creds = Creds::getCredentials("cs_cracking_server");
+    $url = "http://" . $creds[C_HOST] . "/" . $creds[C_DATB];
+    unset($creds);
     $result = do_post_request($url, "hashes=" . urlencode(implode(",", $hashes)));
     if($result === FALSE)
         return false;
