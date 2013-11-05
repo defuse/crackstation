@@ -78,10 +78,10 @@ header('Content-Type: text/html; charset=utf-8');
 ?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="google-site-verification" content="bJfNsQVzNQLRCAQiZD0kUNF-gFYS16YnaCZDJEX-dLk" />
-<link rel="stylesheet" media="all" type="text/css" href="/mainmenu2.css" />
-<link rel="stylesheet" media="all" type="text/css" href="/main.css" />
+<link rel="stylesheet" media="all" type="text/css" href="/css/mainmenu2.css" />
+<link rel="stylesheet" media="all" type="text/css" href="/css/main.css" />
 <link rel="stylesheet" media="all" type="text/css" href="/css/style.css" />
-<link rel="stylesheet" media="all" type="text/css" href="/vimhl.css" />
+<link rel="stylesheet" media="all" type="text/css" href="/css/vimhl.css" />
 <!--[if !IE 7]>
 	<style type="text/css">
 		#wrap {display:table;height:100%}
