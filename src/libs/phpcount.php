@@ -2,7 +2,7 @@
 // WARNING: HACKED ---- table prefixes 
 /*
  * phpcount.php Ver.1.0- Provides a MySQL-based "Anonymous" hit counter.
- * Copyright (C) 2011  FireXware (firexware@gmail.com)
+ * Copyright (C) 2011  Taylor Hornby (havoc@defuse.ca)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@
  * yourself from being able to recover anyone's IP address without brute forcing
  * the 2^32 possible IP addresses. In the case of IPv6, it becomes 2^128.
  *
- * Contact: firexware@gmail.com
- * WWW:     http://ossbox.com/
+ * Contact: havoc@defuse.ca
+ * WWW:     https://defuse.ca/
  *
  * USAGE:
  *        In your script, use reqire_once() to import this script, then call the
