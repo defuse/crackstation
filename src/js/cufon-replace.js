@@ -1,1 +1,0 @@
-Cufon.replace('.menu > li > a, .button', { fontFamily: 'Mate', hover:true });
