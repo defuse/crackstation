@@ -192,7 +192,7 @@ better web forum</a>. Please contribute if you can.
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0; vertical-align: bottom;" src="/images/cc-by-sa.png" /></a>
 <a href="https://defuse.ca/">Defuse Security</a> | 
     <a href="https://defuse.ca/pastebin.htm">Secure Pastebin</a> | 
-    <a href="https://defuse.ca/passgen.htm">Password Generator</a>
+    <a href="https://github.com/defuse/crackstation">Source Code</a>
     </div> <!-- end footer -->
     </div> <!-- footerwrapper -->
 </body>
