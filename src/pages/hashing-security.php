@@ -33,7 +33,7 @@ but why it should be done that way.
 </tr>
 </tbody></table>
 
-<p>There is public domain password hashing source code at the bottom of this page:</p>
+<p>There is BSD-licensed password hashing source code at the bottom of this page:</p>
 
 <?php sourceCodeShortcuts(); ?>
 
@@ -1052,8 +1052,7 @@ users'. You are responsible for your users' security.
 <p>
 The following code is a secure implementation of PBKDF2 hashing in PHP. You can find a test suite
 and benchmark code for it on <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Security's
-PBKDF2 for PHP</a> page. The code is in the public domain, so you may use it for any purpose
-whatsoever.
+PBKDF2 for PHP</a> page. 
 </p>
 
 <p style="text-align: center;">
@@ -1071,7 +1070,6 @@ whatsoever.
 <?php sourceCodeShortcuts(); ?>
 <p>
     The following code is a secure implementation of PBKDF2 hashing in Java.
-    The code is in the public domain, so you may use it for any purpose whatsoever.
 </p>
 
 <p style="text-align: center;">
@@ -1085,7 +1083,6 @@ whatsoever.
 <?php sourceCodeShortcuts(); ?>
 <p>
 The following code is a secure implementation of salted hashing in C# for ASP.NET. It is in the
-public domain, so you may use it for any purpose whatsoever.
 </p>
 
 <p style="text-align: center;">
@@ -1103,7 +1100,6 @@ public domain, so you may use it for any purpose whatsoever.
 <?php sourceCodeShortcuts(); ?>
 <p>
 The following is a secure implementation of salted PBKDF2 password hashing in Ruby. The code is
-public domain, so you may use it for any purpose whatsoever.
 </p>
 
 <p style="text-align: center;">
