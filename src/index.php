@@ -191,7 +191,8 @@ better web forum</a>. Please contribute if you can.
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0; vertical-align: bottom;" src="/images/cc-by-sa.png" /></a>
 <a href="https://defuse.ca/">Defuse Security</a> | 
     <a href="https://defuse.ca/pastebin.htm">Secure Pastebin</a> | 
-    <a href="https://github.com/defuse/crackstation">Source Code</a>
+    <a href="https://github.com/defuse/crackstation">Source Code</a> | 
+    <script id='fbryl0z'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=earthrise&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbryl0z');</script>
     </div> <!-- end footer -->
     </div> <!-- footerwrapper -->
 </body>
