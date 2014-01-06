@@ -781,7 +781,9 @@ random binary blob used only to identify a record in a database table.
 </p>
 
 <p>
-    Never send the user a new password over email.
+Never send the user a new password over email. Remember to pick a new random
+salt when the user resets their password. Don't re-use the one that was used to
+hash their old password.
 </p>
 
 <h3>What should I do if my user account database gets leaked/hacked?</h3>
@@ -953,12 +955,11 @@ system.
 </p>
 
 <p>
-This is a theoretical attack. I've never seen it done in practice,
-and I seriously doubt it could be done over the internet. Nevertheless, the
-hashing code on this page compares strings in a way that takes the same amount
-of time no matter how much of the strings match, just in case the code gets used
-in an environment that's unusually vulnerable to timing atttacks (such as
-on an extremely slow processor).
+It might seem like it would be impossible to run a timing attack over a network.
+However, it has been done, and has been
+<a href="https://crypto.stanford.edu/~dabo/papers/ssl-timing.pdf">shown to be practical</a>.
+That's why the code on this page compares strings in a way that takes the same
+amount of time no matter how much of the strings match.
 </p>
 
 <a name="slowequals"></a>
