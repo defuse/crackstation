@@ -12,10 +12,10 @@ to help any law enforcement agency.
 
 <h2>Privacy Policy</h2>
 <p>
-CrackStation respects the privacy of its users. Your IP address may be logged as
-you request web pages from this site, but we do not sell that information or
-share that information with anyone. We DO NOT log the hashes that you crack.
-However, you should still not try to crack the hash of your own password or
-other sensitive information, since your connection might be being intercepted by
-the NSA.
+CrackStation respects the privacy of its users. Your IP address and web browser
+information may be logged as you request web pages from this site, but we do not
+sell that information or share that information with anyone. We DO NOT log the
+hashes that you crack.  However, you should still not try to crack the hash of
+your own password or other sensitive information, since your connection might be
+being intercepted by the NSA.
 </p>
