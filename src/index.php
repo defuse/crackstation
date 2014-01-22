@@ -23,6 +23,14 @@
 // Standardize the times & dates to UTC because people don't live in the same timezone as the server.
 date_default_timezone_set("UTC"); 
 
+// HSTS header (force HTTPS)
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' &&
+    $_SERVER['HTTP_HOST'] != "localhost" && 
+    $_SERVER['HTTP_HOST'] != "192.168.1.102")
+{
+    header('Strict-Transport-Security: max-age=31536000'); /* one year */
+}
+
 //Strengthen the server's CSPRNG
 $entropy = implode(gettimeofday()) . implode($_SERVER) . implode($_GET) . implode($_POST) . implode($_COOKIE) . implode($_ENV) . microtime() . mt_rand() . mt_rand();
 file_put_contents("/dev/urandom", $entropy);
