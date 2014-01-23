@@ -437,6 +437,12 @@ even harder to crack.
 <h3>The Basics: Hashing with Salt</h3>
 
 <p>
+<b>Warning: Do not just read this section. You absolutely must implement the
+stuff in the next section: "Making Password Cracking Harder: Slow Hash
+Functions".</b>
+</p>
+
+<p>
 We've seen how malicious hackers can crack plain hashes very quickly using
 lookup tables and rainbow tables. We've learned that randomizing the hashing
 using salt is the solution to the problem.  But how do we generate the salt, and
