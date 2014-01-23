@@ -733,7 +733,7 @@ that breaches are detected and responded to promptly.
 
 <ul class="moveul">
     <li>Outdated hash functions like MD5 or SHA1.</li>
-    <li>Insecure versions of crypt ($1$, $2$, $2a$, $2x$, $3$).</li>
+    <li>Insecure versions of crypt ($1$, $2$, $2x$, $3$).</li>
     <li>Any algorithm that you designed yourself. Only use technology that is in the public domain and has been well-tested by experienced cryptographers.</li>
 </ul>
 
