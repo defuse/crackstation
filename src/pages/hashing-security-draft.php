@@ -87,6 +87,14 @@ The next obvious step is to encrypt passwords with symmetric encryption.
      - PBKDF2, scrypt, bcrypt (anything else?)
      - Weak passwords can still be found .. intro next section with
        security-by-obscurity key.
+
+- Important to keep this at a high level, similar to how block ciphers are
+explained before getting into the details. We can point readers to the
+scrypt/Catena papers and PHC if they want to find out how these things are
+really implemented. We do need to mention some desirable properties, including
+memory hardness, etc. We want to get people interested in how they work, but we
+don't want them to think they can design one themselves. (see solardiz email)
+
 </pre>
 
 <h2>Secure System #2: Keyed Hashes</h2>
