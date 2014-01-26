@@ -114,19 +114,7 @@ don't want them to think they can design one themselves. (see solardiz email)
 
 </pre>
 
-<h2>Secure System #2: Keyed Hashes</h2>
-
-<pre>
-    - Security by obscurity hide-the-key-somewhere-and-hope-attacker-doesn't-find-it.
-    - Why this and not encrypt (first weak one)? - Now we have a robust slow hash system to fall back on if the 
-      attacker DOES find the key.
-    - Should I even include this section? I really don't think it would be
-     useful in practice (attacker can just add an echo to the hash code to get the
-      key)
-    - I think this is sometimes called hashing with "pepper"
-</pre>
-
-<h2>Secure System #3: Hardware Security Module</h2>
+<h2>Increasing Security: Hardware Security Modules</h2>
 
 <pre>
     - Use hardware device with embedded key to do the hashing, so that unless
