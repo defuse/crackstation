@@ -1,7 +1,7 @@
 <h1>How to Store Passwords</h1>
 
 <p>
-This article will walk you through the design of a secure password hashing
+This article will walk you through the design of a secure password storage
 system. Along the way, we'll encounter many common mistakes, and for each
 mistake, we'll understand why it's a mistake and how to fix it.
 </p>
@@ -19,8 +19,8 @@ this page.
 <p>
 If for some reason you missed that big red warning note, please go read it now.
 Really, this guide is <b>not</b> meant to walk you through the process of
-writing your own hashing system, it's to explain the theory behind why password
-hashing should be done a certain way.
+writing your own storage system, it's to explain the reasons why passwords
+should be stored a certain way.
 </p>
 
 <p>
@@ -31,7 +31,7 @@ and how we as defenders can make the attacker's job harder.
 </p>
 
 <p>
-For concreteness, we'll use a standard web application login system as an
+For concreteness, we'll use a standard web site login system as an
 example. 
 </p>
 
