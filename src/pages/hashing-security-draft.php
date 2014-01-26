@@ -41,14 +41,31 @@ example.
 The most obvious way to store passwords is to just put them straight into the
 database without any kind of encryption or hashing. Obviously, this is
 a horrible idea, since if an attacker gains access to your database, they will
-have all of your users' passwords.
+have all of your users' passwords, and you'll be in PR hell trying to win back
+your users' trust.
 </p>
 
 <p>
-This is a huge risk, not just for you, but for your users, too. <b>TODO: users
-re-use same passwords on other websites, PR nightmare, attackers might target
-you if they know your passwords are in plain text.... convince them plain text
-is bad.</b>
+Worse, if attackers know you're storing passwords in plain text, they will
+target you, because password databases are valuable and can be sold on the black
+market.
+</p>
+
+<p>
+It's a huge risk, not just to you, but to your users too. It's very common for
+people to re-use the same password on multiple websites. If your website exposes
+a user's password to an attacker, that attacker might be able to use it to log
+in to the user's account on another website. You might be tempted to blame the
+user for re-using their password, but if you had protected the passwords, the
+user wouldn't be at risk, so it <em>is</em> your responsibility.
+</p>
+
+<p>
+Another problem you'll have, if you store passwords in plain text, is that when
+you get hacked, it will be impossible to give your users a secure way to reclaim
+their account, even after you've fixed the vulnerability. Once the attacker has
+all of the passwords, they can log in to any accounts they're interested in, set
+new passwords, and have permanent access to them.
 </p>
 
 <h2>Weak System #2: Encryption</h2>
