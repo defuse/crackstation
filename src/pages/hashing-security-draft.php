@@ -135,7 +135,7 @@ also extremely low.
 
 <p>
 You might think we can stop here. In fact, we can't, because storing passwords
-this way is still very weak. 
+this way is insecure. 
 </p>
 
 <p>
@@ -178,7 +178,7 @@ account database in a matter of minutes.
 These password cracking databases are very real, and are used by attackers all
 the time. One special type, called a "<a href="https://en.wikipedia.org/wiki/Rainbow_table">Rainbow Table</a>", can fit the MD5 hashes of
 all possible 8 character passwords into a <a
-href="https://www.freerainbowtables.com/en/tables2/">1TB file</a> that can be
+href="https://www.freerainbowtables.com/en/tables2/">1049 GB file</a> that can be
 downloaded from the Internet.
 </p>
 
@@ -197,29 +197,166 @@ same password, or if one user uses the same password twice, the hash values are
 always different. This is done by adding some randomness to the hashing process.
 </p>
 
+<p>
+To hash a password, we use a cryptographically secure pseudo-random number
+generator (CSPRNG) to generate a random string, called a <b>salt</b>, which we
+prepend to the password before hashing it. We then save that random number with
+the hash, since we'll need to verify passwords against the hash.
+</p>
+
+<p>
+Here's what it looks like in pseudocode. The double bar symbol "A || B" means
+concatenate the string A with the string B.
+</p>
+
+<div class="passcrack">
 <pre>
-    - Prepend random salt to thwart above attacks.
-    - Mistakes: short salt, salt reuse, not generating salt with a CSPRNG
-    - Not good enough because attackers with ASICs and GPUs can still test
-      passwords reallly fast.
+# When a new account is created, or a user changes their password.
+create_hash(PASSWORD):
+    Generate a random string SALT with a CSPRNG.
+    HASH = sha256(SALT || PASSWORD).
+    return (SALT, HASH).
+
+
+# When a user tries to log in.
+check_password((SALT, HASH), PASSWORD_GUESS):
+    GUESS_HASH = sha256(SALT || PASSWORD_GUESS).
+    if GUESS_HASH equals HASH:
+        return TRUE.
+    else:
+        return FALSE.
 </pre>
+</div>
+
+<p>
+Assuming the salt is long enough, always generated with a CSPRNG, and no salt is
+ever used to hash more than one password, the attacks of the previous section
+are no longer possible. The only way to crack these hashes is to test password
+guesses for each hash individually. However, <b>this is still not good enough!</b>
+</p>
+
+<p>
+Hash functions like SHA256 were designed to be fast. Good CPUs can compute
+millions of SHA256 hashes per second, and good GPUs (graphics processors) can
+compute <a href="http://www.zdnet.com/25-gpus-devour-password-hashes-at-up-to-348-billion-per-second-7000008368/"><b>billions</b> of hashes per second</a>. Customized hardware (FPGAs and
+ASICs) can reach even higher speeds. This is exactly the opposite of what we
+want, since it means an attacker who stole the user account database can crack
+the hashes a rate of billions of password guesses per second. Not good.
+</p>
+
+<p>
+This is the last hurdle in the race. Once we pass it, we'll finally arrive at
+a secure password storage system.
+</p>
+
 
 <h2>Secure System #1: Slow Hashing</h2>
 
+<p>
+In the previous section, we added salt to our passwords to prevent
+pre-computation attacks. We then saw that hash functions like SHA256 can be
+computed extremely quickly by GPUs and custom hardware, letting attackers test
+billions of passwords per second.
+</p>
+
+<p>
+Password hashing functions don't need to be that fast. You probably won't be
+handling millions of authentication requests per second from one server, so
+there's no reason an authentication server will ever need to compute millions of
+hashes per second. It's alright if the password hashing process is 1,000 times
+or even 1,000,000 times slower than a regular hash function. To make things
+harder for GPUs and custom hardware, <b>we also want the hashing process to need
+lots of memory</b>.
+</p>
+
+<p>
+It's not enough to add a call to <kbd>sleep()</kbd> or a time-consuming "no op"
+loop into the password hashing code. An attacker can remove it and compute
+hashes as fast as they want. Instead, the hashing function has to be truly hard
+to compute. There should be no way to compute it any faster or with less memory.
+More correctly stated, there should be no way to reduce the overall <kbd>time
+* area</kbd> needed to compute the function, where "area" means the size of the
+circuit you need to compute the hash in a given amount of time.
+</p>
+
+<p>
+We want the defender's (password authenticator's) implementation of the function
+to be as optimal as possible. This is important, since if the defender is taking
+10x longer to compute the function, the attacker, using a 10x more efficient
+implementation, has an advantage over the defender. That means these functions
+should be implemented in native code (assembly language or C/C++), and not in
+a scripting language.
+</p>
+
+<p>
+Researchers are still figuring out how to best design these slow hashes. There's
+a competition going on right now, called the <a
+href="https://password-hashing.net/">Password Hashing Competition (PHC)</a>,  to find
+the best one. It's similar in nature to the <a
+href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard_process">competition
+that selected the AES cipher</a>. Even though the competition hasn't finished
+yet, we already have some slow hash functions that we think are good, and are in
+common use. These are: <a href="https://www.tarsnap.com/scrypt/scrypt.pdf">scrypt</a>,
+<a href="https://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and
+<a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>.
+</p>
+
+<p>
+If you want to know more about how slow hashes are designed, read the <a
+href="https://www.tarsnap.com/scrypt/scrypt.pdf">Scrypt paper</a> and the <a
+href="http://eprint.iacr.org/2013/525.pdf">Catena paper</a>. You should also
+join and read the <a href="https://password-hashing.net/interaction.html">PHC
+mailing list</a>, since research in this area is evolving quickly! Whatever you
+do, <b>do not try to design and use your own slow hash function</b>. Stick to
+the ones that already exist and have been used for a while. Feel free to design
+(and break) your own as a learning exercise, but for crying out loud, don't use
+it.
+</p>
+
+<p>
+So, if we choose scrypt as our slow hash, we can store passwords securely like
+this. It's the same as before, except we're using scrypt instead of SHA256.
+</p>
+
+<div class="passcrack">
 <pre>
-     - Use slow hash function.
-     - PBKDF2, scrypt, bcrypt (anything else?)
+# When a new account is created, or a user changes their password.
+create_hash(PASSWORD):
+    Generate a random string SALT with a CSPRNG.
+    HASH = scrypt(SALT, PASSWORD).
+    return (SALT, HASH).
+
+
+# When a user tries to log in.
+check_password((SALT, HASH), PASSWORD_GUESS):
+    GUESS_HASH = scrypt(SALT, PASSWORD_GUESS).
+    if GUESS_HASH equals HASH:
+        return TRUE.
+    else:
+        return FALSE.
+</pre>
+</div>
+
+<p>
+- want defender to be optimized
+- the functions are parameterized (take time and memory parameters)
+- summarry like "we've mitigated pre-computation attacks as well as made it
+extremely difficult for GPUs or whatever"
+</p>
+
+<pre>
      - Weak passwords can still be found .. intro next section with
        security-by-obscurity key.
-
-- Important to keep this at a high level, similar to how block ciphers are
-explained before getting into the details. We can point readers to the
-scrypt/Catena papers and PHC if they want to find out how these things are
-really implemented. We do need to mention some desirable properties, including
-memory hardness, etc. We want to get people interested in how they work, but we
-don't want them to think they can design one themselves. (see solardiz email)
-
+     - AKA key stretching,
+    - Offloading to the client (sjcl) -- does not remove need for server hashing
+    - Re-read old post since this is missing some stuff that was covered in it
 </pre>
+
+<p>
+Even with the salt and slow hashing, weak passwords can still be cracked.
+In the next section, we'll see how, with the help of some special hardware, we
+can protect our hashes so that even the weak ones can't be cracked.
+</p>
 
 <h2>Increasing Security: Hardware Security Modules</h2>
 
@@ -228,13 +365,34 @@ don't want them to think they can design one themselves. (see solardiz email)
       it's physically stolen and tampered with, the passwords are really safe.
     - Also possible to do w/o custom hardware... just set up dedicated password
       authentication box that does nothing but hash passwords; no services, etc.
+    - Mandatory for websites with more than 100k users.
+    - Cloud options? (amazon thing)?
+    - Physical options? (yubihsm?)
 </pre>
+
+<h2>Common Mistakes</h2>
+
+<p>
+Be on the lookout for these common password hashing mistakes.
+</p>
+
+<h3>Salt Reuse</h3>
+
+<h3>Short Salts</h3>
+
+<h3>Generating Salts with a Weak Random Number Generator</h3>
 
 <h2>Frequently Asked Questions</h2>
 
 <pre>
     - Basically the same list of FAQ from the original article except emphasize
         slow hashing.
+
+     - In "what to do when" section... "don't clutter up the notice message with
+all the crap about salt and hashing and scrypt, they won't understand. Just tell
+them to change their password if they used it anywhere else etc. But do publish
+the information about hashing, just don't make it distracting or give a false
+sense of security."
 </pre>
 
 <h2>Source Code</h2>
