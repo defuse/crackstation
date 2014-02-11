@@ -199,7 +199,6 @@ header('Content-Type: text/html; charset=utf-8');
     </span>
     </div> <!-- end footer -->
     </div> <!-- footerwrapper -->
-</body>
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
@@ -219,4 +218,5 @@ header('Content-Type: text/html; charset=utf-8');
 <img src="https://defuse.ca/piwik/piwik.php?idsite=2&amp;rec=1" style="border:0" alt="" />
 </noscript>
 <!-- End Piwik Code -->
+</body>
 </html>
