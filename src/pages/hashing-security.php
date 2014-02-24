@@ -6,7 +6,24 @@ The most important aspect of a user account system is how user passwords are
 protected. User account databases are hacked frequently, so you absolutely must
 do something to protect your users' passwords if your website is ever breached.
 The best way to protect passwords is to employ <b>salted password hashing</b>.
-This page will explain how to do it properly.
+This page will explain why it's done the way it is.
+</p>
+
+<div style="background-color: #FFCCCC; border: solid red 1px; padding: 10px;">
+<strong>IMPORTANT WARNING:</strong> If you are thinking of writing your own
+password hashing code, <strong>please don't!</strong>. It's too easy to screw
+up. No, that cryptography course you took in university doesn't make you exempt
+from this warning. This applies to everyone: <strong>DO NOT WRITE YOUR OWN
+CRYPTO!</strong> The problem of storing passwords has already been solved. Use either use either <a
+href="http://www.openwall.com/phpass/">phpass</a> or the source code given on
+this page.
+</div>
+
+<p>
+If for some reason you missed that big red warning note, please go read it now.
+Really, this guide is <b>not</b> meant to walk you through the process of
+writing your own storage system, it's to explain the reasons why passwords
+should be stored a certain way.
 </p>
 
 <p>
