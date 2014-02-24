@@ -9,6 +9,15 @@ The best way to protect passwords is to employ <b>salted password hashing</b>.
 This page will explain why it's done the way it is.
 </p>
 
+<p>
+There are a lot of conflicting ideas and misconceptions on how to do password
+hashing properly, probably due to the abundance of misinformation on the web.
+Password hashing is one of those things that's so simple, but yet so many people
+get wrong. With this page, I hope to explain not only the correct way to do it,
+but why it should be done that way.
+</p>
+
+
 <div style="background-color: #FFCCCC; border: solid red 1px; padding: 10px;">
 <strong>IMPORTANT WARNING:</strong> If you are thinking of writing your own
 password hashing code, <strong>please don't!</strong>. It's too easy to screw
@@ -24,14 +33,6 @@ If for some reason you missed that big red warning note, please go read it now.
 Really, this guide is <b>not</b> meant to walk you through the process of
 writing your own storage system, it's to explain the reasons why passwords
 should be stored a certain way.
-</p>
-
-<p>
-There are a lot of conflicting ideas and misconceptions on how to do password
-hashing properly, probably due to the abundance of misinformation on the web.
-Password hashing is one of those things that's so simple, but yet so many people
-get wrong. With this page, I hope to explain not only the correct way to do it,
-but why it should be done that way.
 </p>
 
 <p>You may use the following links to jump to the different sections of this page.</p>
