@@ -49,7 +49,7 @@ human password hashes to motivate their move to a better salting scheme.
 <p>
 The wordlist is being sold using a "pay what you want" model. That means
 you can pay absolutely any amount of money you want for the wordlist. Even
-nothing. Use the PayPal donate button, Bitcoin address, or Litecoin address
+nothing. Use the [redacted] donate button, Bitcoin address, or Litecoin address
 below to make your payment.
 </p>
 
