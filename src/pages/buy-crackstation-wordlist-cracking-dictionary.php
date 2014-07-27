@@ -45,11 +45,10 @@ human password hashes to motivate their move to a better salting scheme.
 
 <h2>Step 1: Pay what you want.</h2>
 
-<s>
 <p>
 The wordlist is being sold using a "pay what you want" model. That means
 you can pay absolutely any amount of money you want for the wordlist. Even
-nothing. Use the [redacted] donate button, Bitcoin address, or Litecoin address
+nothing. Use the PayPal donate button, Bitcoin address, or Litecoin address
 below to make your payment.
 </p>
 
@@ -81,12 +80,9 @@ Think about the following points when deciding how much to pay:
         sharing this page with your friends is appreciated!
     </li>
 </ul>
-</s>
 
 <br />
 <br />
-
-<!-- 
 <center>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick" />
@@ -95,14 +91,6 @@ Think about the following points when deciding how much to pay:
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </form>
 </center>
--->
-
-<p style="font-size: 16pt;">
-Update: "The major online payment processor that starts with P and rhymes with
-Pal" limited my account because of this wordlist. They are assholes. So fuck it.
-Download it for free. You can still send some Bitcoins or Litecoins if you want,
-though:
-</p>
 
 <div style="text-align: center; font-family: monospace;">
     <br />
