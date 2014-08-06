@@ -80,13 +80,13 @@ function sourceCodeShortcuts() {
             hash("waltz") = c0e81794384491161f1777c232bc6bd9ec38f616560b120fda8e90f383853542<br />
         </div>
 <p>
-Hash algorithms are one way functions. They turn any amount of data into a
-fixed-length "fingerprint" that cannot be reversed. They also have the property
-that if the input changes by even a tiny bit, the resulting hash is completely
-different (see the example above). This is great for protecting passwords,
-because we want to store passwords in an encrypted form that's impossible to
-decrypt, but at the same time, we need to be able to verify that a user's
-password is correct. 
+Hash algorithms are one way functions. They turn any amount of data into
+a fixed-length "fingerprint" that cannot be reversed. They also have the
+property that if the input changes by even a tiny bit, the resulting hash is
+completely different (see the example above). This is great for protecting
+passwords, because we want to store passwords in a form that protects them even
+if the password file itself is compromised, but at the same time, we need to be
+able to verify that a user's password is correct.
 </p>
 
 <p>
