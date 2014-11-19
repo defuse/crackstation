@@ -56,6 +56,20 @@ var RecaptchaOptions = {
 </script>
 
 <h1>Free Password Hash Cracker</h1>
+
+<div style="background-color: #550000; color: #FFFFFF; border: solid black 3px; padding: 10px;">
+<p style="font-size: 20px;">
+Temporarily Broken!
+</p>
+<p>
+CrackStation's database server is broken. I will fix it as soon as possible,
+however as I am busy with university this might not happen until mid-december.
+Thanks for your patience! (If you really need some hashes cracked in the
+meantime, download the wordlist and source code and index it yourself (skip the
+pay-what-you-want, just take it for free)).
+</p>
+</div>
+
 <p>
     Enter up to 10 non-salted hashes:
 </p>
