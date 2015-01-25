@@ -107,8 +107,8 @@ Think about the following points when deciding how much to pay:
 </p>
 
 <div style="text-align: center;">
-    <a class="wldl" href="magnet:?xt=urn:btih:fd62cc1d79f595cbe1de6356fb13c2165994e469&dn=CrackStation.Password.Cracking.Dictionary&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Fopen.demonii.com%3A1337">
-        <span style="font-size: 20pt;">Torrent (Magnet Link)</span>
+    <a class="wldl" href="/downloads/crackstation.txt.gz.torrent">
+        <span style="font-size: 20pt;">Torrent</span>
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
@@ -138,8 +138,8 @@ There are about 64 million passwords in this list!
 </p>
 
 <div style="text-align: center;">
-    <a class="wldl" href="magnet:?xt=urn:btih:7ae809ccd7f0778328ab4b357e777040248b8c7f&dn=CrackStation.Human.Passwords.Only&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Fopen.demonii.com%3A1337">
-        <span style="font-size: 16pt;">Torrent (Magnet Link)</span>
+    <a class="wldl" href="/downloads/crackstation-human-only.txt.gz.torrent">
+        <span style="font-size: 16pt;">Torrent</span>
         <br />
         GZIP-compressed. 247 MiB compressed. 684 MiB uncompressed.
     </a>
