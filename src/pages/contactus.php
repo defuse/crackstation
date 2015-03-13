@@ -1,10 +1,16 @@
 <div class="box">
 <div class="padding">
 <h1>Contacting CrackStation</h1>
+
+<p>
+    <strong>Please Note:</strong> I have stopped replying to email. If you would
+    have feedback or a question, and want to receive a reply, please tweet it to
+    me instead. I will very rarely reply to any email, but I do enjoy reading
+    everything that gets sent to me.
+</p>
+
 <p>
 To contact CrackStation, send an email to <a href="mailto:crackstation@defuse.ca"><strong>crackstation@defuse.ca</strong></a>
-We'll be glad to answer any questions you have, and we appreciate all feedback, good or bad. You
-should receive a reply within two days.
 </p>
 </div>
 
