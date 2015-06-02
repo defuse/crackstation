@@ -101,9 +101,8 @@ Think about the following points when deciding how much to pay:
 <h2>Step 2: Download!</h2>
 
 <p>
-    <strong>Please note:</strong> Some people have had problems downloading the
-    word lists using the Mega link. It is highly recommended that you try the
-    torrent download first.
+<b>Note:</b> To download the torrents, you will need a torrent client like
+Transmission (for Linux and Mac), or uTorrent for Windows.
 </p>
 
 <div style="text-align: center;">
