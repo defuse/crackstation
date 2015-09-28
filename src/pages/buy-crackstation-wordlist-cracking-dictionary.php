@@ -94,8 +94,8 @@ Think about the following points when deciding how much to pay:
 
 <div style="text-align: center; font-family: monospace;">
     <br />
-    Bitcoin: 1qrd1BFuYu4ETiQfPNRuNuZzqd8jQWtkV <br /><br />
-    Litecoin: LVT12f2fFGvRL5DYvXLMWKnm2yAjWimwBR
+    Bitcoin: 1G6PjrYhy5uXPsY1DxirEA3Ahx5EHn5W45<br /><br />
+    Litecoin: Lg46hm5DY5QT2TU7rUN5yHuGZ2PHqjUb9L
 </div>
 
 <h2>Step 2: Download!</h2>
