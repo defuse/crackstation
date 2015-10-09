@@ -85,6 +85,7 @@ header('Content-Type: text/html; charset=utf-8');
             echo htmlspecialchars($metk, ENT_QUOTES);
 ?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="google-site-verification" content="AeVohZfbCxeMLV4i1tKOdEgAOxhl8JgvNEpi11neLLk" />
 <meta name="google-site-verification" content="bJfNsQVzNQLRCAQiZD0kUNF-gFYS16YnaCZDJEX-dLk" />
 <link rel="stylesheet" media="all" type="text/css" href="/css/mainmenu2.css" />
 <link rel="stylesheet" media="all" type="text/css" href="/css/main.css" />
