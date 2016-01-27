@@ -193,6 +193,7 @@ header('Content-Type: text/html; charset=utf-8');
     </table>
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0; vertical-align: bottom;" src="/images/cc-by-sa.png" /></a>
 <a href="https://defuse.ca/">Defuse Security</a> | 
+    <a href="https://z.cash/">Zcash</a> |
     <a href="https://defuse.ca/pastebin.htm">Secure Pastebin</a> | 
     <a href="https://github.com/defuse/crackstation">Source Code</a>
     <span style="float: right;">
