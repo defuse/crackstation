@@ -1043,5 +1043,5 @@ users'. You are responsible for your users' security.
 </p>
 
 <div style="text-align: center;">
-    <h4>Article and code written by <a href="https://defuse.ca/">Defuse Security.</a></h4>
+    <h4>Article written by <a href="https://defuse.ca/">Defuse Security.</a></h4>
 </div>
