@@ -23,9 +23,12 @@ but why it should be done that way.
 password hashing code, <strong>please don't!</strong>. It's too easy to screw
 up. No, that cryptography course you took in university doesn't make you exempt
 from this warning. This applies to everyone: <strong>DO NOT WRITE YOUR OWN
-CRYPTO!</strong> The problem of storing passwords has already been solved. Use either use either <a
-href="http://www.openwall.com/phpass/">phpass</a> or the source code given on
-this page.
+CRYPTO!</strong> The problem of storing passwords has already been solved. Use
+either use either <a href="http://www.openwall.com/phpass/">phpass</a>, the PHP,
+C#, Java, and Ruby implementations in <a
+href="https://github.com/defuse/password-hashing">defuse/password-hashing</a>,
+or <a
+href="https://download.libsodium.org/doc/password_hashing/index.html">libsodium</a>.
 </div>
 
 <p>
@@ -50,27 +53,6 @@ should be stored a certain way.
     <td><a href="#faq" class="sca" title="Frequently asked questions about password hashing and salt">6. Frequently Asked Questions</a></td>
 </tr>
 </tbody></table>
-
-<p>There is BSD-licensed password hashing source code at the bottom of this page:</p>
-
-<?php sourceCodeShortcuts(); ?>
-
-<?php
-function sourceCodeShortcuts() {
-?>
-    <table class="shortcuts" style="text-align: center;">
-    <tbody>
-    <tr>
-        <td><a href="#phpsourcecode" class="sca" title="PHP password hashing example source code">PHP Source Code</a></td>
-        <td><a href="#javasourcecode" class="sca" title="Java password hashing example source code">Java Source Code</a></td>
-        <td><a href="#aspsourcecode" class="sca" title="C# password hashing example source code">ASP.NET (C#) Source Code</a></td>
-        <td><a href="#rubysourcecode" class="sca" title="Ruby PBKDF2 password hashing code">Ruby (on Rails) Source Code</a></td>
-    </tr>
-    </tbody>
-    </table>
-<?
-}
-?>
 
 <a name="normalhashing"></a>
 <h2>What is password hashing?</h2>
@@ -512,11 +494,6 @@ account table alongside the hash.  </p>
     <li>Compare the hash of the given password with the hash from the database. If they match, the password is correct. Otherwise, the password is incorrect.</li>
 </ol>
 
-<p>
-    At the bottom of this page, there are implementations of salted password hashing in
-    <a href="#phpsourcecode">PHP</a>, <a href="#aspsourcecode">C#</a>,
-    <a href="#javasourcecode">Java</a>, and <a href="#rubysourcecode">Ruby</a>.
-</p>
 
 <h4>In a Web Application, <b>always</b> hash on the server</h4>
 <p>
@@ -740,12 +717,7 @@ that breaches are detected and responded to promptly.
 <span style="color: green;"><b>DO</b></span> use:
 
 <ul class="moveul">
-    <li>The <a href="#phpsourcecode" title="PHP password hashing source code">PHP source code</a>,
-            <a href="#javasourcecode" title="Java password hashing source code">Java source code</a>,
-            <a href="#aspsourcecode" title="C# password hashing source code">C# source code</a>
-            or the <a href="#aspsourcecode" title="Ruby password hashing source code">Ruby source code</a>
-            at the bottom of this page.
-    </li>
+    <li><a href="https://github.com/defuse/password-hashing">My implementations of PBKDF2 in PHP, C#, Java, and Ruby.</a></li>
     <li>OpenWall's <a href="http://www.openwall.com/phpass/">Portable PHP password hashing
     framework</a></li>
     <li>Any modern well-tested cryptographic hash algorithm, such as SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
@@ -1070,69 +1042,6 @@ password everywhere). It's not just your security that's at risk, it's your
 users'. You are responsible for your users' security.
 </p>
 
-<a name="phpsourcecode"></a>
-<h2>PHP PBKDF2 Password Hashing Code</h2>
-<?php sourceCodeShortcuts(); ?>
-
-<p>
-The following code is a secure implementation of PBKDF2 hashing in PHP. You can find a test suite
-and benchmark code for it on <a href="https://defuse.ca/php-pbkdf2.htm">Defuse Security's
-PBKDF2 for PHP</a> page. 
-</p>
-
-<p style="text-align: center;">
-    <strong><a href="/source/password-hashing/PasswordHash.php">Download PasswordHash.php</a></strong>
-</p>
-<p style="text-align: center;">
-    If you need compatible PHP and C# implementations, see <a
-    href="https://github.com/defuse/password-hashing/tree/master/compatible">here</a>.
-</p>
-
-<?php printSourceFile("source/password-hashing/PasswordHash.php", false); ?>
-
-<a name="javasourcecode"></a>
-<h2>Java PBKDF2 Password Hashing Code</h2>
-<?php sourceCodeShortcuts(); ?>
-<p>
-    The following code is a secure implementation of PBKDF2 hashing in Java.
-</p>
-
-<p style="text-align: center;">
-    <strong><a href="/source/password-hashing/PasswordHash.java">Download PasswordHash.java</a></strong>
-</p>
-
-<?php printSourceFile("source/password-hashing/PasswordHash.java", false); ?>
-
-			<a name="aspsourcecode"></a>
-<h2>ASP.NET (C#) Password Hashing Code</h2>
-<?php sourceCodeShortcuts(); ?>
-<p>
-The following code is a secure implementation of salted hashing in C# for ASP.NET. It is in the
-</p>
-
-<p style="text-align: center;">
-    <strong><a href="/source/password-hashing/PasswordHash.cs">Download PasswordHash.cs</a></strong>
-</p>
-
-<p style="text-align: center;">
-    If you need compatible PHP and C# implementations, see <a
-    href="https://github.com/defuse/password-hashing/tree/master/compatible">here</a>.
-</p>
-<?php printSourceFile("source/password-hashing/PasswordHash.cs", false); ?>
-
-<a name="rubysourcecode"></a>
-<h2>Ruby (on Rails) Password Hashing Code</h2>
-<?php sourceCodeShortcuts(); ?>
-<p>
-The following is a secure implementation of salted PBKDF2 password hashing in Ruby. The code is
-</p>
-
-<p style="text-align: center;">
-    <strong><a href="/source/password-hashing/PasswordHash.rb">Download PasswordHash.rb</a></strong>
-</p>
-<?php printSourceFile("source/password-hashing/PasswordHash.rb", false); ?>
-
 <div style="text-align: center;">
     <h4>Article and code written by <a href="https://defuse.ca/">Defuse Security.</a></h4>
 </div>
-
