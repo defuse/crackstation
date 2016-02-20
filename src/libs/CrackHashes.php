@@ -85,7 +85,6 @@ function CrackHashes($hashes)
     }
 	echo "</table>";
     echo '<p style="font-size: 8pt;"><strong>Color Codes:</strong> <span style="background-color: #00FF00;">Green:</span> Exact match, <span style="background-color: #FFFF00;">Yellow:</span> Partial match, <span style="background-color: #FF0000;">Red:</span> Not found.</p>';
-    incrementCounter($cracked_increment, $attempt_increment);
     return true;
 }
 ?>

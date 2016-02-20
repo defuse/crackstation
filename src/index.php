@@ -36,7 +36,6 @@ $entropy = implode(gettimeofday()) . implode($_SERVER) . implode($_GET) . implod
 file_put_contents("/dev/urandom", $entropy);
 
 require_once('libs/URLParse.php'); 
-require_once('libs/hitcounter.php');
 require_once('libs/phpcount.php');
 
 $name = URLParse::ProcessURL();
