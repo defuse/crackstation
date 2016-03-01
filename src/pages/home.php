@@ -112,18 +112,9 @@ if(isset($_POST['crack']))
         $hashes = explode("\n", $hashes);
         array_walk($hashes, 'trim_value');
         $hashes = array_filter($hashes, function ($item) { return !empty($item); });
-        if(count($hashes) <= 10)
-        {
-            if(!CrackHashes($hashes))
-            {
-                echo "<p style=\"color: red;\">
-                        <b>There was an error connecting to the CrackStation
-                        database. We will fix this shortly.</b>
-                      </p>";
-            }
-        }
-        else
-        {
+        if(count($hashes) <= 10) {
+            CrackHashes($hashes);
+        } else {
             echo "<p style=\"color: red;\">
                     <b>Please enter <strong>10</strong> or less hashes.</b>
                   </p>";

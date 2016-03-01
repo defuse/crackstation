@@ -20,71 +20,143 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once('/etc/creds.php');
-
-// http://wezfurlong.org/blog/2006/nov/http-post-from-php-without-curl/
-function do_post_request($url, $data, $optional_headers = null)
-{
-  $params = array('http' => array(
-              'method' => 'POST',
-              'content' => $data
-            ));
-  if ($optional_headers !== null) {
-    $params['http']['header'] = $optional_headers;
-  }
-  $ctx = stream_context_create($params);
-  $fp = @fopen($url, 'rb', false, $ctx);
-  if (!$fp) {
-      return FALSE;
-  }
-  $response = @stream_get_contents($fp);
-  if ($response === false) {
-      return FALSE;
-  }
-  return $response;
-}
+require_once(getenv("CRACKSTATION_DEPENDS_DIR") . "/crackstation-hashdb/LookupTable.php");
 
 function CrackHashes($hashes)
 {
-    $attempt_increment = count($hashes);
-    $cracked_increment = 0;
 	echo "<table class=\"results\">";
 	echo "<tr><th>Hash</th><th>Type</th><th>Result</th></tr>";
-    $creds = Creds::getCredentials("cs_cracking_server");
-    $url = "http://" . $creds[C_HOST] . "/" . $creds[C_DATB];
-    unset($creds);
-    $result = do_post_request($url, "hashes=" . urlencode(implode(",", $hashes)));
-    if($result === FALSE)
-        return false;
-    $result = explode("\n", $result);
-    foreach($result as $line)
-    {
-        $data = explode("||#||", $line);
-        if(count($data) == 4)
-        {
-            $cracked_increment++;
-            $hash = "";
-            while(strlen($data[3]) > 0)
-            {
-                $hash .= htmlspecialchars(substr($data[3], 0, 64), ENT_QUOTES) . "<br />";
-                $data[3] = substr($data[3], 64);
+
+    foreach($hashes as $hash) {
+        $supported_lookups = array(
+            array(
+                'index' => 'lm.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'LM',
+            ),
+            array(
+                'index' => 'md2.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'md2',
+            ),
+            array(
+                'index' => 'md4.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'md4',
+            ),
+            array(
+                'index' => 'md5.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'md5',
+            ),
+            array(
+                'index' => 'md5md5.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'md5(md5)',
+            ),
+            array(
+                'index' => 'mysql4.1+.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'MySQL4.1+',
+            ),
+            array(
+                'index' => 'ntlm.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'NTLM',
+            ),
+            array(
+                'index' => 'ripemd160.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'ripemd160',
+            ),
+            array(
+                'index' => 'sha1.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'sha1',
+            ),
+            array(
+                'index' => 'sha224.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'sha224',
+            ),
+            array(
+                'index' => 'sha256.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'sha256',
+            ),
+            array(
+                'index' => 'sha384.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'sha384',
+            ),
+            array(
+                'index' => 'sha512.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'sha512',
+            ),
+            array(
+                'index' => 'whirlpool.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'whirlpool',
+            ),
+            /* Big ones. */
+            array(
+                'index' => 'md5-huge.idx',
+                'dict' => 'HUGELIST.lst',
+                'alg' => 'md5',
+            ),
+            array(
+                'index' => 'sha1-huge.idx',
+                'dict' => 'HUGELIST.lst',
+                'alg' => 'sha1',
+            ),
+        );
+
+        $html_escaped_hash = htmlentities($hash, ENT_QUOTES);
+
+        /* Try to crack the hash with every lookup table, collecting all of the
+            results. */
+        $results = array();
+        foreach($supported_lookups as $lookup) {
+
+            $index_path = getenv("CRACKSTATION_DEPENDS_DIR") . "/cracking/" . $lookup['index'];
+            $dict_path = getenv("CRACKSTATION_DEPENDS_DIR") . "/cracking/" . $lookup['dict'];
+
+            $lut = new LookupTable($index_path, $dict_path, $lookup['alg']);
+
+            try {
+                $results = array_merge($results, $lut->crack($hash));
+            } catch (HashFormatException $ex) {
+                echo "<tr class=\"fail\"><td>$html_escaped_hash</td><td>Unknown</td><td>Unrecognized hash format.</td></tr>";
+                /* WARNING: Curently a throw of HashFormatException for one
+                   algorithm means it will throw for *all* algorithms. That may
+                   not remain to be the case. */
+                break;
             }
-            $type = htmlspecialchars($data[1], ENT_QUOTES);
-            $pass = htmlspecialchars($data[2], ENT_QUOTES);
-            if($data[0] == "FULLMATCH")
-                echo '<tr class="suc">';
-            elseif($data[0] == "PARTIALMATCH")
-                echo '<tr class="part">';
-            echo "<td>$hash</td><td>$type</td><td>$pass</td></tr>";
         }
-        elseif(count($data) == 2 && $data[0] == "NOTFOUND")
-        {
-            $hash = htmlspecialchars($data[1], ENT_QUOTES);
-            echo "<tr class=\"fail\"><td>$hash</td><td>Unknown</td><td>Not Found</td></tr>";
+
+        /* Show all of the results for this hash. */
+        if (count($results) == 0) {
+            echo "<tr class=\"fail\"><td>$html_escaped_hash</td><td>Unknown</td><td>Not found.</td></tr>";
+        } else {
+            foreach ($results as $result) {
+                if ($result->isFullMatch()) {
+                    $tr_class = "suc";
+                } else {
+                    $tr_class = "part";
+                }
+                echo "<tr class=\"$tr_class\">";
+                echo "<td>$html_escaped_hash</td>";
+                $html_escaped_alg = htmlentities($result->getAlgorithmName(), ENT_QUOTES);
+                echo "<td>$html_escaped_alg</td>";
+                $html_escaped_plaintext = htmlentities($result->getPlaintext(), ENT_QUOTES);
+                echo "<td>$html_escaped_plaintext</td>";
+                echo "</tr>";
+            }
         }
     }
-	echo "</table>";
+
+    echo "</table>";
     echo '<p style="font-size: 8pt;"><strong>Color Codes:</strong> <span style="background-color: #00FF00;">Green:</span> Exact match, <span style="background-color: #FFFF00;">Yellow:</span> Partial match, <span style="background-color: #FF0000;">Red:</span> Not found.</p>';
-    return true;
 }
 ?>
