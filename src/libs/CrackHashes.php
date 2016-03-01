@@ -35,6 +35,33 @@ function CrackHashes($hashes)
                 'alg' => 'LM',
             ),
             array(
+                'index' => 'ntlm.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'NTLM',
+            ),
+            array(
+                'index' => 'mysql4.1+.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'MySQL4.1+',
+            ),
+            /* md5(md5) must come before actual md5, since the hash might be in
+               the wordlist. */
+            array(
+                'index' => 'md5md5.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'md5(md5)',
+            ),
+            array(
+                'index' => 'md5.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'md5',
+            ),
+            array(
+                'index' => 'sha1.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'sha1',
+            ),
+            array(
                 'index' => 'md2.idx',
                 'dict' => 'REALUNIQ.lst',
                 'alg' => 'md2',
@@ -45,44 +72,14 @@ function CrackHashes($hashes)
                 'alg' => 'md4',
             ),
             array(
-                'index' => 'md5.idx',
+                'index' => 'sha256.idx',
                 'dict' => 'REALUNIQ.lst',
-                'alg' => 'md5',
-            ),
-            array(
-                'index' => 'md5md5.idx',
-                'dict' => 'REALUNIQ.lst',
-                'alg' => 'md5(md5)',
-            ),
-            array(
-                'index' => 'mysql4.1+.idx',
-                'dict' => 'REALUNIQ.lst',
-                'alg' => 'MySQL4.1+',
-            ),
-            array(
-                'index' => 'ntlm.idx',
-                'dict' => 'REALUNIQ.lst',
-                'alg' => 'NTLM',
-            ),
-            array(
-                'index' => 'ripemd160.idx',
-                'dict' => 'REALUNIQ.lst',
-                'alg' => 'ripemd160',
-            ),
-            array(
-                'index' => 'sha1.idx',
-                'dict' => 'REALUNIQ.lst',
-                'alg' => 'sha1',
+                'alg' => 'sha256',
             ),
             array(
                 'index' => 'sha224.idx',
                 'dict' => 'REALUNIQ.lst',
                 'alg' => 'sha224',
-            ),
-            array(
-                'index' => 'sha256.idx',
-                'dict' => 'REALUNIQ.lst',
-                'alg' => 'sha256',
             ),
             array(
                 'index' => 'sha384.idx',
@@ -98,6 +95,11 @@ function CrackHashes($hashes)
                 'index' => 'whirlpool.idx',
                 'dict' => 'REALUNIQ.lst',
                 'alg' => 'whirlpool',
+            ),
+            array(
+                'index' => 'ripemd160.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'ripemd160',
             ),
             /* Big ones. */
             array(
