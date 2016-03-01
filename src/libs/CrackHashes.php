@@ -131,7 +131,7 @@ function CrackHashes($hashes)
                 /* WARNING: Curently a throw of HashFormatException for one
                    algorithm means it will throw for *all* algorithms. That may
                    not remain to be the case. */
-                break;
+                goto nexthash;
             }
         }
 
@@ -154,6 +154,8 @@ function CrackHashes($hashes)
                 echo "</tr>";
             }
         }
+
+nexthash:
     }
 
     echo "</table>";
