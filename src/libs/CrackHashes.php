@@ -112,7 +112,11 @@ function CrackHashes($hashes)
             ),
         );
 
-        $html_escaped_hash = htmlentities($hash, ENT_QUOTES);
+        $html_escaped_hash = htmlentities(
+            wordwrap($hash, 64, "\n", true),
+            ENT_QUOTES
+        );
+        $html_escaped_hash = str_replace("\n", "<br />\n", $html_escaped_hash);
 
         /* Try to crack the hash with every lookup table, collecting all of the
             results. */

@@ -58,7 +58,7 @@ var RecaptchaOptions = {
 <h1>Free Password Hash Cracker</h1>
 
 <p>
-    Enter up to 20 non-salted hashes:
+    Enter up to 20 non-salted hashes, one per line:
 </p>
 
 <!-- Hash cracking form. -->
