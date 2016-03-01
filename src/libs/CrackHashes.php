@@ -126,6 +126,17 @@ function CrackHashes($hashes)
 
             try {
                 $results = array_merge($results, $lut->crack($hash));
+                /* Exit early.
+                   This does two things. Firstly, it avoids duplication between
+                   md5.idx/md5-huge.idx and sha1.idx/sha1-huge.idx. Secondly, it
+                   speeds things up since for example if we've already cracked
+                   it as an md5 hash it's very unlikely to also be a sha1 hash.
+                */
+                foreach ($results as $result) {
+                    if ($result->isFullMatch()) {
+                        break 2;
+                    }
+                }
             } catch (HashFormatException $ex) {
                 echo "<tr class=\"fail\"><td>$html_escaped_hash</td><td>Unknown</td><td>Unrecognized hash format.</td></tr>";
                 /* WARNING: Curently a throw of HashFormatException for one
