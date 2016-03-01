@@ -89,8 +89,8 @@ var RecaptchaOptions = {
 <!-- Supported hash types. -->
 <p style="font-size: 8pt; margin: 0; padding: 0;">
 <b>Supports:</b>
-LM, NTLM, md2, md4, md5, md5(md5), md5-half, sha1, sha1(sha1_bin()), sha224,
-sha256, sha384, sha512, ripeMD160, whirlpool, MySQL 4.1+
+LM, NTLM, md2, md4, md5, md5(md5_hex), md5-half, sha1, sha224, sha256, sha384,
+sha512, ripeMD160, whirlpool, MySQL 4.1+ (sha1(sha1_bin))
 <br />
 </p>
 
