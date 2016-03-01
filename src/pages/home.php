@@ -58,7 +58,7 @@ var RecaptchaOptions = {
 <h1>Free Password Hash Cracker</h1>
 
 <p>
-    Enter up to 10 non-salted hashes:
+    Enter up to 20 non-salted hashes:
 </p>
 
 <!-- Hash cracking form. -->
@@ -112,11 +112,11 @@ if(isset($_POST['crack']))
         $hashes = explode("\n", $hashes);
         array_walk($hashes, 'trim_value');
         $hashes = array_filter($hashes, function ($item) { return !empty($item); });
-        if(count($hashes) <= 10) {
+        if(count($hashes) <= 20) {
             CrackHashes($hashes);
         } else {
             echo "<p style=\"color: red;\">
-                    <b>Please enter <strong>10</strong> or less hashes.</b>
+                    <b>Please enter <strong>20</strong> or less hashes.</b>
                   </p>";
         }
     }
