@@ -717,18 +717,17 @@ that breaches are detected and responded to promptly.
 <span style="color: green;"><b>DO</b></span> use:
 
 <ul class="moveul">
-    <li><a href="https://github.com/defuse/password-hashing">My implementations of PBKDF2 in PHP, C#, Java, and Ruby.</a></li>
+    <li>Well-designed key stretching algorithms such as <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and <a href="http://www.tarsnap.com/scrypt.html">scrypt</a>.</li>
     <li>OpenWall's <a href="http://www.openwall.com/phpass/">Portable PHP password hashing
     framework</a></li>
-    <li>Any modern well-tested cryptographic hash algorithm, such as SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
-    <li>Well-designed key stretching algorithms such as <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, <a href="http://en.wikipedia.org/wiki/Bcrypt">bcrypt</a>, and <a href="http://www.tarsnap.com/scrypt.html">scrypt</a>.</li>
+    <li><a href="https://github.com/defuse/password-hashing">My implementations of PBKDF2 in PHP, C#, Java, and Ruby.</a></li>
     <li>Secure versions of <a href="http://en.wikipedia.org/wiki/Crypt_(Unix)#Library_Function_crypt.283.29">crypt</a> ($2y$, $5$, $6$)</li>
 </ul>
 <br />
 <span style="color: red;"><b>DO NOT</b></span> use:
 
 <ul class="moveul">
-    <li>Outdated hash functions like MD5 or SHA1.</li>
+    <li>Fast cryptographic hash functions such as MD5, SHA1, SHA256, SHA512, RipeMD, WHIRLPOOL, SHA3, etc.</li>
     <li>Insecure versions of crypt ($1$, $2$, $2x$, $3$).</li>
     <li>Any algorithm that you designed yourself. Only use technology that is in the public domain and has been well-tested by experienced cryptographers.</li>
 </ul>
