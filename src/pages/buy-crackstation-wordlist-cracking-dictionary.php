@@ -111,12 +111,10 @@ Transmission (for Linux and Mac), or uTorrent for Windows.
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
-    <!--
     <br /><br />
-    <a class="wldl" href="https://mega.co.nz/#!fMQGhTqK!M0aeI3vMie3ldGlTArVzhhaDWgE_iCY7_NA6Vm_W_Pg">
-        <span style="font-size: 16pt;">Mega Mirror</span>
+    <a class="wldl" href="/files/crackstation.txt.gz">
+        <span style="font-size: 16pt;">HTTP Mirror (Slow)</span>
     </a>
-    -->
 </div>
 
 <h4>Checksums (crackstation.txt.gz)</h4>
@@ -142,12 +140,10 @@ There are about 64 million passwords in this list!
         <br />
         GZIP-compressed. 247 MiB compressed. 684 MiB uncompressed.
     </a>
-    <!--
     <br /><br />
-    <a class="wldl" href="https://mega.co.nz/#!3VZiEJ4L!TitrTiiwygI2I_7V2bRWBH6rOqlcJ14tSjss2qR5dqo">
-        <span style="font-size: 16pt;">Mega Mirror</span>
+    <a class="wldl" href="/files/crackstation-human-only.txt.gz">
+        <span style="font-size: 16pt;">HTTP Mirror (Slow)</span>
     </a>
-    -->
     <br />
 </div>
 
