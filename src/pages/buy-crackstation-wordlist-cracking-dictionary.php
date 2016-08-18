@@ -107,7 +107,7 @@ Transmission (for Linux and Mac), or uTorrent for Windows.
 
 <div style="text-align: center;">
     <a class="wldl" href="/downloads/crackstation.txt.gz.torrent">
-        <span style="font-size: 20pt;">Torrent</span>
+        <span style="font-size: 20pt;">Torrent (Fast)</span>
         <br />
         GZIP-compressed (level 9). 4.2 GiB compressed. 15 GiB uncompressed.
     </a>
@@ -136,7 +136,7 @@ There are about 64 million passwords in this list!
 
 <div style="text-align: center;">
     <a class="wldl" href="/downloads/crackstation-human-only.txt.gz.torrent">
-        <span style="font-size: 16pt;">Torrent</span>
+        <span style="font-size: 20pt;">Torrent (Fast)</span>
         <br />
         GZIP-compressed. 247 MiB compressed. 684 MiB uncompressed.
     </a>
