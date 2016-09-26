@@ -92,7 +92,7 @@ valid usernames without knowing their passwords.
 
 <p>
 It should be noted that the hash functions used to protect passwords are not the
-same as the hash functions you may have seen in a data structures course.  The
+same as the hash functions you may have seen in a data structures course. The
 hash functions used to implement data structures such as hash tables are
 designed to be fast, not secure. Only <b>cryptographic hash functions</b> may be
 used to implement password hashing.  Hash functions like SHA256, SHA512, RipeMD,
@@ -482,7 +482,7 @@ account table alongside the hash.  </p>
 
 <ol>
     <li>Generate a long random salt using a CSPRNG.</li>
-    <li>Prepend the salt to the password and hash it with a <b>standard</b> cryptographic hash function such as SHA256.</li>
+    <li>Prepend the salt to the password and hash it with a <b>standard</b> password hashing function like Argon2, bcrypt, scrypt, or PBKDF2.</li>
     <li>Save both the salt and the hash in the user's database record.</li>
 </ol>
 
