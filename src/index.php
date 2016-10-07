@@ -28,7 +28,7 @@ if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' &&
     $_SERVER['HTTP_HOST'] != "localhost" && 
     $_SERVER['HTTP_HOST'] != "192.168.1.102")
 {
-    header('Strict-Transport-Security: max-age=31536000'); /* one year */
+    header('Strict-Transport-Security: max-age=31536000; includeSubdomains; preload'); /* one year */
 }
 
 //Strengthen the server's CSPRNG
