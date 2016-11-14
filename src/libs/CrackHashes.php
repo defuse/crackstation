@@ -101,6 +101,11 @@ function CrackHashes($hashes)
                 'dict' => 'REALUNIQ.lst',
                 'alg' => 'ripemd160',
             ),
+            array(
+                'index' => 'qubesv3.1.idx',
+                'dict' => 'REALUNIQ.lst',
+                'alg' => 'QubesV3.1BackupDefaults',
+            ),
             /* Big ones. */
             array(
                 'index' => 'md5-huge.idx',
