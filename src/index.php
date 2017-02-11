@@ -172,9 +172,6 @@ header('Content-Type: text/html; charset=utf-8');
     <a href="https://z.cash/">Zcash</a> |
     <a href="https://defuse.ca/pastebin.htm">Secure Pastebin</a> | 
     <a href="https://github.com/defuse/crackstation">Source Code</a>
-    <span style="float: right;">
-    <script id='fbryl0z'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=earthrise&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fbryl0z');</script>
-    </span>
     </div> <!-- end footer -->
     </div> <!-- footerwrapper -->
 <!-- Piwik -->
