@@ -81,7 +81,7 @@ account system is as follows:
 
     <li>When the user attempts to login, the hash of the password they entered is checked against the hash of their real password (retrieved from the database).</li>
     <li>If the hashes match, the user is granted access. If not, the user is told they entered invalid login credentials.</li>
-    <li>Steps 3 and 4 repeat everytime someone tries to login to their account.</li>
+    <li>Steps 3 and 4 repeat every time someone tries to login to their account.</li>
 </ol>
 
 <p>
@@ -923,7 +923,7 @@ For example, a standard comparison of the strings &quot;xyzabc&quot; and
 &quot;abcxyz&quot; would immediately see that the first character is different
 and wouldn't bother to check the rest of the string. On the other hand, when the
 strings &quot;aaaaaaaaaaB&quot; and &quot;aaaaaaaaaaZ&quot; are compared, the
-comparison algorithm scans through the block of "a" before it determins the
+comparison algorithm scans through the block of "a" before it determines the
 strings are unequal.
 </p>
 
@@ -931,7 +931,7 @@ strings are unequal.
 Suppose an attacker wants to break into an on-line system that rate limits
 authentication attempts to one attempt per second. Also suppose the attacker
 knows all of the parameters to the password hash (salt, hash type, etc), except
-for the hash and (obviously) the password. If the attacker can get a precisise
+for the hash and (obviously) the password. If the attacker can get a precise
 measurement of how long it takes the on-line system to compare the hash of the
 real password with the hash of a password the attacker provides, he can use the
 timing attack to extract part of the hash and crack it using an offline attack,
