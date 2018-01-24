@@ -94,8 +94,10 @@ Think about the following points when deciding how much to pay:
 
 <div style="text-align: center; font-family: monospace;">
     <br />
-    Bitcoin: 1G6PjrYhy5uXPsY1DxirEA3Ahx5EHn5W45<br /><br />
-    Litecoin: Lg46hm5DY5QT2TU7rUN5yHuGZ2PHqjUb9L
+    Zcash: t1VcNjcSAWLEBuuT8piKF4kZMXFxciLz5pL<br /><br />
+    Bitcoin: 1P8zEAkomPzT55SmXLAsmjb5EoDC6D9o8M<br /><br />
+    Bitcoin Cash: 1NASphvYpW4a7uSiCu9bumqZJvF8ckyg7x<br /><br />
+    Litecoin: LeWjnJoUrtcZqSNVF8N9zqe347dTEDehgg
 </div>
 
 <h2>Step 2: Download!</h2>
