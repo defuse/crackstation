@@ -67,6 +67,13 @@ header('Content-Type: text/html; charset=utf-8');
 <link rel="stylesheet" media="all" type="text/css" href="/css/mainmenu2.css" />
 <link rel="stylesheet" media="all" type="text/css" href="/css/main.css" />
 <link rel="stylesheet" media="all" type="text/css" href="/css/style.css" />
+<?php
+    if ($name === "") {
+    ?>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    <?
+    }
+?>
 <!--[if !IE 7]>
 	<style type="text/css">
 		#wrap {display:table;height:100%}
