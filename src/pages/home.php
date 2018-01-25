@@ -25,15 +25,34 @@ mb_internal_encoding('UTF-8');
 
 require_once('libs/recaptchalib.php');
 require_once('libs/CrackHashes.php');
-
-/* Get the recaptcha credentials from a protected file. */
 require_once('/etc/creds.php');
-$rec_pub_creds = Creds::getCredentials("cs_recaptcha_pub");
-$rec_pub_key = $rec_pub_creds[C_PASS];
-unset($rec_pub_creds);
-$rec_priv_creds = Creds::getCredentials("cs_recaptcha_priv");
-$rec_priv_key = $rec_priv_creds[C_PASS];
-unset($rec_priv_creds);
+
+// Copied from: https://stackoverflow.com/a/30749288
+function checkReCAPTCHA() 
+{
+    try {
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $creds = Creds::getCredentials("timecapsule_recaptcha");
+        $data = ['secret'   => $creds[C_PASS],
+                 'response' => $_POST['g-recaptcha-response'],
+                 'remoteip' => $_SERVER['REMOTE_ADDR']];
+
+        $options = [
+            'http' => [
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data) 
+            ]
+        ];
+
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        return json_decode($result)->success;
+    }
+    catch (Exception $e) {
+        return null;
+    }
+}
 
 if(isset($_GET['p']))
 {
@@ -61,6 +80,15 @@ var RecaptchaOptions = {
     Enter up to 20 non-salted hashes, one per line:
 </p>
 
+<script>
+    function onRecaptchaChecked() {
+        document.getElementById("submitbutton").disabled = false;
+    }
+    function onRecaptchaExpired() {
+        document.getElementById("submitbutton").disabled = true;
+    }
+</script>
+
 <!-- Hash cracking form. -->
 <form action="/" method="post">
 <table style="width: 100%;">
@@ -76,10 +104,8 @@ var RecaptchaOptions = {
     </td>
     <td>
         <center>
-            <?php
-                echo recaptcha_get_html($rec_pub_key, null, true);
-            ?>
-            <input type="submit" name="crack" value="Crack Hashes" style="width: 200px; margin-top: 10px;" />
+            <div class="g-recaptcha" data-theme="dark" data-sitekey="6LcnNi8UAAAAALJikXrc6jwNWUm00Yjx_rHCJW7u" data-callback="onRecaptchaChecked" data-expired-callback="onRecaptchaExpired"></div>
+            <input id="submitbutton" type="submit" name="crack" value="Crack Hashes" style="width: 200px; margin-top: 10px;" disabled/>
         </center>
     </td>
 </tr>
@@ -99,13 +125,7 @@ sha512, ripeMD160, whirlpool, MySQL 4.1+ (sha1(sha1_bin)), QubesV3.1BackupDefaul
 <?php
 if(isset($_POST['crack']))
 {
-    $rec_result = recaptcha_check_answer(
-        $rec_priv_key,
-        $_SERVER["REMOTE_ADDR"],
-        $_POST["recaptcha_challenge_field"],
-        $_POST["recaptcha_response_field"]
-    );
-    if($rec_result->is_valid)
+    if(checkReCaptcha() === true)
     {
         $hashes = str_replace("\r\n", "\n", $_POST['hashes']);
         $hashes = str_replace("\r", "\n", $hashes);
