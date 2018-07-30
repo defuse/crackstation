@@ -687,7 +687,7 @@ Even experienced developers must be educated in security in order to write secur
 A great resource for learning about web application vulnerabilities is 
 <a href="https://www.owasp.org/index.php/Main_Page">The Open Web Application
 Security Project (OWASP)</a>. A good introduction is the 
-<a href="http://owasptop10.googlecode.com/files/OWASP%20Top%2010%20-%202013.pdf">OWASP Top Ten Vulnerability List</a>.
+<a href="https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf">OWASP Top Ten Vulnerability List</a>.
 Unless you understand all the vulnerabilities on the list, do not attempt to
 write a web application that deals with sensitive data. It is the employer's
 responsibility to ensure all developers are adequately trained in secure
