@@ -162,6 +162,9 @@ class URLParse
                 P_METD => "Donation Confirmation Page"
                 ),
             "buy-crackstation-wordlist-password-cracking-dictionary" => array(
+                P_RDIR => "buy-crackstation-wordlist-password-cracking-dictionary"
+                ),
+            "crackstation-wordlist-password-cracking-dictionary" => array(
                 P_FILE => "buy-crackstation-wordlist-cracking-dictionary.php",
                 P_TITL => "CrackStation's Password Cracking Dictionary (Pay what you want!)",
                 P_METD => "Download CrackStation's password cracking wordlist.",

@@ -105,7 +105,7 @@ header('Content-Type: text/html; charset=utf-8');
     <li class="headerlink" ><a href="/">CrackStation<img class="downimg" src="/images/downarrow.gif" alt="&#9660;"/><!--[if gt IE 6]><!--></a><!--<![endif]--><!--[if lt IE 7]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
         <ul class="leftbutton">
             <li><a href="/">&nbsp;Free Hash Cracker</a></li>
-            <li><a href="buy-crackstation-wordlist-password-cracking-dictionary.htm">&nbsp;Wordlist Download</a></li>
+            <li><a href="crackstation-wordlist-password-cracking-dictionary.htm">&nbsp;Wordlist Download</a></li>
             <li><a href="/about-us.htm">&nbsp;About Us</a></li>
             <li><a href="/contact-us.htm">&nbsp;Contact Us</a></li>
             <li><a href="/legal-privacy.htm">&nbsp;ToS &amp; Privacy Policy</a></li>

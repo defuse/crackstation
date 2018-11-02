@@ -30,7 +30,7 @@ Here are the results of cracking <a
 href="https://defuse.ca/blog/cracking-linkedin-hashes-with-crackstation">LinkedIn's</a>
 and <a
 href="https://defuse.ca/blog/cracking-eharmonys-unsalted-hashes-with-crackstation">
-eHarmony's</a> password hash leaks with the list. 
+eHarmony's</a> password hash leaks with the list.
 </p>
 
 <p>
@@ -43,64 +43,7 @@ list, we were able to crack 49.98% of one customer's set of 373,000
 human password hashes to motivate their move to a better salting scheme.
 </p>
 
-<h2>Step 1: Pay what you want.</h2>
-
-<p>
-The wordlist is being sold using a "pay what you want" model. That means
-you can pay absolutely any amount of money you want for the wordlist. Even
-nothing. Use the PayPal donate button, Bitcoin address, or Litecoin address
-below to make your payment.
-</p>
-
-<p>
-<strong>How much should I pay?</strong>
-</p>
-
-<p>
-Think about the following points when deciding how much to pay:
-</p>
-
-<ul>
-    <li>
-        If I wasn't doing a "pay what want" I would set the price at
-        $5.
-    </li>
-    <li>
-        The money will be used for open source security research and development projects.
-    </li>
-    <li>
-        It took about 3 weeks of full-time work to make this dictionary
-        (searching, downloading, scripting, processing).
-    </li>
-    <li>
-        I will not be offended by small payments.
-    </li>
-    <li>
-        If you have no money or don't want to pay, seeding the torrents and
-        sharing this page with your friends is appreciated!
-    </li>
-</ul>
-
-<br />
-<br />
-<center>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick" />
-<input type="hidden" name="hosted_button_id" value="PNMQT9EL48KBA" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" />
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
-</center>
-
-<div style="text-align: center; font-family: monospace;">
-    <br />
-    Zcash: t1VcNjcSAWLEBuuT8piKF4kZMXFxciLz5pL<br /><br />
-    Bitcoin: 1P8zEAkomPzT55SmXLAsmjb5EoDC6D9o8M<br /><br />
-    Bitcoin Cash: 1NASphvYpW4a7uSiCu9bumqZJvF8ckyg7x<br /><br />
-    Litecoin: LeWjnJoUrtcZqSNVF8N9zqe347dTEDehgg
-</div>
-
-<h2>Step 2: Download!</h2>
+<h2>Download</h2>
 
 <p>
 <b>Note:</b> To download the torrents, you will need a torrent client like

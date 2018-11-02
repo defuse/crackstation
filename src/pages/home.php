@@ -152,7 +152,7 @@ if(isset($_POST['crack']))
 
 <div class="downloaddiv">
     <a class="downloadlink"
-       href="/buy-crackstation-wordlist-password-cracking-dictionary.htm">
+       href="/crackstation-wordlist-password-cracking-dictionary.htm">
             Download CrackStation's Wordlist
     </a>
 </div>
@@ -182,7 +182,7 @@ them much more effective. For MD5 and SHA1 hashes, we have a 190GB,
 
 <p>
 You can download CrackStation's dictionaries <a
-href="/buy-crackstation-wordlist-password-cracking-dictionary.htm">here</a>, and
+href="/crackstation-wordlist-password-cracking-dictionary.htm">here</a>, and
 the lookup table implementation (PHP and C) is available <a
 href="https://github.com/defuse/crackstation-hashdb">here</a>.
 </p>
