@@ -25,7 +25,7 @@ mb_internal_encoding('UTF-8');
 
 require_once('libs/recaptchalib.php');
 require_once('libs/CrackHashes.php');
-require_once('/etc/creds.php');
+require_once('/storage/creds.php');
 
 // Copied from: https://stackoverflow.com/a/30749288
 function checkReCAPTCHA() 

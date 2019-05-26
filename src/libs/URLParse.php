@@ -93,7 +93,7 @@ class URLParse
     private static $MASTER_HOST = "crackstation.net";
     private static $ACCEPTED_HOSTS = array(
                                             "crackstation.h.defuse.ca",
-                                            "crackstation"
+                                            "crackstation:20443"
                                             );
     private static $FORCE_HTTPS = true;
     private static $DEFAULT_TITLE = "CrackStation - Online Password Hash Cracking - MD5, SHA1, Linux, Rainbow Tables, etc.";
