@@ -848,7 +848,7 @@ their password.
 <h3>If an attacker has access to my database, can't they just replace the hash of my password with their own hash and login?</h3>
 
 <p>
-Yes, but if someone has accesss to your database, they probably already have
+Yes, but if someone has access to your database, they probably already have
 access to everything on your server, so they wouldn't need to login to your
 account to get what they want. The purpose of password hashing (in the context
 of a website) is not to protect the website from being breached, but to protect
