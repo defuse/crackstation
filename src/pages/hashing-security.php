@@ -466,7 +466,7 @@ that exist for some popular programming platforms.
     <tr><td>Java</td><td><a href="http://docs.oracle.com/javase/6/docs/api/java/security/SecureRandom.html">java.security.SecureRandom</a></td></tr>
     <tr><td>Dot NET (C#, VB)</td><td><a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.rngcryptoserviceprovider.aspx">System.Security.Cryptography.RNGCryptoServiceProvider</a></td></tr>
     <tr><td>Ruby</td><td><a href="http://rubydoc.info/stdlib/securerandom/1.9.3/SecureRandom">SecureRandom</a></td></tr>
-    <tr><td>Python</td><td><a href="http://docs.python.org/library/os.html">os.urandom</a></td></tr>
+    <tr><td>Python</td><td><a href="https://docs.python.org/3/library/secrets.html">secrets</a></td></tr>
     <tr><td>Perl</td><td><a href="http://search.cpan.org/~mkanat/Math-Random-Secure-0.06/lib/Math/Random/Secure.pm">Math::Random::Secure</a></td></tr>
     <tr><td>C/C++ (Windows API)</td><td><a href="http://en.wikipedia.org/wiki/CryptGenRandom">CryptGenRandom</a></td></tr>
     <tr><td>Any language on GNU/Linux or Unix</td><td>Read from <a href="http://en.wikipedia.org/wiki//dev/random">/dev/random</a> or /dev/urandom</td></tr>
