@@ -24,7 +24,7 @@ password hashing code, <strong>please don't!</strong>. It's too easy to screw
 up. No, that cryptography course you took in university doesn't make you exempt
 from this warning. This applies to everyone: <strong>DO NOT WRITE YOUR OWN
 CRYPTO!</strong> The problem of storing passwords has already been solved. Use
-either use either <a href="http://www.openwall.com/phpass/">phpass</a>, the PHP,
+either <a href="http://www.openwall.com/phpass/">phpass</a>, the PHP,
 C#, Java, and Ruby implementations in <a
 href="https://github.com/defuse/password-hashing">defuse/password-hashing</a>,
 or <a
